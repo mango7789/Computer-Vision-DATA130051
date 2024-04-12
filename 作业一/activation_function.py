@@ -46,11 +46,8 @@ class Tanh(ActivationFunction):
 #                            Sigmoid                                  #
 #######################################################################
 class Sigmoid(ActivationFunction):
-    def sigmoid(self, x: np.array):
+    def forward(self, x: np.array):
         return 1 / (1 + np.exp(-x))
     
-    def forward(self, x: np.array):
-        return self.sigmoid(x)
-    
     def backward(self, grad: np.array, score: np.array):
-        return grad * self.sigmoid(score) * (1 - self.sigmoid(score))
+        return grad * score * (1 - score)
