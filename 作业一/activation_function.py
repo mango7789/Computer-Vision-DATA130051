@@ -1,7 +1,6 @@
-from numpy.core.multiarray import array as array
 from __init__ import *
 
-class ActivationFunction(ABC):
+class ActivationFunction:
     @classmethod
     def __new__(cls, type: str):
         if type.lower() == 'relu':
@@ -13,41 +12,60 @@ class ActivationFunction(ABC):
         else:
             raise ValueError("Unknown activation function type: {}, please choose from ['relu', 'tanh', 'sigmoid']".format(type))
 
-    @abstractmethod
-    def forward(self, x: np.array):
-        raise NotImplementedError
-    
-    @abstractmethod
-    def backward(self, grad: np.array, score: np.array):
-        raise NotImplementedError
+    @classmethod
+    def forward(cls, x: np.array, type: str):
+        activation_func = cls(type)
+        return activation_func.forward(x)
+
+    @classmethod
+    def backward(cls, dout: np.array, cache: np.array, type: str):
+        activation_func = cls(type)
+        return activation_func.backward(dout, cache)
     
 #######################################################################
 #                             ReLU                                    #
 #######################################################################
 class ReLU(ActivationFunction):
     def forward(self, x: np.array):
-        return np.max(0, x)
+        out = np.copy(x)
+        out[out < 0] = 0
+        cache = x
+        return out, cache
     
-    def backward(self, grad: np.array, score: np.array):
-        grad[score == 0] = 0
-        return grad
+    def backward(self, dout: np.array, cache: np.array):
+        dx, x = None, cache
+        dx = np.copy(dout)
+        dx[x <= 0] = 0
+        return dx
 
 #######################################################################
 #                             Tanh                                    #
 #######################################################################
 class Tanh(ActivationFunction):
     def forward(self, x: np.array):
-        return np.tanh(x)
+        out = np.tanh(np.copy(x))
+        cache = x
+        return out, cache
 
-    def backward(self, grad: np.array, score: np.array):
-        return grad * (1 - score**2)
+    def backward(self, dout: np.array, cache: np.array):
+        dx, x = None, cache
+        dx = dout * (1 - np.power(np.tanh(x), 2))
+        return dx
 
 #######################################################################
 #                            Sigmoid                                  #
 #######################################################################
 class Sigmoid(ActivationFunction):
-    def forward(self, x: np.array):
+    def sigmoid(self, x: np.array):
         return 1 / (1 + np.exp(-x))
+
+    def forward(self, x: np.array):
+        out = np.copy(x)
+        out = self.sigmoid(out)
+        cache = x
+        return out, cache
     
-    def backward(self, grad: np.array, score: np.array):
-        return grad * score * (1 - score)
+    def backward(self, dout: np.array, cache: np.array):
+        dx, x = None, cache
+        dx = dout * self.sigmoid(x) * (1 - self.sigmoid(x))
+        return dx
