@@ -1,5 +1,5 @@
 from __init__ import *
-from activation_function import *
+from activation import *
 
 class Linear:
     @staticmethod
@@ -62,16 +62,16 @@ class Linear_Activation:
         - cache: Object to give to the backward pass
         """
         score, fc_cache = Linear.forward(x, w, b)
-        out, af_cache = ActivationFunction.forward(score, type)
+        out, af_cache = Activation.forward(score, type)
         cache = (fc_cache, af_cache)
         return out, cache
     
     @staticmethod
     def backward(dout: np.array, cache: tuple, type: str):
         """
-        Backward pass for the linear-relu convenience layer
+        Backward pass for the linear-activation_function convenience layer
         """
         fc_cache, af_cache = cache
-        ds = ActivationFunction.backward(dout, af_cache, type)
+        ds = Activation.backward(dout, af_cache, type)
         dx, dw, db = Linear.backward(ds, fc_cache)
         return dx, dw, db

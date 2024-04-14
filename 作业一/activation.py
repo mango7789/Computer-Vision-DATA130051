@@ -1,31 +1,54 @@
 from __init__ import *
 
-class ActivationFunction:
+class Activation:
     @classmethod
     def __new__(cls, type: str):
-        if type.lower() == 'relu':
+        """
+        Create a new activation-component based on the input of type. 
+        Inputs:
+        - type: the type of activation function, should be in ['relu', 'tanh', 'sigmoid](ignore case).
+        """
+        type = type.lower()
+        if type == 'relu':
             return ReLU()
-        elif type.lower() == 'tanh':
+        elif type == 'tanh':
             return Tanh()
-        elif type.lower() == 'sigmoid':
+        elif type == 'sigmoid':
             return Sigmoid()
         else:
             raise ValueError("Unknown activation function type: {}, please choose from ['relu', 'tanh', 'sigmoid']".format(type))
 
     @classmethod
     def forward(cls, x: np.array, type: str):
+        """
+        Computes the forward pass for an activation component.
+        Inputs:
+        - x: An array containing input data, of shape (N, M)
+         Returns a tuple of:
+        - out: output, of shape (N, M)
+        - cache: x, used for backward pass
+        """
         activation_func = cls(type)
         return activation_func.forward(x)
 
     @classmethod
     def backward(cls, dout: np.array, cache: np.array, type: str):
+        """
+        Computes the backward pass for an activation component.
+        Inputs:
+        - dout: Upstream derivative, of shape (N, M)
+        - cache: Tuple of:
+          - x: Input data, of shape (N, M)
+        Returns a tuple of:
+        - dx: Gradient with respect to x, of shape (N, M)
+        """
         activation_func = cls(type)
         return activation_func.backward(dout, cache)
     
 #######################################################################
 #                             ReLU                                    #
 #######################################################################
-class ReLU(ActivationFunction):
+class ReLU(Activation):
     def forward(self, x: np.array):
         out = np.copy(x)
         out[out < 0] = 0
@@ -41,7 +64,7 @@ class ReLU(ActivationFunction):
 #######################################################################
 #                             Tanh                                    #
 #######################################################################
-class Tanh(ActivationFunction):
+class Tanh(Activation):
     def forward(self, x: np.array):
         out = np.tanh(np.copy(x))
         cache = x
@@ -55,7 +78,7 @@ class Tanh(ActivationFunction):
 #######################################################################
 #                            Sigmoid                                  #
 #######################################################################
-class Sigmoid(ActivationFunction):
+class Sigmoid(Activation):
     def sigmoid(self, x: np.array):
         return 1 / (1 + np.exp(-x))
 
