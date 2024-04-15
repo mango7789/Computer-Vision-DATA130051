@@ -1,6 +1,6 @@
 from __init__ import *
-from linear_layer import *
-from loss import *
+from linear_layer import Linear
+from loss import Loss
 
 class FullConnectNet:
 
@@ -21,11 +21,13 @@ class FullConnectNet:
         Inputs:
         - hidden_dims: A list of integers giving the size of each
           hidden layer.
+		    - types: A list of strings giving the type of each activation function.
         - input_dim: An integer giving the size of the input.
         - num_classes: An integer giving the number of classes to classify.
         - reg: Scalar giving L2 regularization strength.
         - weight_scale: Scalar giving the standard deviation for random
           initialization of the weights.
+        - loss: The loss function to be used.
         - dtype: A numpy data type object; all computations will be
           performed using this datatype.
         """
@@ -37,15 +39,18 @@ class FullConnectNet:
         # only use one type of activation function
         if len(type) == 1 and self.num_layers > 2:
             types = types * (self.num_layers - 1)
-
-        self.params['W1'] = np.randn(input_dim, hidden_dims[0], dtype=dtype) * weight_scale
+        # unmatching number of activation functions and hidden layers
+        elif len(type) != 1 and len(type) != self.num_layers - 1:
+            raise ValueError("The number of activation functions should be 1 or the same as the number of hidden layers minus 1.") 
+        
+        self.params['W1'] = np.random.randn(input_dim, hidden_dims[0], dtype=dtype) * weight_scale
         self.params['b1'] = np.zeros(hidden_dims[0], dtype=dtype)
         self.params['A1'] = types[0]
         for i in range(2, self.num_layers):
-            self.params[f'W{i}'] = np.randn(hidden_dims[i-2], hidden_dims[i-1], dtype=dtype) * weight_scale
+            self.params[f'W{i}'] = np.random.randn(hidden_dims[i-2], hidden_dims[i-1], dtype=dtype) * weight_scale
             self.params[f'b{i}'] = np.zeros(hidden_dims[i-1], dtype=dtype)
             self.params[f'A{i}'] = types[i-1]
-        self.params[f'W{self.num_layers}'] = np.randn(hidden_dims[self.num_layers-2], num_classes, dtype=dtype) * weight_scale
+        self.params[f'W{self.num_layers}'] = np.random.randn(hidden_dims[self.num_layers-2], num_classes, dtype=dtype) * weight_scale
         self.params[f'b{self.num_layers}'] = np.zeros(num_classes, dtype=dtype)
         self.params['loss'] = loss
 
@@ -84,7 +89,7 @@ class FullConnectNet:
 
         # add regularization losses
         for i in range(1, self.num_layers + 1):
-            loss += self.reg * np.sum(self.params[f'W{i}'] ** 2)    
+            loss += self.reg * np.sum(self.params[f'W{i}'] ** 2)
 
         # backward pass for the fully-connected net. Store the loss in the loss variable and gradients in the grads dictionary
         dh, grads[f'W{self.num_layers}'], grads[f'b{self.num_layers}'] = Linear.backward(dout, cache)
@@ -92,7 +97,7 @@ class FullConnectNet:
         for j in range(self.num_layers - 1, 0, -1):
             dh, grads[f'W{j}'], grads[f'b{j}'] = Linear_Activation.backward(dh, activation_caches[j])
             grads[f'W{j}'] += 2 * self.reg * self.params[f'W{j}']
-            
+
         return loss, grads
 
     def save(self, path: str):
@@ -119,7 +124,7 @@ class FullConnectNet:
 
         Inputs:
         - path: The file name of the zipped model parmeters file.
-        - dtype: A numpy datatype object; all parameters in the model parameters file will 
+        - dtype: A numpy datatype object; all parameters in the model parameters file will
           be converted to this datatype.
         """
         save_params = np.load(os.path.join('model', path))

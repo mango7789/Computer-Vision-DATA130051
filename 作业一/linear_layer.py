@@ -1,5 +1,5 @@
 from __init__ import *
-from activation import *
+from activation_func import Activation
 
 class Linear:
     @staticmethod
@@ -57,6 +57,7 @@ class Linear_Activation:
         Inputs:
         - x: Input to the linear layer
         - w, b: Weights for the linear layer
+        - type: The activation function to use
         Returns a tuple of:
         - out: Output from the activation function
         - cache: Object to give to the backward pass

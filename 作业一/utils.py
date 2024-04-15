@@ -1,9 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import math
+from __init__ import *
 
 def plot_stats(stat_dict):
-    # Plot the loss function and train / validation accuracies
+    # plot the loss function and train / validation accuracies
     plt.subplot(1, 2, 1)
     plt.plot(stat_dict['loss_history'], 'o')
     plt.title('Loss history')
@@ -15,7 +13,7 @@ def plot_stats(stat_dict):
     plt.plot(stat_dict['val_acc_history'], 'o-', label='val')
     plt.title('Classification accuracy history')
     plt.xlabel('Epoch')
-    plt.ylabel('Clasification accuracy')
+    plt.ylabel('Classification accuracy')
     plt.legend()
 
     plt.gcf().set_size_inches(14, 4)
@@ -24,7 +22,7 @@ def plot_stats(stat_dict):
 
 def visualize_grid(Xs, ubound=255.0, padding=1):
     """
-    Reshape a 4D tensor of image data to a grid for easy visualization.
+    Reshape a 4D array of image data to a grid for easy visualization.
 
     Inputs:
     - Xs: Data of shape (N, H, W, C)
@@ -36,7 +34,7 @@ def visualize_grid(Xs, ubound=255.0, padding=1):
     grid_size = int(math.ceil(math.sqrt(N)))
     grid_height = H * grid_size + padding * (grid_size - 1)
     grid_width = W * grid_size + padding * (grid_size - 1)
-    grid = np.zeros((grid_height, grid_width, C), device=Xs.device)
+    grid = np.zeros((grid_height, grid_width, C))
     next_idx = 0
     y0, y1 = 0, H
     for y in range(grid_size):
@@ -54,11 +52,13 @@ def visualize_grid(Xs, ubound=255.0, padding=1):
     return grid
 
 
-# Visualize the weights of the network
 def show_net_weights(net):
+    """
+    Visualize the weights of the network
+    """
     W1 = net.params['W1']
-    W1 = W1.reshape(3, 32, 32, -1).transpose(0, 3)
-    plt.imshow(visualize_grid(W1, padding=3).astype(np.uint8).cpu())
+    W1 = np.transpose(W1.reshape(3, 28, 28, -1), (3, 1, 2, 0))
+    plt.imshow(visualize_grid(W1, padding=3).astype(np.uint8))
     plt.gca().axis('off')
     plt.show()
 
@@ -69,14 +69,14 @@ def plot_acc_curves(stat_dict):
         plt.plot(single_stats['train_acc_history'], label=str(key))
     plt.title('Train accuracy history')
     plt.xlabel('Epoch')
-    plt.ylabel('Clasification accuracy')
+    plt.ylabel('Classification accuracy')
 
     plt.subplot(1, 2, 2)
     for key, single_stats in stat_dict.items():
         plt.plot(single_stats['val_acc_history'], label=str(key))
     plt.title('Validation accuracy history')
     plt.xlabel('Epoch')
-    plt.ylabel('Clasification accuracy')
+    plt.ylabel('Classification accuracy')
     plt.legend()
 
     plt.gcf().set_size_inches(14, 5)

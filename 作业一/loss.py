@@ -1,16 +1,21 @@
 from __init__ import *
 
 class Loss:
+    """
+    The loss functions defined below directly implement the forward and backward passes, so they're not
+    wrapped in a subclass like what I did in the `Activation` class.
+    """
+    @classmethod
     def __new__(cls, loss: str):
         loss = loss.lower()
-        if loss == 'ce' or 'cross_entrophy':
+        if loss in ['ce', 'cross_entrophy']:
             return cross_entrophy
-        elif loss == 'softmax' or 'softmax_loss':
+        elif loss in ['softmax', 'softmax_loss']:
             return softmax_loss
-        elif loss == 'svm' or 'svm_loss':
+        elif loss in ['svm', 'svm_loss']:
             return svm_loss
         else:
-            raise ValueError("Unknown loss function: {}, please choose from ['ce', 'softmax', 'svm']".format(loss))
+            raise ValueError("Unknown loss function: {}, please choose one from ['cross_entrophy', 'softmax', 'svm']".format(loss))
 
 def cross_entrophy(x: np.array, y: np.array):
     """
@@ -25,11 +30,6 @@ def cross_entrophy(x: np.array, y: np.array):
     - dx: Gradient of the loss with respect to x.
     """
     N = x.shape[0]
-    
-    # add epsilon to avoid underflow / overflow during logarithm calculations
-    epsilon = 1e-15
-    x = np.clip(x, epsilon, 1 - epsilon)
-    
     log_probs = -np.log(x[np.arange(N), y])
     loss = np.mean(log_probs)
     dx = np.copy(x)  

@@ -180,25 +180,12 @@ class Solver:
             "train_acc_history": self.train_acc_history,
             "val_acc_history": self.val_acc_history,
         }
-        filename = "%s_epoch_%d.pkl" % (self.checkpoint_name, self.epoch)
+        filename = "%s_epoch_%d.npy" % (self.checkpoint_name, self.epoch)
         if self.verbose:
             print('Saving checkpoint to "%s"' % filename)
         with open(filename, "wb") as f:
-            np.savez(checkpoint, f)
+            np.savez(**checkpoint, f)
 
-    @staticmethod
-    def sgd(w, dw, config=None):
-        """
-        Performs vanilla stochastic gradient descent.
-        config format:
-        - learning_rate: Scalar learning rate.
-        """
-        if config is None:
-            config = {}
-        config.setdefault("learning_rate", 1e-2)
-
-        w -= config["learning_rate"] * dw
-        return w, config
 
     def check_accuracy(self, X, y, num_samples=None, batch_size=100):
         """

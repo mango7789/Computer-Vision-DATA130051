@@ -2,9 +2,9 @@ import urllib.request
 import gzip
 import argparse
 import os
-from full_connect_network import *
-from optimization import *
-from solver import *
+from full_connect_network import FullConnectNet
+from optimization import Optim
+from solver import Solver
 from utils import *
 
 def download_minist():
@@ -83,7 +83,7 @@ if __name__ == "__main__":
         weight_scale=args.weight_scale,
         loss=args.loss
     )
-    solver = Solver(
+    three_layer_net = Solver(
         model=three_layer_model, 
         data=data,
         epochs=args.epochs,
@@ -93,4 +93,4 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
     )
 
-    solver.train() 
+    three_layer_net.train() 
