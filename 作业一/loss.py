@@ -1,5 +1,17 @@
 from __init__ import *
 
+class Loss:
+    def __new__(cls, loss: str):
+        loss = loss.lower()
+        if loss == 'ce' or 'cross_entrophy':
+            return cross_entrophy
+        elif loss == 'softmax' or 'softmax_loss':
+            return softmax_loss
+        elif loss == 'svm' or 'svm_loss':
+            return svm_loss
+        else:
+            raise ValueError("Unknown loss function: {}, please choose from ['ce', 'softmax', 'svm']".format(loss))
+
 def cross_entrophy(x: np.array, y: np.array):
     """
     Computes the categorical cross-entropy loss and gradient.
