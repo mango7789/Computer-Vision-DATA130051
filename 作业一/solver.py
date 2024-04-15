@@ -1,5 +1,5 @@
 from __init__ import *
-from optimization import Optim
+from optimization import get_optim_func
 
 class Solver:
     """
@@ -124,8 +124,7 @@ class Solver:
 
     def _reset(self):
         """
-        Set up some book-keeping variables for optimization. Don't call this
-        manually.
+        Set up some book-keeping variables for optimization.
         """
         # Set up some variables for book-keeping
         self.epoch = 0
@@ -141,14 +140,13 @@ class Solver:
             d = {k: v for k, v in self.optim_config.items()}
             self.optim_configs[p] = d
 
-    def _step(self):
+    def step(self):
         """
-        Make a single gradient update. This is called by train() and should not
-        be called manually.
+        Make a single gradient update.
         """
         # Make a minibatch of training data
         num_train = self.X_train.shape[0]
-        batch_mask = np.random.choice(num_train, replace=False)[: self.batch_size]
+        batch_mask = np.random.choice(np.arange(num_train), self.batch_size, replace=False)
         X_batch = self.X_train[batch_mask]
         y_batch = self.y_train[batch_mask]
 
@@ -158,9 +156,11 @@ class Solver:
 
         # Perform a parameter update
         for p, w in self.model.params.items():
+            if 'A' in p or 'loss' in p:
+                continue
             dw = grads[p]
             config = self.optim_configs[p]
-            next_w, next_config = Optim(self.update_rule)(w, dw, config)
+            next_w, next_config = get_optim_func(self.update_rule)(w, dw, config)
             self.model.params[p] = next_w
             self.optim_configs[p] = next_config
 
@@ -184,7 +184,7 @@ class Solver:
         if self.verbose:
             print('Saving checkpoint to "%s"' % filename)
         with open(filename, "wb") as f:
-            np.savez(**checkpoint, f)
+            np.savez(f, **checkpoint)
 
 
     def check_accuracy(self, X, y, num_samples=None, batch_size=100):
@@ -205,12 +205,11 @@ class Solver:
         # Maybe subsample the data
         N = X.shape[0]
         if num_samples is not None and N > num_samples:
-            mask = np.randperm(N, device=self.device)[:num_samples]
+            mask = np.random.choice(np.arange(N), num_samples, replace=False)
             N = num_samples
             X = X[mask]
             y = y[mask]
-        X = X.to(self.device)
-        y = y.to(self.device)
+
 
         # Compute predictions in batches
         num_batches = N // batch_size
@@ -223,8 +222,8 @@ class Solver:
             scores = self.model.loss(X[start:end])
             y_pred.append(np.argmax(scores, axis=1))
 
-        y_pred = np.cat(y_pred)
-        acc = (y_pred == y).to(np.float).mean()
+        y_pred = np.concatenate(y_pred)
+        acc = np.mean(y_pred == y)
 
         return acc.item()
 
@@ -257,7 +256,7 @@ class Solver:
                     break
             prev_time = cur_time
 
-            self._step()
+            self.step()
 
             # Maybe print training loss
             if self.verbose and t % self.print_every == 0:
@@ -307,7 +306,10 @@ class Solver:
                     self.best_val_acc = val_acc
                     self.best_params = {}
                     for k, v in self.model.params.items():
-                        self.best_params[k] = v.clone()
+                        if 'A' in k or 'loss' in k:
+                            self.best_params[k] = v
+                        else:
+                            self.best_params[k] = np.copy(v)
 
         # At the end of training swap the best params into the model
         if return_best_params:

@@ -1,21 +1,15 @@
 from __init__ import *
 
-class Loss:
-    """
-    The loss functions defined below directly implement the forward and backward passes, so they're not
-    wrapped in a subclass like what I did in the `Activation` class.
-    """
-    @classmethod
-    def __new__(cls, loss: str):
-        loss = loss.lower()
-        if loss in ['ce', 'cross_entrophy']:
-            return cross_entrophy
-        elif loss in ['softmax', 'softmax_loss']:
-            return softmax_loss
-        elif loss in ['svm', 'svm_loss']:
-            return svm_loss
-        else:
-            raise ValueError("Unknown loss function: {}, please choose one from ['cross_entrophy', 'softmax', 'svm']".format(loss))
+def get_loss_func(loss: str) -> Callable:
+	loss = loss.lower()
+	if loss in ['ce', 'cross_entrophy']:
+		return cross_entrophy
+	elif loss in ['softmax', 'softmax_loss']:
+		return softmax_loss
+	elif loss in ['svm', 'svm_loss']:
+		return svm_loss
+	else:
+		raise ValueError("Unknown loss function: {}, please choose one from ['cross_entrophy', 'softmax', 'svm']".format(loss))
 
 def cross_entrophy(x: np.array, y: np.array):
     """
@@ -30,7 +24,8 @@ def cross_entrophy(x: np.array, y: np.array):
     - dx: Gradient of the loss with respect to x.
     """
     N = x.shape[0]
-    log_probs = -np.log(x[np.arange(N), y])
+    epsilon = 1e-13
+    log_probs = -np.log(np.clip(x[np.arange(N), y], a_min=epsilon, a_max=1-epsilon))
     loss = np.mean(log_probs)
     dx = np.copy(x)  
     dx[np.arange(N), y] -= 1  
@@ -52,7 +47,7 @@ def softmax_loss(x: np.array, y: np.array):
     """
     # use shifted_logits to avoid underflow / overflow
     shifted_logits = x - np.max(x, axis=1, keepdims=True)    
-    Z = np.sum(np.exp(shifted_logits), axis=1, keepdim=True)
+    Z = np.sum(np.exp(shifted_logits), axis=1, keepdims=True)
     log_probs = shifted_logits - np.log(Z)
 
     probs = np.exp(log_probs)

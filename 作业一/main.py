@@ -3,7 +3,7 @@ import gzip
 import argparse
 import os
 from full_connect_network import FullConnectNet
-from optimization import Optim
+from optimization import get_optim_func
 from solver import Solver
 from utils import *
 
@@ -25,14 +25,12 @@ def download_minist():
     test_images = download_and_extract_data(urls["test_images"], os.path.join("data", "t10k-images-idx3-ubyte.gz"), download)
     test_labels = download_and_extract_data(urls["test_labels"], os.path.join("data", "t10k-labels-idx1-ubyte.gz"), download)
 
-    train_images = train_images.reshape(-1, 28 * 28)
-    test_images = test_images.reshape(-1, 28 * 28)
 
     data = {
-        'train_images': train_images,
-        'train_labels': train_labels,
-        'test_images': test_images,
-        'test_labels': test_labels
+        'X_train': train_images,
+        'y_train': train_labels,
+        'X_val': test_images,
+        'y_val': test_labels
     }
 
     return data
@@ -87,7 +85,7 @@ if __name__ == "__main__":
         model=three_layer_model, 
         data=data,
         epochs=args.epochs,
-        update_rule=Optim(args.update_rule), 
+        update_rule=get_optim_func(args.update_rule), 
         optim_config=args.optim_config, 
         lr_decay=args.lr_decay, 
         batch_size=args.batch_size,

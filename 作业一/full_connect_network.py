@@ -1,14 +1,14 @@
 from __init__ import *
-from linear_layer import Linear
-from loss import Loss
+from linear_layer import Linear, Linear_Activation
+from loss import get_loss_func
 
 class FullConnectNet:
 
     def __init__(
             self,
             hidden_dims: List[int],
-            types: List[Literal['relu', 'tanh', 'sigmoid']],
-            input_dim: int=3*28*28,
+            types: List[Literal['relu', 'tanh', 'sigmoid']] | str,
+            input_dim: int=1*28*28,
             num_classes: int=10,
             reg: float=0.0,
             weight_scale: float=1e-2,
@@ -37,20 +37,21 @@ class FullConnectNet:
         self.params = {}
 
         # only use one type of activation function
-        if len(type) == 1 and self.num_layers > 2:
-            types = types * (self.num_layers - 1)
+        if len(types) == 1 and self.num_layers > 2:
+            types = types[0] if isinstance(types, list) else types
+            types = [types for _ in range(self.num_layers - 1)]
         # unmatching number of activation functions and hidden layers
-        elif len(type) != 1 and len(type) != self.num_layers - 1:
+        elif len(types) != 1 and len(types) != self.num_layers - 1:
             raise ValueError("The number of activation functions should be 1 or the same as the number of hidden layers minus 1.") 
         
-        self.params['W1'] = np.random.randn(input_dim, hidden_dims[0], dtype=dtype) * weight_scale
+        self.params['W1'] = np.random.randn(input_dim, hidden_dims[0]).astype(dtype) * weight_scale
         self.params['b1'] = np.zeros(hidden_dims[0], dtype=dtype)
         self.params['A1'] = types[0]
         for i in range(2, self.num_layers):
-            self.params[f'W{i}'] = np.random.randn(hidden_dims[i-2], hidden_dims[i-1], dtype=dtype) * weight_scale
+            self.params[f'W{i}'] = np.random.randn(hidden_dims[i-2], hidden_dims[i-1]).astype(dtype) * weight_scale
             self.params[f'b{i}'] = np.zeros(hidden_dims[i-1], dtype=dtype)
             self.params[f'A{i}'] = types[i-1]
-        self.params[f'W{self.num_layers}'] = np.random.randn(hidden_dims[self.num_layers-2], num_classes, dtype=dtype) * weight_scale
+        self.params[f'W{self.num_layers}'] = np.random.randn(hidden_dims[self.num_layers-2], num_classes).astype(dtype) * weight_scale
         self.params[f'b{self.num_layers}'] = np.zeros(num_classes, dtype=dtype)
         self.params['loss'] = loss
 
@@ -84,8 +85,11 @@ class FullConnectNet:
             h, activation_caches[i] = Linear_Activation.forward(h, self.params[f'W{i}'], self.params[f'b{i}'], self.params[f'A{i}'])
         scores, cache = Linear.forward(h, self.params[f'W{self.num_layers}'], self.params[f'b{self.num_layers}'])
 
+        if y is None:
+            return scores
+
         loss, grads = 0.0, {}
-        loss, dout = self.params['loss'](scores, y)
+        loss, dout = get_loss_func(self.params['loss'])(scores, y)
 
         # add regularization losses
         for i in range(1, self.num_layers + 1):
@@ -95,7 +99,7 @@ class FullConnectNet:
         dh, grads[f'W{self.num_layers}'], grads[f'b{self.num_layers}'] = Linear.backward(dout, cache)
         grads[f'W{self.num_layers}'] += 2 * self.reg * self.params[f'W{self.num_layers}']
         for j in range(self.num_layers - 1, 0, -1):
-            dh, grads[f'W{j}'], grads[f'b{j}'] = Linear_Activation.backward(dh, activation_caches[j])
+            dh, grads[f'W{j}'], grads[f'b{j}'] = Linear_Activation.backward(dh, activation_caches[j], self.params[f'A{j}'])
             grads[f'W{j}'] += 2 * self.reg * self.params[f'W{j}']
 
         return loss, grads

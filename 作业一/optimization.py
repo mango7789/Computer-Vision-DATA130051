@@ -1,24 +1,22 @@
 from __init__ import *
 
-class Optim:
-    @classmethod
-    def __new__(cls, method: str) -> Callable:
-        """
-        Create a new optimization method based on the input of method. 
-        Inputs:
-        - method: should be in ['sgd', 'sgd_momentum', 'rmsprop', 'adam'](ignore case).
-        """
-        method = method.lower()
-        if method == 'sgd':
-            return sgd
-        elif method == 'sgd_momentum':
-            return sgd_momentum
-        elif method == 'rmsprop':
-            return rmsprop
-        elif method == 'adam':
-            return adam
-        else:
-            raise ValueError("Unknown optimization method: {}, please choose from ['sgd', 'sgd_momentum', 'rmsprop', 'adam']".format(method))
+def get_optim_func(method: str):
+    """
+    Create a new optimization method based on the input of method. 
+    Inputs:
+    - method: should be in ['sgd', 'sgd_momentum', 'rmsprop', 'adam'](ignore case).
+    """
+    method = method.lower()
+    if method == 'sgd':
+        return sgd
+    elif method == 'sgd_momentum':
+        return sgd_momentum
+    elif method == 'rmsprop':
+        return rmsprop
+    elif method == 'adam':
+        return adam
+    else:
+        raise ValueError("Unknown optimization method: {}, please choose from ['sgd', 'sgd_momentum', 'rmsprop', 'adam']".format(method))
 
 def sgd(w: np.array, dw: np.array, config: Dict=None):
     """
