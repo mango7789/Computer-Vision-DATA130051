@@ -13,5 +13,10 @@ Three Layer Net
 ├──full_connect_network.py  # N层神经网络分类器
 ├──utils.py                 # 可视化神经网络
 ├──main.py                  # 主函数，定义parser
-└──readme.md                # readme
+├──data                     # 数据集
+    ├──train-images-idx3-ubyte.gz   # 训练图片
+    ├──train-labels-idx1-ubyte.gz   # 训练标签
+    ├──t10k-images-idx3-ubyte.gz    # 测试图片
+    └──t10k-labels-idx1-ubyte.gz    # 测试标签
+└──readme.md                # readme文件
 ```

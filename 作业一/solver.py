@@ -1,6 +1,5 @@
 from __init__ import *
-import time
-
+from optimization import Optim
 
 class Solver:
     """
@@ -101,7 +100,7 @@ class Solver:
         self.y_val = data["y_val"]
 
         # Unpack keyword arguments
-        self.update_rule = kwargs.pop("update_rule", self.sgd)
+        self.update_rule = kwargs.pop("update_rule", 'sgd')
         self.optim_config = kwargs.pop("optim_config", {})
         self.lr_decay = kwargs.pop("lr_decay", 1.0)
         self.batch_size = kwargs.pop("batch_size", 100)
@@ -149,9 +148,9 @@ class Solver:
         """
         # Make a minibatch of training data
         num_train = self.X_train.shape[0]
-        batch_mask = np.randperm(num_train)[: self.batch_size]
-        X_batch = self.X_train[batch_mask].to(self.device)
-        y_batch = self.y_train[batch_mask].to(self.device)
+        batch_mask = np.random.choice(num_train, replace=False)[: self.batch_size]
+        X_batch = self.X_train[batch_mask]
+        y_batch = self.y_train[batch_mask]
 
         # Compute loss and gradient
         loss, grads = self.model.loss(X_batch, y_batch)
@@ -161,7 +160,7 @@ class Solver:
         for p, w in self.model.params.items():
             dw = grads[p]
             config = self.optim_configs[p]
-            next_w, next_config = self.update_rule(w, dw, config)
+            next_w, next_config = Optim(self.update_rule)(w, dw, config)
             self.model.params[p] = next_w
             self.optim_configs[p] = next_config
 

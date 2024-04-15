@@ -38,6 +38,14 @@ def download_minist():
     return data
 
 def download_and_extract_data(url, file_name, download=True):
+    """
+    Download the date from the given url and load it as a numpy array with reshape.
+
+    Input:
+    - url: the url of the dataset
+    - file_name: the storage path of the dataset
+    - download: whether to download the dataset, defaule is True
+    """
     if download:
         urllib.request.urlretrieve(url, file_name)
 
@@ -56,18 +64,25 @@ if __name__ == "__main__":
     parser.add_argument("--activation", type=str, nargs='+', required=True, help="The type(s) of activation functions.")
     parser.add_argument("--reg", type=float, default=0.0, help="The regularization strength, default is 0.")
     parser.add_argument("--weight_scale", type=float, default=1e-2, help="The weight initialization scale, default is 0.01.")
+    parser.add_argument("--loss", type=str, default="cross_entropy", help="The loss function, default is cross-entrophy.")
+
     # parameters of the solver
     parser.add_argument("--epochs", type=int, default=10, help="The number of training epochs, default is 10.")
     parser.add_argument("--update_rule", type=str, default="sgd", help="The optimization method, default is sgd.")
     parser.add_argument("--optim_config", type=dict, default={}, help="The optimization configuration.")
     parser.add_argument("--lr_decay", type=float, default=1.0, help="The learning rate decay, default is 1.0.")
     parser.add_argument("--batch_size", type=int, default=100, help="The batch size, default is 100.")
-    parser.add_argument("--loss", type=str, default="cross_entropy", help="The loss function, default is cross-entrophy.")
 
     args = parser.parse_args()
 
     data = download_minist()
-    three_layer_model = FullConnectNet(hidden_dims=args.hidden_dims, types=args.activation, reg=args.reg, weight_scale=args.weight_scale)
+    three_layer_model = FullConnectNet(
+        hidden_dims=args.hidden_dims, 
+        types=args.activation, 
+        reg=args.reg, 
+        weight_scale=args.weight_scale,
+        loss=args.loss
+    )
     solver = Solver(
         model=three_layer_model, 
         data=data,
@@ -76,7 +91,6 @@ if __name__ == "__main__":
         optim_config=args.optim_config, 
         lr_decay=args.lr_decay, 
         batch_size=args.batch_size,
-        loss=Loss(args.loss)
     )
 
     solver.train() 

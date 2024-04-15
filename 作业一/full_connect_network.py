@@ -12,6 +12,7 @@ class FullConnectNet:
             num_classes: int=10,
             reg: float=0.0,
             weight_scale: float=1e-2,
+            loss: str='cross_entrophy',
             dtype: np.dtype=np.float64
         ):
         """
@@ -46,8 +47,9 @@ class FullConnectNet:
             self.params[f'A{i}'] = types[i-1]
         self.params[f'W{self.num_layers}'] = np.randn(hidden_dims[self.num_layers-2], num_classes, dtype=dtype) * weight_scale
         self.params[f'b{self.num_layers}'] = np.zeros(num_classes, dtype=dtype)
+        self.params['loss'] = loss
 
-    def loss(self, X: np.array, y: np.array=None, loss_fun: Callable=cross_entrophy):
+    def loss(self, X: np.array, y: np.array=None):
         """
         Compute loss and gradient for the fully-connected net.
 
@@ -78,7 +80,7 @@ class FullConnectNet:
         scores, cache = Linear.forward(h, self.params[f'W{self.num_layers}'], self.params[f'b{self.num_layers}'])
 
         loss, grads = 0.0, {}
-        loss, dout = loss_fun(scores, y)
+        loss, dout = self.params['loss'](scores, y)
 
         # add regularization losses
         for i in range(1, self.num_layers + 1):
@@ -94,18 +96,33 @@ class FullConnectNet:
         return loss, grads
 
     def save(self, path: str):
+        """
+        Save the model parameters in a `.npy` file in the `model` directory.
+
+        Inputs:
+        - path: The file name of the zipped model parmeters file.
+        """
         save_params = {
             'reg': self.reg,
             'num_layers': self.num_layers,
             'dtype': self.dtype,
             'params': self.params
         }
-
+        os.makedirs('model', exist_ok=True)
+        path = os.path.join('model', path)
         np.savez(path, **save_params)
         print("Model has been saved in {}".format(path))
 
     def load(self, path: str, dtype: np.dtype=np.float64):
-        save_params = np.load(path)
+        """
+        Load the model parameters from a `.npy` file in the `model` directory.
+
+        Inputs:
+        - path: The file name of the zipped model parmeters file.
+        - dtype: A numpy datatype object; all parameters in the model parameters file will 
+          be converted to this datatype.
+        """
+        save_params = np.load(os.path.join('model', path))
         self.reg = save_params['reg']
         self.num_layers = save_params['num_layers']
         self.dtype = save_params['dtype']
