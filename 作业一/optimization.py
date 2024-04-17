@@ -26,7 +26,7 @@ def sgd(w: np.array, dw: np.array, config: Dict=None):
     """
     if config is None:
         config = {}
-    config.setdefault('learning_rate', 1e-2)
+    config.setdefault('learning_rate', 1e-3)
 
     w -= config['learning_rate'] * dw
 
@@ -44,7 +44,7 @@ def sgd_momentum(w: np.array, dw: np.array, config: Dict=None):
     """
     if config is None:
         config = {}
-    config.setdefault('learning_rate', 1e-2)
+    config.setdefault('learning_rate', 1e-3)
     config.setdefault('momentum', 0.9)
 
     v = config.get('velocity', np.zeros_like(w))
@@ -68,7 +68,7 @@ def rmsprop(w: np.array, dw: np.array, config: Dict=None):
     """
     if config is None:
         config = {}
-    config.setdefault('learning_rate', 1e-2)
+    config.setdefault('learning_rate', 1e-3)
     config.setdefault('decay_rate', 0.99)
     config.setdefault('epsilon', 1e-8)
     config.setdefault('cache', np.zeros_like(w))

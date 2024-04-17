@@ -1,5 +1,67 @@
 from __init__ import *
 
+def download_minist() -> Dict:
+    """
+    Download the minist dataset from the website and save them in the local directory `data` .
+
+    Return: 
+    - data: a dictionary containing the keys ["X_train", "y_train", "X_val", "y_val"] and corresponding
+      images and labels.
+    """
+    urls = {
+        "train_images": "http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz",
+        "train_labels": "http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz",
+        "test_images": "http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz",
+        "test_labels": "http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz"
+    }
+
+    download = not os.path.exists('data')
+
+    if download:
+        os.makedirs('data')
+
+    train_images = download_and_extract_data(urls["train_images"], os.path.join("data", "train-images-idx3-ubyte.gz"), download)
+    train_labels = download_and_extract_data(urls["train_labels"], os.path.join("data", "train-labels-idx1-ubyte.gz"), download)
+    test_images = download_and_extract_data(urls["test_images"], os.path.join("data", "t10k-images-idx3-ubyte.gz"), download)
+    test_labels = download_and_extract_data(urls["test_labels"], os.path.join("data", "t10k-labels-idx1-ubyte.gz"), download)
+
+    data = {
+        'X_train': train_images,
+        'y_train': train_labels,
+        'X_val': test_images,
+        'y_val': test_labels
+    }
+
+    return data
+
+def download_and_extract_data(url: str, file_name: str, download=True):
+    """
+    Download the data from the given url, load it as a numpy array(matrix) and reshape it as size 28*28.
+
+    Input:
+    - url: the url of the dataset
+    - file_name: the storage path of the dataset
+    - download: whether to download the dataset, defaule is True
+    """
+    if download:
+        with tqdm(unit='B', unit_scale=True, unit_divisor=1024, desc=file_name) as progress_bar:
+            def reporthook(block_num, block_size, total_size):
+                if total_size > 0:
+                    progress_bar.total = total_size
+                    progress_bar.update(block_size)
+            
+            urllib.request.urlretrieve(url, file_name, reporthook=reporthook)
+    
+    with gzip.open(file_name, 'rb') as f:
+        if 'images' in file_name:
+            data = np.frombuffer(f.read(), dtype=np.uint8, offset=16)
+            data = data.reshape((-1, 28, 28))
+        else:
+            data = np.frombuffer(f.read(), dtype=np.uint8, offset=8)
+    return data
+    
+    return data
+
 def plot_stats(stat_dict):
     # plot the loss function and train / validation accuracies
     plt.subplot(1, 2, 1)

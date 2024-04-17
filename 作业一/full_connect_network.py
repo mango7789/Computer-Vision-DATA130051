@@ -11,7 +11,7 @@ class FullConnectNet:
             input_dim: int=1*28*28,
             num_classes: int=10,
             reg: float=0.0,
-            weight_scale: float=1e-2,
+            weight_scale: float=0.01,
             loss: str='cross_entrophy',
             dtype: np.dtype=np.float64
         ):
@@ -139,7 +139,7 @@ class FullConnectNet:
 
         if dtype != self.dtype:
             for p in self.params:
-                if p[0] != 'A':
+                if p[0] != 'A' and p != 'loss':
                     self.params[p] = self.params[p].astype(dtype)
 
         print("Successfully load model file: {}".format(path))

@@ -1,15 +1,15 @@
 from __init__ import *
 
 def get_loss_func(loss: str) -> Callable:
-	loss = loss.lower()
-	if loss in ['ce', 'cross_entrophy']:
-		return cross_entrophy
-	elif loss in ['softmax', 'softmax_loss']:
-		return softmax_loss
-	elif loss in ['svm', 'svm_loss']:
-		return svm_loss
-	else:
-		raise ValueError("Unknown loss function: {}, please choose one from ['cross_entrophy', 'softmax', 'svm']".format(loss))
+    loss = loss.lower()
+    if loss in ['ce', 'cross_entrophy']:
+        return cross_entrophy
+    elif loss in ['softmax', 'softmax_loss']:
+        return softmax_loss
+    elif loss in ['svm', 'svm_loss']:
+        return svm_loss
+    else:
+        raise ValueError("Unknown loss function: {}, please choose one from ['cross_entrophy', 'softmax', 'svm']".format(loss))
 
 def cross_entrophy(x: np.array, y: np.array):
     """
@@ -24,8 +24,8 @@ def cross_entrophy(x: np.array, y: np.array):
     - dx: Gradient of the loss with respect to x.
     """
     N = x.shape[0]
-    epsilon = 1e-13
-    log_probs = -np.log(np.clip(x[np.arange(N), y], a_min=epsilon, a_max=1-epsilon))
+    epsilon = 1e-6
+    log_probs = -np.log(np.clip(x[np.arange(N), y], a_min=epsilon, a_max=1-epsilon)) # clip the array to avoid overflow / underflow
     loss = np.mean(log_probs)
     dx = np.copy(x)  
     dx[np.arange(N), y] -= 1  
@@ -72,7 +72,7 @@ def svm_loss(x, y):
     """
     N = x.shape[0]
     correct_class_scores = x[np.arange(N), y]
-    margins = np.clip(x - correct_class_scores[:, None] + 1.0, a_min=0.)
+    margins = np.maximum(x - correct_class_scores[:, None] + 1.0, 0)
     margins[np.arange(N), y] = 0.
     loss = np.sum(margins) / N
     num_pos = np.sum(margins > 0, axis=1)
