@@ -6,8 +6,6 @@ def get_loss_func(loss: str) -> Callable:
         return cross_entrophy
     elif loss in ['softmax', 'softmax_loss']:
         return softmax_loss
-    elif loss in ['svm', 'svm_loss']:
-        return svm_loss
     else:
         raise ValueError("Unknown loss function: {}, please choose one from ['cross_entrophy', 'softmax', 'svm']".format(loss))
 
@@ -58,26 +56,3 @@ def softmax_loss(x: np.array, y: np.array):
     dx /= N
     return loss, dx
 
-def svm_loss(x, y):
-    """
-    Computes the loss and gradient using for multiclass SVM classification.
-    Inputs:
-    - x: Input data, of shape (N, C) where x[i, j] is the score for the jth
-      class for the ith input.
-    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and
-      0 <= y[i] < C
-    Returns a tuple of:
-    - loss: Scalar giving the loss
-    - dx: Gradient of the loss with respect to x
-    """
-    N = x.shape[0]
-    correct_class_scores = x[np.arange(N), y]
-    margins = np.maximum(x - correct_class_scores[:, None] + 1.0, 0)
-    margins[np.arange(N), y] = 0.
-    loss = np.sum(margins) / N
-    num_pos = np.sum(margins > 0, axis=1)
-    dx = np.zeros_like(x)
-    dx[margins > 0] = 1.
-    dx[np.arange(N), y] -= num_pos.astype(dx.dtype)
-    dx /= N
-    return loss, dx

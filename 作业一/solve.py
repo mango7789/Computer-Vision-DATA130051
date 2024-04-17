@@ -104,7 +104,7 @@ class Solver:
         """
         N = self.X_train.shape[0]
         iter_per_epoch = max(N // self.batch_size, 1)
-        num_iter = 2 * self.num_epochs * iter_per_epoch
+        num_iter = self.num_epochs * iter_per_epoch
         start_time = time.time()
 
         for t in range(num_iter):

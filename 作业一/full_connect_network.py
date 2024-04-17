@@ -1,5 +1,5 @@
 from __init__ import *
-from linear_layer import Linear, Linear_Activation
+from linear_layer import Linear, LinearActivation
 from loss import get_loss_func
 
 class FullConnectNet:
@@ -82,7 +82,7 @@ class FullConnectNet:
         activation_caches = {}
         # forward pass for the full-connected net. Compute the class scores for X and storing them in the scores variable
         for i in range(1, self.num_layers):
-            h, activation_caches[i] = Linear_Activation.forward(h, self.params[f'W{i}'], self.params[f'b{i}'], self.params[f'A{i}'])
+            h, activation_caches[i] = LinearActivation.forward(h, self.params[f'W{i}'], self.params[f'b{i}'], self.params[f'A{i}'])
         scores, cache = Linear.forward(h, self.params[f'W{self.num_layers}'], self.params[f'b{self.num_layers}'])
 
         if y is None:
@@ -93,13 +93,13 @@ class FullConnectNet:
 
         # add regularization losses
         for i in range(1, self.num_layers + 1):
-            loss += self.reg * np.sum(self.params[f'W{i}'] ** 2)
+            loss += self.reg * np.linalg.norm(self.params[f'W{i}'], ord='fro')
 
         # backward pass for the fully-connected net. Store the loss in the loss variable and gradients in the grads dictionary
         dh, grads[f'W{self.num_layers}'], grads[f'b{self.num_layers}'] = Linear.backward(dout, cache)
         grads[f'W{self.num_layers}'] += 2 * self.reg * self.params[f'W{self.num_layers}']
         for j in range(self.num_layers - 1, 0, -1):
-            dh, grads[f'W{j}'], grads[f'b{j}'] = Linear_Activation.backward(dh, activation_caches[j], self.params[f'A{j}'])
+            dh, grads[f'W{j}'], grads[f'b{j}'] = LinearActivation.backward(dh, activation_caches[j], self.params[f'A{j}'])
             grads[f'W{j}'] += 2 * self.reg * self.params[f'W{j}']
 
         return loss, grads

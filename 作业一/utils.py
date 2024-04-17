@@ -60,8 +60,6 @@ def download_and_extract_data(url: str, file_name: str, download=True):
             data = np.frombuffer(f.read(), dtype=np.uint8, offset=8)
     return data
     
-    return data
-
 def plot_stats(stat_dict):
     # plot the loss function and train / validation accuracies
     plt.subplot(1, 2, 1)

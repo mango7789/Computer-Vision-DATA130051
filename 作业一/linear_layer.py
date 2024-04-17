@@ -48,7 +48,7 @@ class Linear:
         db = np.sum(dout, axis=0)
         return dx, dw, db
     
-class Linear_Activation:
+class LinearActivation:
     @staticmethod
     def forward(x: np.array, w: np.array, b: np.array, type: str):
         """

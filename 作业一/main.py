@@ -2,7 +2,7 @@ import argparse
 from full_connect_network import FullConnectNet
 from optimization import get_optim_func
 from solve import Solver
-from utils import *
+from utils import download_minist
 
 
 if __name__ == "__main__":
