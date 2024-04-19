@@ -17,6 +17,7 @@ class Solver:
         self.optim_config = kwargs.pop('optim_config', {})
         self.lr_decay = kwargs.pop('lr_decay', 1.0)
         self.num_epochs = kwargs.pop('num_epochs', 10)
+        self.iters = kwargs.pop('iters', 6000)
 
         # unpack arguments related to output of the solver
         self.print_iter = kwargs.pop('print_iter', 10)
@@ -102,9 +103,8 @@ class Solver:
         """
         Train the model based on the configuration in the Solver
         """
-        N = self.X_train.shape[0]
-        iter_per_epoch = max(N // self.batch_size, 1)
-        num_iter = self.num_epochs * iter_per_epoch
+        iter_per_epoch = max(self.iters // self.num_epochs, 1)
+        num_iter = self.iters
         start_time = time.time()
 
         for t in range(num_iter):
@@ -113,7 +113,7 @@ class Solver:
 
             # print the training loss
             if self.verbose and t % self.print_iter == 0:
-                print("(Time {:>6.2f} s; Iteration {:>4} / {:>4}) loss {:>7.6f}".format(
+                print("(Time {:>6.2f} s; Iteration {:>5} / {:>5}) loss {:>7.6f}".format(
                     time.time() - start_time,
                     t + 1,
                     num_iter, 
