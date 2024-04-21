@@ -1,4 +1,5 @@
 from __init__ import *
+from solve import Solver
 
 def download_minist() -> Dict:
     """
@@ -60,80 +61,43 @@ def download_and_extract_data(url: str, file_name: str, download=True):
             data = np.frombuffer(f.read(), dtype=np.uint8, offset=8)
     return data
     
-def plot_stats(stat_dict):
-    # plot the loss function and train / validation accuracies
-    plt.subplot(1, 2, 1)
-    plt.plot(stat_dict['loss_history'], 'o')
+def plot_stats_single(net: Solver, window_size: int=100):
+    """
+    Plot the loss function and train / validation accuracies for one single net.
+    """
+    plt.subplot(2, 1, 1)
+    # plt.plot(net.loss_hist, 'o', label='discrete loss')
+    plt.plot([sum(net.loss_hist[i:i+window_size])/window_size for i in range(len(net.loss_hist)-window_size)], 'red', label='moving average')
     plt.title('Loss history')
     plt.xlabel('Iteration')
     plt.ylabel('Loss')
+    plt.legend()
 
-    plt.subplot(1, 2, 2)
-    plt.plot(stat_dict['train_acc_history'], 'o-', label='train')
-    plt.plot(stat_dict['val_acc_history'], 'o-', label='val')
+    plt.subplot(2, 1, 2)
+    plt.plot(net.train_acc_hist, 'o-', label='train')
+    plt.plot(net.val_acc_hist, 'o-', label='val')
     plt.title('Classification accuracy history')
     plt.xlabel('Epoch')
     plt.ylabel('Classification accuracy')
     plt.legend()
 
-    plt.gcf().set_size_inches(14, 4)
+    plt.gcf().set_size_inches(14, 10)
     plt.show()
 
-
-def visualize_grid(Xs, ubound=255.0, padding=1):
+def plot_acc_multi(nets: List[Solver]):
     """
-    Reshape a 4D array of image data to a grid for easy visualization.
-
-    Inputs:
-    - Xs: Data of shape (N, H, W, C)
-    - ubound: Output grid will have values scaled to the range [0, ubound]
-    - padding: The number of blank pixels between elements of the grid
+    Plot the training and validation accuracies for multiple nets in one image.
     """
-    (N, H, W, C) = Xs.shape
-    # print(Xs.shape)
-    grid_size = int(math.ceil(math.sqrt(N)))
-    grid_height = H * grid_size + padding * (grid_size - 1)
-    grid_width = W * grid_size + padding * (grid_size - 1)
-    grid = np.zeros((grid_height, grid_width, C))
-    next_idx = 0
-    y0, y1 = 0, H
-    for y in range(grid_size):
-        x0, x1 = 0, W
-        for x in range(grid_size):
-            if next_idx < N:
-                img = Xs[next_idx]
-                low, high = np.min(img), np.max(img)
-                grid[y0:y1, x0:x1] = ubound * (img - low) / (high - low)
-                next_idx += 1
-            x0 += W + padding
-            x1 += W + padding
-        y0 += H + padding
-        y1 += H + padding
-    return grid
-
-
-def show_net_weights(net):
-    """
-    Visualize the weights of the network
-    """
-    W1 = net.params['W1']
-    W1 = np.transpose(W1.reshape(3, 28, 28, -1), (3, 1, 2, 0))
-    plt.imshow(visualize_grid(W1, padding=3).astype(np.uint8))
-    plt.gca().axis('off')
-    plt.show()
-
-
-def plot_acc_curves(stat_dict):
     plt.subplot(1, 2, 1)
-    for key, single_stats in stat_dict.items():
-        plt.plot(single_stats['train_acc_history'], label=str(key))
+    for net in nets:
+        plt.plot(net.train_acc_hist, label=str(net))
     plt.title('Train accuracy history')
     plt.xlabel('Epoch')
     plt.ylabel('Classification accuracy')
 
     plt.subplot(1, 2, 2)
-    for key, single_stats in stat_dict.items():
-        plt.plot(single_stats['val_acc_history'], label=str(key))
+    for net in nets:
+        plt.plot(net.val_acc_hist, label=str(net))
     plt.title('Validation accuracy history')
     plt.xlabel('Epoch')
     plt.ylabel('Classification accuracy')
@@ -142,3 +106,17 @@ def plot_acc_curves(stat_dict):
     plt.gcf().set_size_inches(14, 5)
     plt.show()
 
+def show_net_weights(net: Solver):
+    """
+    Visualize the weights of the network
+    """
+    weights = [val for key, val in net.model.params.items() if key[0] == 'W']
+    max_shape = np.max([weight.shape for weight in weights], axis=0)
+    fig, axs = plt.subplots(1, len(weights), figsize=(15, 5))
+
+    for index, weight in enumerate(weights):
+        img = axs[index].imshow(weight, cmap='viridis', extent=[0, max_shape[1], 0, max_shape[0]])
+        axs[index].set_title('W{}'.format(index + 1))
+    plt.colorbar(img, ax=axs.ravel().tolist(), shrink=0.65)
+    plt.suptitle('Weights of the network', y=0.2, x=0.44)
+    plt.show()
