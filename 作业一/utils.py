@@ -46,7 +46,7 @@ def download_and_extract_data(url: str, file_name: str, download=True):
     """
     if download:
         with tqdm(unit='B', unit_scale=True, unit_divisor=1024, desc=file_name) as progress_bar:
-            def reporthook(block_num, block_size, total_size):
+            def reporthook(block_size, total_size):
                 if total_size > 0:
                     progress_bar.total = total_size
                     progress_bar.update(block_size)

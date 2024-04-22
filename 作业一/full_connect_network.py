@@ -1,6 +1,6 @@
 from __init__ import *
 from linear_layer import Linear, LinearActivation
-from loss import get_loss_func
+from loss import ce_multi_loss
 
 class FullConnectNet:
 
@@ -12,7 +12,6 @@ class FullConnectNet:
             num_classes: int=10,
             reg: float=0.0,
             weight_scale: float=0.01,
-            loss: str='cross_entrophy',
             dtype: np.dtype=np.float64
         ):
         """
@@ -27,7 +26,6 @@ class FullConnectNet:
         - reg: Scalar giving L2 regularization strength.
         - weight_scale: Scalar giving the standard deviation for random
           initialization of the weights.
-        - loss: The loss function to be used.
         - dtype: A numpy data type object; all computations will be
           performed using this datatype.
         """
@@ -53,7 +51,6 @@ class FullConnectNet:
             self.params[f'A{i}'] = types[i-1]
         self.params[f'W{self.num_layers}'] = np.random.randn(hidden_dims[self.num_layers-2], num_classes).astype(dtype) * weight_scale
         self.params[f'b{self.num_layers}'] = np.zeros(num_classes, dtype=dtype)
-        self.params['loss'] = loss
 
     def loss(self, X: np.array, y: np.array=None):
         """
@@ -89,7 +86,7 @@ class FullConnectNet:
             return scores
 
         loss, grads = 0.0, {}
-        loss, dout = get_loss_func(self.params['loss'])(scores, y)
+        loss, dout = ce_multi_loss(scores, y)
 
         # add regularization losses
         for i in range(1, self.num_layers + 1):
@@ -106,7 +103,7 @@ class FullConnectNet:
 
     def save(self, path: str):
         """
-        Save the model parameters in a `.npy` file in the `model` directory.
+        Save the model parameters in a `.npz` file in the `model` directory.
 
         Inputs:
         - path: The file name of the zipped model parmeters file.
@@ -139,7 +136,7 @@ class FullConnectNet:
 
         if dtype != self.dtype:
             for p in self.params:
-                if p[0] != 'A' and p != 'loss':
+                if p[0] != 'A':
                     self.params[p] = self.params[p].astype(dtype)
 
         print("Successfully load model file: {}".format(path))

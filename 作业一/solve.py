@@ -107,7 +107,7 @@ class Solver:
         self.best_params = {}
         self.optim_configs = {}
         for para in self.model.params:
-            if para[0] == 'A' or para == 'loss':
+            if para[0] == 'A':
                 continue
             d = {k: v for k, v in self.optim_config.items()}
             self.optim_configs[para] = d
@@ -128,7 +128,7 @@ class Solver:
         # update
         for p, w in self.model.params.items():
             # skip the activation layer and loss function
-            if 'A' in p or 'loss' in p:
+            if 'A' in p:
                 continue
             dw = grads[p]
             config = self.optim_configs[p]
@@ -212,7 +212,7 @@ class Solver:
                     self.best_val_acc = val_acc
                     self.best_params = {}
                     for k, v in self.model.params.items():
-                        if 'A' in k or 'loss' in k:
+                        if 'A' in k:
                             self.best_params[k] = v
                         else:
                             self.best_params[k] = np.copy(v)
