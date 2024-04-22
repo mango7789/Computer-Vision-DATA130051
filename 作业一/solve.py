@@ -3,7 +3,72 @@ from full_connect_network import FullConnectNet
 from optimization import get_optim_func
 
 class Solver:
+    """
+    A Solver encapsulates all the logic necessary for training classification
+    models. The Solver performs stochastic gradient descent using different
+    update rules.
+    The solver accepts both training and validation data and labels so it can
+    periodically check classification accuracy on both training and validation
+    data to watch out for overfitting.
+    To train a model, you will first construct a Solver instance, passing the
+    model, dataset, and various options (learning rate, batch size, etc) to the
+    constructor. You will then call the train() method to run the optimization
+    procedure and train the model.
+    After the train() method returns, model.params will contain the parameters
+    that performed best on the validation set over the course of training.
+    In addition, the instance variable solver.loss_hist will contain a list
+    of all losses encountered during training and the instance variables
+    solver.train_acc_hist and solver.val_acc_hist will be lists of the
+    accuracies of the model on the training and validation set at each epoch.
+    Example usage might look something like this:
+    data = {
+        'X_train': # training data
+        'y_train': # training labels
+        'X_val': # validation data
+        'y_val': # validation labels
+    }
+    model = FullConnectNet(hidden_size=100, reg=10)
+    solver = Solver(
+            model, 
+            data,
+            update_rule='sgd',
+            optim_config={
+                'learning_rate': 1e-3,
+            },
+            lr_decay=0.9,
+            num_epochs=10, 
+            batch_size=100,
+            print_iter=100,
+        )
+    solver.train()
+    """
     def __init__(self, model: FullConnectNet, data: Dict, **kwargs) -> None:
+        """
+        Construct a new Solver instance.
+        Required arguments:
+        - model: A model object conforming to the API described above
+        - data: A dictionary of training and validation data containing:
+          'X_train': Array, shape (N_train, d_1, ..., d_k) of training images
+          'X_val': Array, shape (N_val, d_1, ..., d_k) of validation images
+          'y_train': Array, shape (N_train,) of labels for training images
+          'y_val': Array, shape (N_val,) of labels for validation images
+        Optional arguments:
+        - batch_size: Size of minibatches used to compute loss and gradient
+          during training.
+        - update_rule: The string format of a function of an update rule. Default is 'sgd'.
+        - optim_config: A dictionary containing hyperparameters that will be
+          passed to the chosen update rule. Each update rule requires different
+          hyperparameters but all update rules require a
+          'learning_rate' parameter so that should always be present.
+        - lr_decay: A scalar for learning rate decay; after each epoch the
+          learning rate is multiplied by this value.
+        - num_epochs: The number of epochs to run for during training.
+        - iters: The number of iterations to run for the entire training.
+        - print_iter: Integer; training losses will be printed every
+          print_iter iterations.
+        - verbose: Boolean; if set to false then no output will be printed
+          during training.
+        """
         # get the model and data
         self.model = model
         self.X_train = data['X_train']
@@ -154,3 +219,15 @@ class Solver:
 
             # replace the parameters with the best parameters
             self.model.params = self.best_params
+
+    def save(self, path: str):
+        """
+        Save the best model
+        """
+        self.model.save(path)
+
+    def load(self, path: str, dtype: np.dtype=np.float64):
+        """
+        Load the pre-trained model in the given path
+        """
+        self.model.load(path, dtype)
