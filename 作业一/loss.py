@@ -12,7 +12,7 @@ def ce_multi_loss(x: np.array, y: np.array):
     - loss: Scalar giving the loss
     - dx: Gradient of the loss with respect to x
     """
-    # use shifted_logits to avoid underflow / overflow
+    # use shifted_logits to avoid overflow
     shifted_logits = x - np.max(x, axis=1, keepdims=True)    
     Z = np.sum(np.exp(shifted_logits), axis=1, keepdims=True)
     log_probs = shifted_logits - np.log(Z)

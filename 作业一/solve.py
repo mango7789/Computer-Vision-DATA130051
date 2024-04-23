@@ -77,7 +77,7 @@ class Solver:
         self.y_val = data['y_val']
 
         # unpack arguments related to optimization step
-        self.batch_size = kwargs.pop('batch_size', 100)
+        self.batch_size = kwargs.pop('batch_size', 64)
         self.update_rule = kwargs.pop("update_rule", 'sgd')
         self.optim_config = kwargs.pop('optim_config', {})
         self.lr_decay = kwargs.pop('lr_decay', 1.0)

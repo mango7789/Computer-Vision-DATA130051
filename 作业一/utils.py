@@ -66,7 +66,7 @@ def plot_stats_single(net: Solver, window_size: int=100):
     Plot the loss function and train / validation accuracies for one single net.
     """
     plt.subplot(2, 1, 1)
-    # plt.plot(net.loss_hist, 'o', label='discrete loss')
+    plt.plot(net.loss_hist, 'o', label='discrete loss')
     plt.plot([sum(net.loss_hist[i:i+window_size])/window_size for i in range(len(net.loss_hist)-window_size)], 'red', label='moving average')
     plt.title('Loss history')
     plt.xlabel('Iteration')
@@ -81,7 +81,7 @@ def plot_stats_single(net: Solver, window_size: int=100):
     plt.ylabel('Classification accuracy')
     plt.legend()
 
-    plt.gcf().set_size_inches(14, 10)
+    plt.gcf().set_size_inches(10.5, 9)
     plt.show()
 
 def plot_acc_multi(nets: List[Solver]):
