@@ -115,8 +115,9 @@ def show_net_weights(net: Solver):
     fig, axs = plt.subplots(1, len(weights), figsize=(15, 5))
 
     for index, weight in enumerate(weights):
-        img = axs[index].imshow(weight, cmap='viridis', extent=[0, max_shape[1], 0, max_shape[0]])
+        img = axs[index].imshow(weight, cmap='inferno')
         axs[index].set_title('W{}'.format(index + 1))
     plt.colorbar(img, ax=axs.ravel().tolist(), shrink=0.65)
-    plt.suptitle('Weights of the network', y=0.2, x=0.44)
+    plt.suptitle('Weights of the network')
     plt.show()
+    print([weight.shape for weight in weights])
