@@ -19,6 +19,13 @@
 \usepackage[english]{babel}
 \usepackage{tauenvs}
 \usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=brown,
+    urlcolor=cyan,
+    citecolor=red,
+}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \renewcommand{\d}{\text{d}}
 %----------------------------------------------------------
@@ -78,7 +85,7 @@ The remainder of this report is structured as follows: Section 2 provides the do
 
 \section{Dataset}
 
-Having already covered the dataset's characteristics earlier, we'll now delve straight into the downloading and preprocessing steps. Utilizing the Python library \texttt{urllib}, we'll fetch the data from its \href{https://github.com/zalandoresearch/fashion-mnist}{official website} and organize it into a dictionary containing images and labels. Each numpy array representing a grayscale image will be reshaped into the format $(1, 28, 28)$ to maintain consistency with their original shapes.
+Having already covered the dataset's characteristics earlier, we'll now delve straight into the downloading and preprocessing steps. Utilizing the Python library \texttt{urllib}, we'll fetch the data from its \href{https://github.com/zalandoresearch/fashion-mnist}{official repo} and organize it into a dictionary containing images and labels. Each numpy array representing a grayscale image will be reshaped into the format $(1, 28, 28)$ to maintain consistency with their original shapes.
 
 \section{Model}
 
@@ -221,16 +228,42 @@ dx /= N
 
 In addition to the model architecture, such as linear and activation layers, neural networks often involve hyper-parameters such as \texttt{hidden\_dims}, \texttt{reg}, and \texttt{weight\_scale}. 
 
-For \texttt{hidden\_dims}, it determines the size of the hidden layers. Here, I've chosen the empirically recommended values $[128, 64]$.
+For \texttt{hidden\_dims} and \texttt{reg}, they determine the size of the hidden layers and serve as a regularization parameter that helps prevent overfitting by penalizing large weights in the model respectively. In the next section, I'll discuss how grid search is used to find the optimal values of them.
 
-\texttt{reg} is a regularization parameter that helps prevent overfitting by penalizing large weights in the model. In the next section, I'll discuss how grid search is used to find the best value for \texttt{reg}.
+For \texttt{weight\_scale}, the initial scale of the weight matrix, a commonly recommended value is 0.01. This value provides a good starting point for weight initialization, ensuring that the network begins training with reasonable weights.
 
-For the initial scale of the weight matrix, a commonly recommended value is 0.01. This value provides a good starting point for weight initialization, ensuring that the network begins training with reasonable weights.
 
+
+%%%         train          %%%
 \section{Train}
 
 Now that we've covered the details of the Fully Connected Neural Network (FCNN) model in the previous section, let's delve into the training procedures. We'll begin by introducing some update rules, followed by a sanity check of the \texttt{Solver} on a small dataset to ensure its functionality. Subsequently, we'll conduct training for 2000 iterations for each configuration to identify the best configuration. Finally, the model will undergo training based on the optimal parameters for a significantly larger number of iterations to achieve the best results.
 
+By the way, unless otherwise specified, the parameters used in this section are set to their default values, as detailed in Table \ref{tab:parameters}.
+
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Parameter Name} & \textbf{Default Value} \\
+        \hline
+        hidden\_dims & [128, 64]  \\
+        \hline
+        activation & [relu, relu] \\
+        \hline
+        reg & $1e^{-3}$ \\
+        \hline
+        update\_rule & sgd \\
+        \hline
+        learning\_rate & $5e^{-3}$ \\
+        \hline
+        lr\_decay & 0.9 \\
+        \hline
+    \end{tabular}
+    \caption{Default value of parameters (partial listing)}
+    \label{tab:parameters}
+\end{table}
 
 \subsection{Update Rule}
 
@@ -268,34 +301,34 @@ For the sanity check, we trained the model using the first 500 samples of the tr
 
 \begin{figure}[hbp]
     \centering
-    \includegraphics[scale=0.3]{images/sanity_check.png}
+    \includegraphics[scale=0.35]{images/sanity_check.png}
     \caption{Training on the Small Dataset}
     \label{fig:sanity-check}
 \end{figure}
 
-After 9 epochs of training (approximately 1800 iterations), the model achieved perfect accuracy on the training dataset, while the validation (testing) accuracy plateaued around 0.75. This indicates that our model is capable of overfitting the small subset of training data well, ensuring its availability for use. Now, let's proceed to fine-tune the model using the entire training dataset to find the best parameters.
+After 9 epochs of training (approximately 1800 iterations), the model achieved perfect accuracy on the training dataset, while the validation (testing) accuracy plateaued around 77.5\%. This indicates that our model is capable of overfitting the small subset of training data well, ensuring its availability for use. Now, let's proceed to fine-tune the model using the entire training dataset to find the best parameters.
 
 
 \subsection{Search Best Configuration}
 
-The process of searching the best configuration is divided into three subsections. First, the model will undergo training using 9 different combinations of activation functions while keeping other parameters constant, which can be seen as a greedy search. Subsequently, we will implement a grid search method to find the best hyper-parameters \texttt{reg}, \texttt{learning\_rate}, and \texttt{lr\_decay}. Finally, we will experiment with 4 different update rules mentioned in section 4.1.2 and compare their performance.
+The process of searching the best configuration is divided into three subsections. First, the model will undergo training for 2000 iterations using 9 different combinations of activation functions while keeping other parameters constant to find the best combination, which can be seen as a greedy search. Subsequently, we will implement a grid search method to find the best hyper-parameters \texttt{reg}, \texttt{learning\_rate}, and \texttt{hidden\_dims}. Finally, we will experiment with 4 different update rules mentioned in section 4.1.2 and compare their performance.
 
 
-\subsubsection{Activation Function}
+\subsubsection{Combinations Of Activation Functions}
 
-As discussed in Section 3.2, we offer three commonly used activation functions: \texttt{ReLU}, \texttt{Tanh}, and \texttt{Sigmoid}. In a three-layer neural network, there are two layers for activation functions, leading to 9 different combinations. The results of the experiments are presented in Figure \ref{fig:activation-loss} and Figure \ref{fig:activation-acc}.
+As discussed in Section 3.2, we offer three commonly used activation functions: \texttt{ReLU}, \texttt{Tanh}, and \texttt{Sigmoid}. In a three-layer neural network, there are two layers for activation functions, leading to 9 different combinations.  The results of the experiments are presented in Figure \ref{fig:activation-loss} and Figure \ref{fig:activation-acc}.
 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[scale=0.2]{images/activation_loss.png}
+    \includegraphics[scale=0.21]{images/activation_loss.png}
     \caption{Loss on different combinations of activation functions}
     \label{fig:activation-loss}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[scale=0.2]{images/activation_acc.png}
+    \includegraphics[scale=0.21]{images/activation_acc.png}
     \caption{Accuracy on different combinations of activation functions}
     \label{fig:activation-acc}
 \end{figure}
@@ -305,139 +338,154 @@ Based on the results, we observe that the top three performing combinations are 
 Furthermore, it's noteworthy that when \texttt{ReLU} is exclusively applied in the second layer, performance degradation occurs. This observation suggests neural network saturation after the first activation layer if it's not implemented with \texttt{ReLU}. Consequently, we will proceed with the combination ['ReLU', 'ReLU'] in the subsequent sections.
 
 
-\subsubsection{Grid Search Hyper-parameters}
+\subsubsection{Tune Hyper-parameters}
 
-\subsubsection{Update Rules}
+We will now employ a grid search method to fine-tune the parameters \texttt{hidden\_dims}, \texttt{learning\_rate}, and \texttt{reg}. Given a training dataset size of 60,000 with 10 labels, and to ensure generality and computational feasibility, we'll explore combinations of hidden dimensions such as 128, 64, and 48. For the remaining parameters, we'll adopt empirically optimal values. The results of the grid search are presented in the Table \ref{tab:grid-search-results} in Appendix A.
 
-\subsection{Train on Full Dataset}
+Upon examining the table, we observe that \texttt{hidden\_dims} and \texttt{reg} have slightly less impact on the loss compared to \texttt{learning\_rate}. The optimal learning rate may fall around $1e^{-2}$ since their validation accuracy are the highest on average.
+
+To further fine-tune these parameters, we'll utilize a random search. For simplicity of visualization, we'll set the hidden dimensions as $[128, 64]$, randomly sample regularization values from $[1e^{-2.5}, 1e^{-2}]$, and learning rates from $[1e^{-3}, 1e^{-1.5}]$. The optimal parameters found in the former grid search are also added into the searching range of configuration. The precise search results are listed in the Table \ref{tab:random-search-results} in Appendix C and visualized in the Figure \ref{fig:random-search}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.6]{images/random_search_scatter.png}
+    \caption{Scatter plot of random search results}
+    \label{fig:random-search}
+\end{figure}
+
+Combining the results from both the table and figure, it's evident that the validation accuracy increases as the learning rate increases from $1e^{-3}$ to approximately $1e^{-2}$, but decreases rapidly beyond this point. Hence, it's inferred that the optimal learning rate should be chosen around $1e^{-2}$.
+
+To further substantiate the selection of the learning rate, we will fix the \texttt{reg} parameter at its optimal value and plot the loss history of neural networks with different manually selected learning rates. This comparison is depicted in Figure \ref{fig:lr-loss}. It is observable that a lower learning rate (0.0001) may result in a slower decay rate of the loss. Conversely, a high learning rate (0.03) could lead to escaping the saddle point of the loss function and increasing the loss as training progresses. Additionally, there are cases where a high learning rate may cause the loss to decrease too rapidly initially but plateau after several hundred iterations, maintaining a high loss in the end. Unfortunately, this phenomenon did not occur in our training process, which could be attributed to the dataset specifications and the choice of evaluation metrics beforehand.
+
+In the end, the optimal parameters found after the two-phase search are \texttt{hidden\_dims} = [128, 64], \texttt{reg} = 0.001, and \texttt{learning\_rate} = 0.01.
+
+
+\subsubsection{Applying Different Update Rules}
+
+After obtaining the best parameters from the aforementioned procedures, we proceed to apply four different update rules, each with 2000 iterations. The loss history for each update rule is illustrated in Figure \ref{fig:update-rule}.
+
+Clearly, the update rules, excluding SGD, demonstrate substantial enhancements, resulting in a hastened decay of the loss function.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/learning_rate_loss.png}
+        \caption{Loss history for different learning rates}
+        \label{fig:lr-loss}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/update_rule_loss.png}
+        \caption{Loss history of different update rules}
+        \label{fig:update-rule}
+    \end{minipage}
+\end{figure}
+
+\subsection{Training on Full Dataset}
+
+Now that we have obtained the optimal hyper-parameters, let's train our model on the full training dataset using these parameters. We'll run the training for 60,000 iterations, with other parameters set to their default values as specified in the comments for the \texttt{Solver} and \texttt{FullConnectNet} classes. Besides, the loss history and accuracy history during the training process are visualized in the accompanying Figure \ref{fig:full-train}. The training accuracy of the model reaches $96.1\%$ upon completion of the training process.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[scale=0.35]{images/full_train.png}
+    \caption{Training on the Full Dataset}
+    \label{fig:full-train}
+\end{figure}
+
+Once the training is completed, we save the trained model as a \texttt{.npz} file in the path \texttt{./model/fcnn.npz}.
+
 
 \section{Load \& Test}
 
-\subsection{Load Pre-trained Model}
+In the previous section, we successfully trained a three-layer neural network and saved the weight parameters in a \texttt{.npz} file. Now, let's load the trained model and test it on the testing dataset.
 
-\subsection{Evaludate Model on Testing Dataset }
+We observed that the accuracy of the model on the training dataset is $88.9\%$. Next, we will select 10 samples from each of the 10 labels and visualize them after passing through the first and second layers. This will provide us with some intuition about the trained neural network.
+
+
 
 \section{Discussion}
 
+\subsection{Initialization of Weight}
 
+\subsection{Hyper-parameters Tuning}
 
-% \section{Appendix}
+\newpage
+\renewcommand{\thesubsection}{\Alph{subsection}} 
 
-%     \subsection{Environments preview}
+\section{Appendix}
+\subsection{File Structure}
 
-%         The following environments are defined in \textit{tauenvs} package.
-		
-% 		\subsubsection{Tau environment}
+\subsection{Grid Search Results}
 
-%                 The following code defines the tauenv environment. A custom title can be added to this environment.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \texttt{hidden\_dims} & \texttt{reg} & \texttt{learning\_rate} & Val acc\\ \hline
+        [128, 64] & 0.001 & 0.0001 & 0.6629 \\ \hline
+        [128, 64] & 0.001 & 0.001  & 0.8312 \\ \hline
+        [128, 64] & 0.001 & 0.01   & \textcolor{red}{0.8665} \\ \hline
+        [128, 64] & 0.01  & 0.0001 & 0.6599 \\ \hline
+        [128, 64] & 0.01  & 0.001  & 0.8279 \\ \hline
+        [128, 64] & 0.01  & 0.01   & 0.8598 \\ \hline
+        [128, 64] & 0.1   & 0.0001 & 0.6587 \\ \hline
+        [128, 64] & 0.1   & 0.001  & 0.8222 \\ \hline
+        [128, 64] & 0.1   & 0.01   & 0.8429 \\ \hline
+        [128, 48] & 0.001 & 0.0001 & 0.6456 \\ \hline
+        [128, 48] & 0.001 & 0.001  & 0.8298 \\ \hline
+        [128, 48] & 0.001 & 0.01   & \textcolor{red}{0.8646} \\ \hline
+        [128, 48] & 0.01  & 0.0001 & 0.6463 \\ \hline
+        [128, 48] & 0.01  & 0.001  & 0.8286 \\ \hline
+        [128, 48] & 0.01  & 0.01   & \textcolor{red}{0.8653} \\ \hline
+        [128, 48] & 0.1   & 0.0001 & 0.6508 \\ \hline
+        [128, 48] & 0.1   & 0.001  & 0.8240 \\ \hline
+        [128, 48] & 0.1   & 0.01   & 0.8416 \\ \hline
+        [64, 48] & 0.001 & 0.0001 & 0.6183 \\ \hline
+        [64, 48] & 0.001 & 0.001  & 0.8172 \\ \hline
+        [64, 48] & 0.001 & 0.01   & \textcolor{red}{0.8633} \\ \hline
+        [64, 48] & 0.01  & 0.0001 & 0.6176 \\ \hline
+        [64, 48] & 0.01  & 0.001  & 0.8186 \\ \hline
+        [64, 48] & 0.01  & 0.01   & 0.8593 \\ \hline
+        [64, 48] & 0.1   & 0.0001 & 0.6100 \\ \hline
+        [64, 48] & 0.1   & 0.001  & 0.8100 \\ \hline
+        [64, 48] & 0.1   & 0.01   & 0.8410 \\ \hline
+    \end{tabular}
+    \caption{Grid search results}
+    \label{tab:grid-search-results}
+\end{table}
 
-% 			\begin{tauenv}[frametitle=Tauenv]
-%                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum justo quis massa aliquet, ut ultrices quam bibendum.
-% 			\end{tauenv}
-		
-% \begin{lstlisting}[language=TeX, caption=Tauenv environment code.]
-% \newmdenv[
-% 	backgroundcolor=taublue!22, 					
-% 	linecolor=taublue,									
-% 	linewidth=0.7pt,
-% 	frametitle=\vskip0pt\bfseries,
-% 	frametitlerule=false,
-% 	frametitlefont=\color{taublue}\bfseries\sffamily,
-% 	frametitlealignment=\raggedright,
-% 	innertopmargin=3pt,
-% 	innerbottommargin=6pt,
-% 	innerleftmargin=6pt,
-% 	innerrightmargin=6pt,
-% 	font=\selectfont,
-% 	fontcolor=taublue,									
-% 	frametitleaboveskip=8pt,
-% 	skipabove=10pt
-% ]{tauenv} \end{lstlisting}
-		
-% 		\subsubsection{Note}
-
-%                 This code defines the note environment.
-
-%   			\begin{note}
-%                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum justo quis massa aliquet, ut ultrices quam bibendum.
-% 			\end{note}
-		
-% \begin{lstlisting}[language=TeX, caption=Note environment code.]
-% \newmdenv[
-% 	backgroundcolor=taublue!22, 						
-% 	linecolor=taublue,									
-% 	linewidth=0.7pt,
-% 	frametitle=\vskip0pt\bfseries\notelanguage,
-% 	frametitlerule=false,
-% 	frametitlefont=\color{taublue}\bfseries\sffamily,
-% 	frametitlealignment=\raggedright,
-% 	innertopmargin=3pt,
-% 	innerbottommargin=6pt,
-% 	innerleftmargin=6pt,
-% 	innerrightmargin=6pt,
-% 	font=\normalfont,
-% 	fontcolor=taublue,									
-% 	frametitleaboveskip=3pt,
-% 	skipabove=10pt
-% ]{note} \end{lstlisting}
-
-% 		\subsubsection{Info}
-
-%                 This code defines the info environment.
-
-%     		\begin{info}
-%                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum justo quis massa aliquet, ut ultrices quam bibendum.
-% 			\end{info}
-		
-% \begin{lstlisting}[language=TeX, caption=Info environment code.]
-% \newmdenv[
-% 	backgroundcolor=taublue!22, 						
-% 	linecolor=taublue,									
-% 	linewidth=0.7pt,
-% 	frametitle=\vskip0pt\bfseries\infolanguage,
-% 	frametitlerule=false,
-% 	frametitlefont=\color{taublue}\bfseries\sffamily,
-% 	frametitlealignment=\raggedright,
-% 	innertopmargin=3pt,
-% 	innerbottommargin=6pt,
-% 	innerleftmargin=6pt,
-% 	innerrightmargin=6pt,
-% 	font=\normalfont,
-% 	fontcolor=taublue,									
-% 	frametitleaboveskip=3pt,
-% 	skipabove=10pt
-% ]{info} \end{lstlisting}
-
-%     \subsection{Alternative title}
-
-%          You can make the following modification to \textit{tau class} in the \textit{title preferences} section to change the position of the title. This will move the title to the left. 
-
-% \begin{lstlisting}[language=TeX, caption=Alternative title.]
-% \renewcommand{\@maketitle}{%
-%         \vskip-18pt
-%     {\RaggedRight\bfseries\color{taublue}\fontsize{18}{22}\sffamily\selectfont\@title\par}
-% 		\vskip8pt
-%     {\RaggedRight\normalsize\sffamily\@author\par}
-%         \vskip8pt
-%     {\RaggedRight\fontsize{7pt}{8pt}\selectfont\@professor\par}
-%         \vskip24pt
-% }% 
-% \end{lstlisting}
-
-%     \subsection{Equation skip value}
-
-%         Play with the value of \verb|\eqskip| until the preferred spacing is set for equations.
-
-% \begin{lstlisting}[language=TeX, caption=Equation skip code.]
-% \newlength{\eqskip}\setlength{\eqskip}{6.5pt}
-% \expandafter\def\expandafter\normalsize\expandafter{%
-%     \normalsize%
-%     \setlength\abovedisplayskip{\eqskip}%
-%     \setlength\belowdisplayskip{\eqskip}%
-%     \setlength\abovedisplayshortskip{\eqskip-\baselineskip}%
-%     \setlength\belowdisplayshortskip{\eqskip}%
-% }
-% \end{lstlisting}
+\subsection{Random Search Results}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \texttt{reg} & \texttt{learning\_rate} & Val acc\\ \hline
+        0.0083 & 0.02 & 0.6124 \\ \hline
+        0.005 & 0.0257  & \textcolor{blue}{0.3829} \\ \hline
+        0.0088 & 0.0139   & 0.8339 \\ \hline
+        0.0057  & 0.018 & 0.7889 \\ \hline
+        0.0072  & 0.0213  & 0.5127 \\ \hline
+        0.0083  & 0.0129   & 0.8594 \\ \hline
+        0.0065   & 0.0041 & 0.8606 \\ \hline
+        0.007   & 0.0057  & 0.8655 \\ \hline
+        0.0057   & 0.0128   & 0.8544 \\ \hline
+        0.001 & 0.0185 & 0.7801 \\ \hline
+        0.0043 & 0.0046  & 0.8617 \\ \hline
+        0.0049 & 0.0203   & 0.6039 \\ \hline
+        0.0094  & 0.0132 & 0.7196 \\ \hline
+        0.006  & 0.0065  & 0.8651 \\ \hline
+        0.0071  & 0.0187   & 0.7650 \\ \hline
+        0.0055   & 0.0071 & 0.8634 \\ \hline
+        0.0098   & 0.0307  & \textcolor{blue}{0.2586} \\ \hline
+        0.0068   & 0.0132   & 0.8542 \\ \hline
+        0.0098 & 0.0239 & \textcolor{blue}{0.3799} \\ \hline
+        0.0099 & 0.0016  & 0.8464 \\ \hline
+        0.001 & 0.01   & \textcolor{red}{0.8668} \\ \hline
+    \end{tabular}
+    \caption{Random search results}
+    \label{tab:random-search-results}
+\end{table}
 					
 % %----------------------------------------------------------
 
