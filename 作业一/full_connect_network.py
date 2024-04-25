@@ -7,7 +7,7 @@ class FullConnectNet:
     def __init__(
             self,
             hidden_dims: List[int],
-            types: List[Literal['relu', 'tanh', 'sigmoid']] | str,
+            activation: List[Literal['relu', 'tanh', 'sigmoid']] | str,
             input_dim: int=1*28*28,
             num_classes: int=10,
             reg: float=0.0,
@@ -35,20 +35,20 @@ class FullConnectNet:
         self.params = {}
 
         # only use one type of activation function
-        if len(types) == 1 and self.num_layers > 2:
-            types = types[0] if isinstance(types, list) else types
-            types = [types for _ in range(self.num_layers - 1)]
+        if len(activation) == 1 and self.num_layers > 2:
+            activation = activation[0] if isinstance(activation, list) else activation
+            activation = [activation for _ in range(self.num_layers - 1)]
         # unmatching number of activation functions and hidden layers
-        elif len(types) != 1 and len(types) != self.num_layers - 1:
+        elif len(activation) != 1 and len(activation) != self.num_layers - 1:
             raise ValueError("The number of activation functions should be 1 or the same as the number of hidden layers minus 1.") 
         
         self.params['W1'] = np.random.randn(input_dim, hidden_dims[0]).astype(dtype) * weight_scale
         self.params['b1'] = np.zeros(hidden_dims[0], dtype=dtype)
-        self.params['A1'] = types[0]
+        self.params['A1'] = activation[0]
         for i in range(2, self.num_layers):
             self.params[f'W{i}'] = np.random.randn(hidden_dims[i-2], hidden_dims[i-1]).astype(dtype) * weight_scale
             self.params[f'b{i}'] = np.zeros(hidden_dims[i-1], dtype=dtype)
-            self.params[f'A{i}'] = types[i-1]
+            self.params[f'A{i}'] = activation[i-1]
         self.params[f'W{self.num_layers}'] = np.random.randn(hidden_dims[self.num_layers-2], num_classes).astype(dtype) * weight_scale
         self.params[f'b{self.num_layers}'] = np.zeros(num_classes, dtype=dtype)
 

@@ -113,7 +113,7 @@ def show_net_weights(net: Solver):
     weights = [val for key, val in net.model.params.items() if key[0] == 'W']
     max_shape = np.max([weight.shape for weight in weights], axis=0)
     fig, axs = plt.subplots(1, len(weights), figsize=(15, 5))
-
+    # subplots
     for index, weight in enumerate(weights):
         img = axs[index].imshow(weight, cmap='inferno')
         axs[index].set_title('W{}'.format(index + 1))
@@ -121,3 +121,21 @@ def show_net_weights(net: Solver):
     plt.suptitle('Weights of the network')
     plt.show()
     print([weight.shape for weight in weights])
+
+def train_val_split(data: Dict, k: int=5):
+    """
+    Conduct a k-fold split on the Fashion-MINIST dataset.
+    """
+    train_samples = len(data['X_train'])
+    val_samples = train_samples // k
+    accuracy = 0.
+    # find the indices of the validation samples
+    indices = np.arange(train_samples)
+    np.random.shuffle(indices)
+    fold_indices = [indices[i * val_samples:(i + 1) * val_samples] for i in range(k)]
+    # assign the remaining indices to the last fold
+    if train_samples % k != 0:
+        fold_indices[-1] = np.concatenate((fold_indices[-1], indices[k * val_samples:]))
+    return fold_indices
+
+

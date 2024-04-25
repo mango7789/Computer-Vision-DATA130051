@@ -7,4 +7,5 @@ import gzip
 import numpy as np
 import matplotlib.pyplot as plt
 from typing import List, Dict, Literal, Callable, Final
-plt.rcParams['font.size'] = 14
+from tqdm import tqdm
+plt.rcParams['font.size'] = 12
