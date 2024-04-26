@@ -6,8 +6,8 @@ class FullConnectNet:
 
     def __init__(
             self,
-            hidden_dims: List[int],
-            activation: List[Literal['relu', 'tanh', 'sigmoid']] | str,
+            hidden_dims: List[int]=[128, 64],
+            activation: List[Literal['relu', 'tanh', 'sigmoid']] | str=['relu'],
             input_dim: int=1*28*28,
             num_classes: int=10,
             reg: float=0.0,
@@ -119,7 +119,7 @@ class FullConnectNet:
         np.savez(path, **save_params)
         print("Model has been saved in {}".format(path))
 
-    def load(self, path: str, dtype: np.dtype=np.float64):
+    def load(self, path: str):
         """
         Load the model parameters from a `.npy` file in the `model` directory.
 
@@ -128,15 +128,10 @@ class FullConnectNet:
         - dtype: A numpy datatype object; all parameters in the model parameters file will
           be converted to this datatype.
         """
-        save_params = np.load(os.path.join('model', path))
+        save_params = np.load(os.path.join('model', path), allow_pickle=True)
         self.reg = save_params['reg']
         self.num_layers = save_params['num_layers']
         self.dtype = save_params['dtype']
         self.params = save_params['params'][()]
-
-        if dtype != self.dtype:
-            for p in self.params:
-                if p[0] != 'A':
-                    self.params[p] = self.params[p].astype(dtype)
 
         print("Successfully load model file: {}".format(path))

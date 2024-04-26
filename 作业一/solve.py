@@ -226,8 +226,11 @@ class Solver:
         """
         self.model.save(path)
 
-    def load(self, path: str, dtype: np.dtype=np.float64):
+    def load(self, path: str):
         """
         Load the pre-trained model in the given path
         """
-        self.model.load(path, dtype)
+        self.model.load(path)
+        
+    def test(self, data: Dict):
+        pass

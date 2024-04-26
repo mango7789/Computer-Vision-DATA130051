@@ -6,6 +6,7 @@ import urllib.request
 import gzip
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import seaborn as sns
 from typing import List, Dict, Literal, Callable, Final
 from tqdm import tqdm
