@@ -138,4 +138,31 @@ def train_val_split(data: Dict, k: int=5):
         fold_indices[-1] = np.concatenate((fold_indices[-1], indices[k * val_samples:]))
     return fold_indices
 
+def image_clamp(images_list: List):
+    """
+    Clamp the gray value of images to get a better visualization of them
+    """
+    image_shape = images_list[0][0].shape
+    reshape_size = int(math.floor(math.sqrt(image_shape[1])))
+    return  [
+                [
+                np.resize(np.interp(image, (np.min(image), np.max(image)), (0, 1)), (reshape_size, reshape_size))
+                for image in images
+            ]
+            for images in images_list
+        ]
 
+def plot_images(images_list: List, class_names: List, clamp: bool=True):
+    """
+    Visualize the Fashion-MNIST dataset in a grid.
+    """
+    fig, axes = plt.subplots(10, 11, figsize=(10, 10))
+    fig.subplots_adjust(hspace=0.2, wspace=0.2)  
+    for i, images in enumerate(image_clamp(images_list) if clamp else images_list):
+        axes[i, 0].text(0.5, 0.5, class_names[i], ha='center')
+        axes[i, 0].axis('off')
+        for j in range(10):
+            ax = axes[i, j + 1]
+            ax.imshow(images[j], cmap='gray')
+            ax.axis('off')
+    plt.show()

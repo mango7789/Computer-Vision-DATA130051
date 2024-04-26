@@ -71,10 +71,11 @@ class Solver:
         """
         # get the model and data
         self.model = model
-        self.X_train = data['X_train']
-        self.y_train = data['y_train']
-        self.X_val = data['X_val']
-        self.y_val = data['y_val']
+        if data != {}:
+            self.X_train = data['X_train']
+            self.y_train = data['y_train']
+            self.X_val = data['X_val']
+            self.y_val = data['y_val']
 
         # unpack arguments related to optimization step
         self.batch_size = kwargs.pop('batch_size', 64)
@@ -232,5 +233,57 @@ class Solver:
         """
         self.model.load(path)
         
-    def test(self, data: Dict):
-        pass
+    def test_accuracy_table(self, X: np.array, y: np.array):
+        """
+        Provide an accuracy table of the model on the provided data. Like the one 
+        offered by `sklearn.metrics`
+        Inputs:
+        - X: Array of data, of shape (N, d_1, ..., d_k)
+        - y: Array of labels, of shape (N,).
+        Returns:
+        - acc: Scalar giving the fraction of instances that were correctly
+          classified by the model.
+        """
+        y_pred = []
+        scores = self.model.loss(X)
+        y_pred.append(np.argmax(scores, axis=1))
+        y_pred = np.hstack(y_pred)
+        
+        unique_labels = np.unique(y)
+        num_labels = len(unique_labels)
+        
+        # initialize arrays to store metrics
+        accuracy = np.zeros(num_labels)
+        precision = np.zeros(num_labels)
+        recall = np.zeros(num_labels)
+        f1_score = np.zeros(num_labels)
+
+        for i, label in enumerate(unique_labels):
+            # mask to select instances with the current label
+            mask = y == label
+            
+            # compute metrics for the current label
+            true_positives = np.sum(np.logical_and(mask, y_pred == label))
+            false_positives = np.sum(np.logical_and(np.logical_not(mask), y_pred == label))
+            false_negatives = np.sum(np.logical_and(mask, y_pred != label))
+
+            accuracy[i] = np.mean(y[mask] == y_pred[mask])
+            precision[i] = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
+            recall[i] = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
+            f1_score[i] = 2 * (precision[i] * recall[i]) / (precision[i] + recall[i]) if (precision[i] + recall[i]) > 0 else 0
+
+        # total metrics
+        total_accuracy = np.mean(y == y_pred)
+        total_precision = np.sum(precision) / num_labels
+        total_recall = np.sum(recall) / num_labels
+        total_f1_score = np.sum(f1_score) / num_labels
+        accuracy = np.append(accuracy, total_accuracy)
+        precision = np.append(precision, total_precision)
+        recall = np.append(recall, total_recall)
+        f1_score = np.append(f1_score, total_f1_score)
+        
+        # create table
+        metrics_table = np.column_stack((accuracy, precision, recall, f1_score))
+
+        return metrics_table
+        
