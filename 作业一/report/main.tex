@@ -58,14 +58,10 @@
 % ABSTRACT
 %----------------------------------------------------------
 
-\begin{abstract}    
-    Welcome to tau ($\tau$) \LaTeX\ class for making academic articles and lab reports. In this example template, we will guide you through the process of using and customizing this class to your needs. For more information of this class check out the appendix section. There, you will find snippets codes that define key aspects of the template, allowing you to explore and modify them.
+\begin{abstract}
+This project focuses on developing and training a neural network for accurate classification of grayscale fashion items in the Fashion-MNIST dataset. The neural network architecture comprises three linear layers, and various components such as activation functions and loss functions are explored to optimize performance. The report details dataset downloading, architectural choices, training processes, and evaluation metrics, emphasizing the importance of meticulous design and optimization for effective neural network development in image classification tasks.
 \end{abstract}
-
-%----------------------------------------------------------
-
-\keywords{\LaTeX\ class, lab report, academic article, tau class}
-
+\keywords{Fashion-MNIST, image classification, neural network}
 %----------------------------------------------------------
 
 \begin{document}
@@ -73,15 +69,16 @@
 \maketitle
 \thispagestyle{firststyle}
 \tauabstract
+
 %----------------------------------------------------------
 
 \section{Introduction}
 
 \taustart{I}n this project, we aim to develop and train a fully connected neural network to classify images from the Fashion-MNIST dataset. The Fashion-MNIST dataset, curated by Zalando, comprises a collection of grayscale images representing various fashion items, along with corresponding labels indicating their respective categories. With 60,000 training examples and 10,000 test examples, this dataset serves as a standard benchmark for evaluating machine learning algorithms in the context of fashion image classification.
 
-The neural network architecture we will employ consists of three linear layers, which will be trained to learn meaningful representations from the input images and make accurate predictions about their corresponding classes. Throughout this project, we will explore different components of the neural network, including activation functions, loss functions, and training strategies, to optimize its performance on the Fashion-MNIST dataset.
+Our neural network consists of three linear layers, trained to learn meaningful representations and make accurate predictions. We explore various components like activation functions and training strategies to optimize performance. 
 
-The remainder of this report is structured as follows: Section 2 provides the downloading the pre-process method of the Fashion-MNIST dataset. Section 3 delves into the specifics of the neural network architecture, detailing the design choices for its components. Section 4 outlines the training process, including the selection of hyper-parameters and evaluation metrics. In Section 5, we evaluate the trained model on the test dataset and present visualizations to assess its effectiveness. Finally, Section 6 offers concluding remarks and discusses potential avenues for future research and improvement.
+The remainder of this report is structured as follows: Section 2 provides the downloading the pre-process method of the Fashion-MNIST dataset. Section 3 delves into the specifics of the neural network architecture, detailing the design choices for its components. Section 4 outlines the training process, including the selection of hyper-parameters and evaluation metrics. In Section 5, we evaluate the trained model on the test dataset and present visualizations to assess its effectiveness. Finally, Section 6 offers concluding remarks and discusses potential avenues for future research and improvement. 
 
 \section{Dataset}
 
@@ -101,7 +98,7 @@ Consider the first linear layer as an illustration. The forward pass can be conc
     \vec{Y} = \vec{X}\vec{W} + \vec{b} \tag{3.1.1}
 \end{equation}
 
-Here, $\vec{Y} \in \mathbb{R}^{N \times H_1}$, $\vec{X} \in \mathbb{R}^{N \times D}$, $\vec{W} \in \mathbb{R}^{D \times H_1}$, and $\vec{b} \in \mathbb{R}^{H_1}$. It's worth noting that \texttt{numpy} broadcasts $\vec{b}$ to fit into the computation. Hence, I represent $\vec{b}$ as a vector to maintain alignment with my code implementation. Also, please note that we need to 'cache' the current values of $\vec{X}$ and $\vec{W}$ for the backward pass.
+Here, $\vec{Y} \in \mathbb{R}^{N \times H_1}$, $\vec{X} \in \mathbb{R}^{N \times D}$, $\vec{W} \in \mathbb{R}^{D \times H_1}$, and $\vec{b} \in \mathbb{R}^{H_1}$. It's worth noting that \texttt{numpy} broadcasts $\vec{b}$ to fit into the computation. Hence, we represent $\vec{b}$ as a vector to maintain alignment with my code implementation. Also, please note that we need to 'cache' the current values of $\vec{X}$ and $\vec{W}$ for the backward pass.
 
 Regarding the backward pass, the input of the backward function is \texttt{dout} and \texttt{cache}, where \texttt{dout} represents the gradient at $\vec{Y}$ with shape $(N, H_1)$. Taking derivatives with respect to $\vec{X}$ and $\vec{W}$, we obtain:
 
@@ -170,7 +167,7 @@ Then, the forward and backward pass of the sigmoid function are:
 
 \subsection{Loss Function}
 
-The loss function plays a crucial role in training a neural network as it quantifies the discrepancy between the predicted output and the actual target. Here, I'll implement the \texttt{cross\_entrophy}. Since this is a multi-class classification task, the CE is slightly different from the binary case.
+The loss function plays a crucial role in training a neural network as it quantifies the discrepancy between the predicted output and the actual target. Here, we'll implement the \texttt{cross\_entrophy}. Since this is a multi-class classification task, the CE is slightly different from the binary case.
 
 For traditional binary cross entropy, the loss function is
 
@@ -228,7 +225,7 @@ dx /= N
 
 In addition to the model architecture, such as linear and activation layers, neural networks often involve hyper-parameters such as \texttt{hidden\_dims}, \texttt{reg}, and \texttt{weight\_scale}. 
 
-For \texttt{hidden\_dims} and \texttt{reg}, they determine the size of the hidden layers and serve as a regularization parameter that helps prevent overfitting by penalizing large weights in the model respectively. In the next section, I'll discuss how grid search is used to find the optimal values of them.
+For \texttt{hidden\_dims} and \texttt{reg}, they determine the size of the hidden layers and serve as a regularization parameter that helps prevent overfitting by penalizing large weights in the model respectively. In the next section, we'll discuss how grid search is used to find the optimal values of them.
 
 For \texttt{weight\_scale}, the initial scale of the weight matrix, a commonly recommended value is 0.01. This value provides a good starting point for weight initialization, ensuring that the network begins training with reasonable weights.
 
@@ -242,7 +239,7 @@ Now that we've covered the details of the Fully Connected Neural Network (FCNN) 
 By the way, unless otherwise specified, the parameters used in this section are set to their default values, as detailed in Table \ref{tab:parameters}.
 
 
-\begin{table}[h]
+\begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
@@ -267,7 +264,7 @@ By the way, unless otherwise specified, the parameters used in this section are 
 
 \subsection{Update Rule}
 
-For update rules, I have provide four commonly used methods: stochastic gradient descent (SGD), SGD with momentum, Adam, and RMSprop. The mathematical explanation and some intuitions will be given below, while the experiment results of comparison of these four update rules will be defer to section 4.3.
+For update rules, we have provide four commonly used methods: stochastic gradient descent (SGD), SGD with momentum, Adam, and RMSprop. The mathematical explanation and some intuitions will be given below, while the experiment results of comparison of these four update rules will be defer to section 4.3.
 
 \subsubsection{SGD}
 
@@ -344,7 +341,7 @@ We will now employ a grid search method to fine-tune the parameters \texttt{hidd
 
 Upon examining the table, we observe that \texttt{hidden\_dims} and \texttt{reg} have slightly less impact on the loss compared to \texttt{learning\_rate}. The optimal learning rate may fall around $1e^{-2}$ since their validation accuracy are the highest on average.
 
-To further fine-tune these parameters, we'll utilize a random search. For simplicity of visualization, we'll set the hidden dimensions as $[128, 64]$, randomly sample regularization values from $[1e^{-2.5}, 1e^{-2}]$, and learning rates from $[1e^{-3}, 1e^{-1.5}]$. The optimal parameters found in the former grid search are also added into the searching range of configuration. The precise search results are listed in the Table \ref{tab:random-search-results} in Appendix C and visualized in the Figure \ref{fig:random-search}.
+To further fine-tune these parameters, we'll utilize a random search. For simplicity of visualization, we'll set the hidden dimensions as $[128, 64]$, randomly sample regularization values from $[1e^{-2.5}, 1e^{-2}]$, and learning rates from $[1e^{-3}, 1e^{-1.5}]$. The optimal parameters found in the former grid search are also added into the searching range of configuration. The precise search results are listed in the Table \ref{tab:random-search-results} in Appendix B and visualized in the Figure \ref{fig:random-search}.
 
 \begin{figure}[htbp]
     \centering
@@ -384,7 +381,7 @@ Clearly, the update rules, excluding SGD, demonstrate substantial enhancements, 
 
 \subsection{Training on Full Dataset}
 
-Now that we have obtained the optimal hyper-parameters, let's train our model on the full training dataset using these parameters. We'll run the training for 60,000 iterations, with other parameters set to their default values as specified in the comments for the \texttt{Solver} and \texttt{FullConnectNet} classes. Besides, the loss history and accuracy history during the training process are visualized in the accompanying Figure \ref{fig:full-train}. The training accuracy of the model reaches $96.1\%$ upon completion of the training process.
+Now that we have obtained the optimal hyper-parameters, let's train our model on the full training dataset using these parameters. We'll run the training for 30,000 iterations, with other parameters set to their default values as specified in the comments for the \texttt{Solver} and \texttt{FullConnectNet} classes. Besides, the loss history and accuracy history during the training process are visualized in the accompanying Figure \ref{fig:full-train}. The training accuracy of the model reaches $94.8\%$ upon completion of the training process.
 
 \begin{figure}[htbp]
     \centering
@@ -398,23 +395,72 @@ Once the training is completed, we save the trained model as a \texttt{.npz} fil
 
 \section{Load \& Test}
 
-In the previous section, we successfully trained a three-layer neural network and saved the weight parameters in a \texttt{.npz} file. Now, let's load the trained model and test it on the testing dataset.
+Having successfully trained the three-layer neural network and saved the weight parameters, we now proceed to load the trained model and evaluate its performance on the testing dataset. The accuracy table is presented in Table \ref{tab:accuracy-table}.
 
-We observed that the accuracy of the model on the training dataset is $88.9\%$. Next, we will select 10 samples from each of the 10 labels and visualize them after passing through the first and second layers. This will provide us with some intuition about the trained neural network.
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+& Accuracy(Recall) & Precision & F1-score \\ \hline
+T-shirt/top & 0.847 & 0.836957 & 0.841948 \\ \hline
+Trouser & \textcolor{red}{0.973} & 0.988821 & 0.980847 \\ \hline
+Pullover & 0.812 & 0.817724  & 0.814852 \\ \hline
+Dress & 0.879 & 0.904321 & 0.891481 \\ \hline
+Coat & 0.83 & 0.793499 & 0.811339 \\ \hline
+Sandal & 0.966 & 0.974773  & 0.970367 \\ \hline
+Shirt & \textcolor{blue}{0.719} & 0.72334 & 0.721163 \\ \hline
+Sneaker & 0.959 & 0.946693 & 0.952807 \\ \hline
+Bag & 0.97 & 0.973896 & 0.971944 \\ \hline
+Ankle boot & 0.962 & 0.962963 & 0.962481 \\ \hline
+\textcolor{orange}{Total} & \textcolor{orange}{0.8917} & \textcolor{orange}{0.892299}  & \textcolor{orange}{0.891923} \\ \hline
+\end{tabular}
+\caption{Accuracy table}
+\label{tab:accuracy-table}
+\end{table}
 
+The model achieves an accuracy of $89.17\%$ on the testing dataset. It performs best on the label Trouser with an accuracy exceeding $97\%$ and worst on the label Shirt with an accuracy below $72\%$.
 
+Next, we select 10 samples from each of the 10 labels and visualize them after passing through the first and second layers. This will provide us with some intuition about the trained neural network. The visualizations are depicted in Figures \ref{fig:original-image}, \ref{fig:first-layer}, and \ref{fig:second-layer}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.4]{images/original_image.png}
+\caption{Original images}
+\label{fig:original-image}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.4]{images/first_layer.png}
+\caption{Images after the first layer}
+\label{fig:first-layer}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.4]{images/second_layer.png}
+\caption{Images after the second layer}
+\label{fig:second-layer}
+\end{figure}
+
+Upon examination, we notice that the images after the first layer for each class don't exhibit much similarity. This may be because the neural network hasn't learned sufficient information about the dataset in one single layer. However, in the images after the second layer, we can clearly observe that the network has learned distinct patterns for each class. Notably, the Trouser class shares the most similarity between the selected 10 images, while the patterns for the Shirt class are less consistent, consistent with our observations in the accuracy table.
 
 \section{Discussion}
 
-\subsection{Initialization of Weight}
+While our neural network has achieved relative good accuracy in classifying images from the Fashion-MNIST dataset, there are several areas where further refinement and exploration could potentially lead to even better performance and model robustness.
 
-\subsection{Hyper-parameters Tuning}
+\subsection{Weight Initialization}
 
-\newpage
+In this project, we briefly touched upon weight initialization in the neural network. In practice, various initialization methods like Xavier initialization and Kaiming initialization can significantly impact network performance. Exploring these methods could lead to improved results.
+
+\subsection{Hyperparameter Tuning}
+
+Although we provided hyperparameters such as \texttt{lr\_decay}, \texttt{batch\_size}, and \texttt{epochs}, we opted for their default values. However, fine-tuning these hyperparameters could potentially enhance the neural network's performance. Further investigation into optimal hyperparameter settings may yield better results.
+
 \renewcommand{\thesubsection}{\Alph{subsection}} 
+\newpage
 
 \section{Appendix}
-\subsection{File Structure}
 
 \subsection{Grid Search Results}
 
@@ -455,6 +501,7 @@ We observed that the accuracy of the model on the training dataset is $88.9\%$. 
     \label{tab:grid-search-results}
 \end{table}
 
+\newpage
 \subsection{Random Search Results}
 \begin{table}[h]
     \centering
