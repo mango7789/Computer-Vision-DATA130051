@@ -16,8 +16,8 @@ class Solver:
     procedure and train the model.
     After the train() method returns, model.params will contain the parameters
     that performed best on the validation set over the course of training.
-    In addition, the instance variable solver.loss_hist will contain a list
-    of all losses encountered during training and the instance variables
+    In addition, the instance variable solver.train_loss_hist will contain a 
+    list of all losses encountered during training and the instance variables
     solver.train_acc_hist and solver.val_acc_hist will be lists of the
     accuracies of the model on the training and validation set at each epoch.
     Example usage might look something like this:
@@ -68,6 +68,8 @@ class Solver:
           print_iter iterations.
         - verbose: Boolean; if set to false then no output will be printed
           during training.
+        - require_loss: Boolean; if set to true, then the validation loss will
+          be computed in each step.
         """
         # get the model and data
         self.model = model
@@ -88,7 +90,8 @@ class Solver:
         # unpack arguments related to output of the solver
         self.print_iter = kwargs.pop('print_iter', 10)
         self.verbose = kwargs.pop('verbose', True)
-
+        self.require_loss = kwargs.pop('require_loss', False)
+        
         # if there have other undesired arguments
         if len(kwargs) > 0:
             arguments = ", ".join('"%s"' % key for key in list(kwargs.keys()))
@@ -101,7 +104,8 @@ class Solver:
         Initialize some variables for recording the training process.
         """
         self.epoch = 0
-        self.loss_hist = []
+        self.train_loss_hist = []
+        self.val_loss_hist = []
         self.train_acc_hist = []
         self.val_acc_hist = []
         self.best_val_acc = 0
@@ -124,8 +128,13 @@ class Solver:
 
         # compute the loss and gradients
         loss, grads = self.model.loss(X_batch, y_batch)
-        self.loss_hist.append(float(loss))
-
+        self.train_loss_hist.append(float(loss))
+        
+        if self.require_loss:
+            val_mask = np.random.choice(np.arange(self.X_val.shape[0]), self.batch_size // 6, replace=False)
+            val_X, val_y = self.X_val[val_mask], self.y_val[val_mask]
+            self.val_loss_hist.append(float(self.model.loss(val_X, val_y)[0]))
+        
         # update
         for p, w in self.model.params.items():
             # skip the activation layer and loss function
@@ -183,7 +192,7 @@ class Solver:
                     time.time() - start_time,
                     t + 1,
                     num_iter, 
-                    self.loss_hist[-1]
+                    self.train_loss_hist[-1]
                 ))
 
             # learning rate decay after one epoch
@@ -241,8 +250,8 @@ class Solver:
         - X: Array of data, of shape (N, d_1, ..., d_k)
         - y: Array of labels, of shape (N,).
         Returns:
-        - acc: Scalar giving the fraction of instances that were correctly
-          classified by the model.
+        - metrics_table: A numpy matrix with each row representing the (recall, precision, f1-score)
+          scores for each label or the total average (last row).
         """
         y_pred = []
         scores = self.model.loss(X)
@@ -265,25 +274,21 @@ class Solver:
             # compute metrics for the current label
             true_positives = np.sum(np.logical_and(mask, y_pred == label))
             false_positives = np.sum(np.logical_and(np.logical_not(mask), y_pred == label))
-            false_negatives = np.sum(np.logical_and(mask, y_pred != label))
 
             accuracy[i] = np.mean(y[mask] == y_pred[mask])
-            precision[i] = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0
-            recall[i] = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0
-            f1_score[i] = 2 * (precision[i] * recall[i]) / (precision[i] + recall[i]) if (precision[i] + recall[i]) > 0 else 0
+            precision[i] = true_positives / (true_positives + false_positives)
+            f1_score[i] = 2 * (precision[i] * accuracy[i]) / (precision[i] + accuracy[i])
 
         # total metrics
         total_accuracy = np.mean(y == y_pred)
         total_precision = np.sum(precision) / num_labels
-        total_recall = np.sum(recall) / num_labels
         total_f1_score = np.sum(f1_score) / num_labels
         accuracy = np.append(accuracy, total_accuracy)
         precision = np.append(precision, total_precision)
-        recall = np.append(recall, total_recall)
         f1_score = np.append(f1_score, total_f1_score)
         
         # create table
-        metrics_table = np.column_stack((accuracy, precision, recall, f1_score))
+        metrics_table = np.column_stack((accuracy, precision, f1_score))
 
         return metrics_table
         

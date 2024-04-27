@@ -66,8 +66,12 @@ def plot_stats_single(net: Solver, window_size: int=100):
     Plot the loss function and train / validation accuracies for one single net.
     """
     plt.subplot(2, 1, 1)
-    plt.plot(net.loss_hist, 'o', label='discrete loss')
-    plt.plot([sum(net.loss_hist[i:i+window_size])/window_size for i in range(len(net.loss_hist)-window_size)], 'red', label='moving average')
+    if net.val_loss_hist == []:
+        plt.plot(net.train_loss_hist, 'o', label='discrete loss')
+        plt.plot([sum(net.train_loss_hist[i:i+window_size])/window_size for i in range(len(net.train_loss_hist)-window_size)], 'red', label='moving average')
+    else: 
+        plt.plot([sum(net.train_loss_hist[i:i+window_size])/window_size for i in range(len(net.train_loss_hist)-window_size)], 'red', label='train')
+        plt.plot([sum(net.val_loss_hist[i:i+window_size])/window_size for i in range(len(net.val_loss_hist)-window_size)], 'purple', label='val')
     plt.title('Loss history')
     plt.xlabel('Iteration')
     plt.ylabel('Loss')
