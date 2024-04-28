@@ -23,7 +23,7 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=brown,
-    urlcolor=cyan,
+    urlcolor=blue,
     citecolor=red,
 }
 \renewcommand{\vec}[1]{\mathbf{#1}}
@@ -59,9 +59,10 @@
 %----------------------------------------------------------
 
 \begin{abstract}
-This project focuses on developing and training a neural network for accurate classification of grayscale fashion items in the Fashion-MNIST dataset. The neural network architecture comprises three linear layers, and various components such as activation functions and loss functions are explored to optimize performance. The report details dataset downloading, architectural choices, training processes, and evaluation metrics, emphasizing the importance of meticulous design and optimization for effective neural network development in image classification tasks.
+This project focuses on developing and training a neural network to accurately classify grayscale fashion items in the Fashion-MNIST dataset. The neural network architecture consists of three linear layers, with a thorough exploration of activation functions and loss functions to optimize performance. The report covers dataset acquisition, architectural decisions, training procedures, and evaluation metrics, underscoring the importance of meticulous design and optimization in neural network development for image classification tasks. The trained model achieves a training accuracy of $94.8\%$ and a testing accuracy of $89.6\%$.
 \end{abstract}
 \keywords{Fashion-MNIST, image classification, neural network}
+
 %----------------------------------------------------------
 
 \begin{document}
@@ -74,11 +75,15 @@ This project focuses on developing and training a neural network for accurate cl
 
 \section{Introduction}
 
-\taustart{I}n this project, we aim to develop and train a fully connected neural network to classify images from the Fashion-MNIST dataset. The Fashion-MNIST dataset, curated by Zalando, comprises a collection of grayscale images representing various fashion items, along with corresponding labels indicating their respective categories. With 60,000 training examples and 10,000 test examples, this dataset serves as a standard benchmark for evaluating machine learning algorithms in the context of fashion image classification.
+\taustart{I}n this project, our goal is to train a fully connected neural network to classify images from the Fashion-MNIST dataset. Curated by Zalando, this dataset contains grayscale images of various fashion items, along with corresponding category labels. With 60,000 training examples and 10,000 test examples, Fashion-MNIST serves as a standard benchmark for fashion image classification.
 
 Our neural network consists of three linear layers, trained to learn meaningful representations and make accurate predictions. We explore various components like activation functions and training strategies to optimize performance. 
 
-The remainder of this report is structured as follows: Section 2 provides the downloading the pre-process method of the Fashion-MNIST dataset. Section 3 delves into the specifics of the neural network architecture, detailing the design choices for its components. Section 4 outlines the training process, including the selection of hyper-parameters and evaluation metrics. In Section 5, we evaluate the trained model on the test dataset and present visualizations to assess its effectiveness. Finally, Section 6 offers concluding remarks and discusses potential avenues for future research and improvement. 
+The remainder of this report is structured as follows: Section 2 provides the dataset acquisition and preprocessing method. Section 3 delves into the specifics of the neural network architecture, detailing the design choices for its components. Section 4 outlines the training process, including the selection of hyperparameters and evaluation metrics. In Section 5, we evaluate the trained model on the test dataset and present visualizations to assess its effectiveness. Finally, Section 6 discusses potential avenues for future improvement. 
+
+\textbf{Note: You can find the project files in the \href{https://github.com/mango7789/Computer-Vision-HW1}{GitHub repo} and the model parameters in the \href{https://drive.google.com/file/d/1fHbpA-FtWAH-j2v-awv-D9p3sIjMfqLW/view?usp=drive_link}{Google Drive}. For instructions on how to train and test the neural network, please refer to the readme file.}
+
+
 
 \section{Dataset}
 
@@ -109,8 +114,6 @@ Regarding the backward pass, the input of the backward function is \texttt{dout}
     \d\vec{W} = \vec{X}^{\top} \cdot \d\vec{Y} \tag{3.1.3}
 \end{equation}
 For bias $\vec{b}$, the derivative involves summing \texttt{dout} over the first dimension. 
-
-You can observe that the shapes of these matrices match perfectly. The same technique can be applied to other following linear layers. Feel free to refer to my code in \texttt{linear\_layer.py} to see the details of implementation.
 
 
 \subsection{Activation Functions}
@@ -223,7 +226,7 @@ dx /= N
 
 \subsection{Other Parameters}
 
-In addition to the model architecture, such as linear and activation layers, neural networks often involve hyper-parameters such as \texttt{hidden\_dims}, \texttt{reg}, and \texttt{weight\_scale}. 
+In addition to the model architecture, such as linear and activation layers, neural networks often involve hyperparameters such as \texttt{hidden\_dims}, \texttt{reg}, and \texttt{weight\_scale}. 
 
 For \texttt{hidden\_dims} and \texttt{reg}, they determine the size of the hidden layers and serve as a regularization parameter that helps prevent overfitting by penalizing large weights in the model respectively. In the next section, we'll discuss how grid search is used to find the optimal values of them.
 
@@ -308,7 +311,7 @@ After 9 epochs of training (approximately 1800 iterations), the model achieved p
 
 \subsection{Search Best Configuration}
 
-The process of searching the best configuration is divided into three subsections. First, the model will undergo training for 2000 iterations using 9 different combinations of activation functions while keeping other parameters constant to find the best combination, which can be seen as a greedy search. Subsequently, we will implement a grid search method to find the best hyper-parameters \texttt{reg}, \texttt{learning\_rate}, and \texttt{hidden\_dims}. Finally, we will experiment with 4 different update rules mentioned in section 4.1.2 and compare their performance.
+The process of searching the best configuration is divided into three subsections. First, the model will undergo training for 2000 iterations using 9 different combinations of activation functions while keeping other parameters constant to find the best combination, which can be seen as a greedy search. Subsequently, we will implement a grid search method to find the best hyperparameters \texttt{reg}, \texttt{learning\_rate}, and \texttt{hidden\_dims}. Finally, we will experiment with 4 different update rules mentioned in section 4.1.2 and compare their performance.
 
 
 \subsubsection{Combinations Of Activation Functions}
@@ -335,13 +338,13 @@ Based on the results, we observe that the top three performing combinations are 
 Furthermore, it's noteworthy that when \texttt{ReLU} is exclusively applied in the second layer, performance degradation occurs. This observation suggests neural network saturation after the first activation layer if it's not implemented with \texttt{ReLU}. Consequently, we will proceed with the combination ['ReLU', 'ReLU'] in the subsequent sections.
 
 
-\subsubsection{Tune Hyper-parameters}
+\subsubsection{Tune Hyperparameters}
 
-We will now employ a grid search method to fine-tune the parameters \texttt{hidden\_dims}, \texttt{learning\_rate}, and \texttt{reg}. Given a training dataset size of 60,000 with 10 labels, and to ensure generality and computational feasibility, we'll explore combinations of hidden dimensions such as 128, 64, and 48. For the remaining parameters, we'll adopt empirically optimal values. The results of the grid search are presented in the Table \ref{tab:grid-search-results} in Appendix A.
+We will now employ a grid search method to fine-tune the parameters \texttt{hidden\_dims}, \texttt{learning\_rate}, and \texttt{reg}. Given a training dataset size of 60,000 with 10 labels, and to ensure generality and computational feasibility, we'll explore combinations of hidden dimensions such as 128, 64, and 48. For the remaining parameters, we'll adopt empirically optimal values. The results of the grid search are presented in the Table \ref{tab:grid-search-results} in Appendix \ref{subsec:grid-table}.
 
 Upon examining the table, we observe that \texttt{hidden\_dims} and \texttt{reg} have slightly less impact on the loss compared to \texttt{learning\_rate}. The optimal learning rate may fall around $1e^{-2}$ since their validation accuracy are the highest on average.
 
-To further fine-tune these parameters, we'll utilize a random search. For simplicity of visualization, we'll set the hidden dimensions as $[128, 64]$, randomly sample regularization values from $[1e^{-2.5}, 1e^{-2}]$, and learning rates from $[1e^{-3}, 1e^{-1.5}]$. The optimal parameters found in the former grid search are also added into the searching range of configuration. The precise search results are listed in the Table \ref{tab:random-search-results} in Appendix B and visualized in the Figure \ref{fig:random-search}.
+To further fine-tune these parameters, we'll utilize a random search. For simplicity of visualization, we'll set the hidden dimensions as $[128, 64]$, randomly sample regularization values from $[1e^{-2.5}, 1e^{-2}]$, and learning rates from $[1e^{-3}, 1e^{-1.5}]$. The optimal parameters found in the former grid search are also added into the searching range of configuration. The precise search results are listed in the Table \ref{tab:random-search-results} in Appendix \ref{subsec:random-table} and visualized in the Figure \ref{fig:random-search}.
 
 \begin{figure}[htbp]
     \centering
@@ -381,7 +384,7 @@ Clearly, the update rules, excluding SGD, demonstrate substantial enhancements, 
 
 \subsection{Training on Full Dataset}
 
-Now that we have obtained the optimal hyper-parameters, let's train our model on the full training dataset using these parameters. We'll run the training for 30,000 iterations, with other parameters set to their default values as specified in the comments for the \texttt{Solver} and \texttt{FullConnectNet} classes. Besides, the loss history and accuracy history during the training process are visualized in the accompanying Figure \ref{fig:full-train}. The training accuracy of the model reaches $94.8\%$ upon completion of the training process.
+Now that we have obtained the optimal hyperparameters, let's train our model on the full training dataset using these parameters. We'll run the training for 30,000 iterations, with other parameters set to their default values as specified in the comments for the \texttt{Solver} and \texttt{FullConnectNet} classes. Besides, the loss history and accuracy history during the training process are visualized in the accompanying Figure \ref{fig:full-train}. The training accuracy of the model reaches $94.8\%$ upon completion of the training process.
 
 \begin{figure}[htbp]
     \centering
@@ -395,55 +398,71 @@ Once the training is completed, we save the trained model as a \texttt{.npz} fil
 
 \section{Load \& Test}
 
-Having successfully trained the three-layer neural network and saved the weight parameters, we now proceed to load the trained model and evaluate its performance on the testing dataset. The accuracy table is presented in Table \ref{tab:accuracy-table}.
+Having successfully trained the three-layer neural network and saved the weight parameters, we now proceed to load the trained model and evaluate its performance on the testing dataset. The accuracy table is presented in Table \ref{tab:accuracy-table} and the confusion matrix is visualized in Figure \ref{fig:confusion-matrix}.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{|c|c|c|c|}
-\hline
-& Accuracy(Recall) & Precision & F1-score \\ \hline
-T-shirt/top & 0.847 & 0.836957 & 0.841948 \\ \hline
-Trouser & \textcolor{red}{0.973} & 0.988821 & 0.980847 \\ \hline
-Pullover & 0.812 & 0.817724  & 0.814852 \\ \hline
-Dress & 0.879 & 0.904321 & 0.891481 \\ \hline
-Coat & 0.83 & 0.793499 & 0.811339 \\ \hline
-Sandal & 0.966 & 0.974773  & 0.970367 \\ \hline
-Shirt & \textcolor{blue}{0.719} & 0.72334 & 0.721163 \\ \hline
-Sneaker & 0.959 & 0.946693 & 0.952807 \\ \hline
-Bag & 0.97 & 0.973896 & 0.971944 \\ \hline
-Ankle boot & 0.962 & 0.962963 & 0.962481 \\ \hline
-\textcolor{orange}{Total} & \textcolor{orange}{0.8917} & \textcolor{orange}{0.892299}  & \textcolor{orange}{0.891923} \\ \hline
+    \hline
+                &   Accuracy(Recall) &   Precision &   F1-score \\ \hline
+    T-shirt/top &             0.85   &  0.843254   &   0.846614 \\ \hline
+    Trouser     &             0.974  &  0.986829   &   0.980372 \\ \hline
+    Pullover    &             0.823  &  0.809243   &   0.816063 \\ \hline
+    Dress       &             0.898  &  0.887352   &   0.892644 \\ \hline
+    Coat        &             0.819  &  0.81982    &   0.81941  \\ \hline
+    Sandal      &             \textcolor{red}{0.976}  &  0.973081   &   0.974538 \\ \hline
+    Shirt       &             \textcolor{blue}{0.726}  &  0.751553   &   0.738555 \\ \hline
+    Sneaker     &             0.956  &  0.955045   &   0.955522 \\ \hline
+    Bag         &             \textcolor{red}{0.976}  &  0.975025   &   0.975512 \\ \hline
+    Ankle boot  &             0.966  &  0.960239   &   0.963111 \\ \hline
+    \textcolor{orange}{Total}       &  \textcolor{orange}{0.8964}  &  \textcolor{orange}{0.896144}   &   \textcolor{orange}{0.896234} \\ \hline
 \end{tabular}
 \caption{Accuracy table}
 \label{tab:accuracy-table}
 \end{table}
 
-The model achieves an accuracy of $89.17\%$ on the testing dataset. It performs best on the label Trouser with an accuracy exceeding $97\%$ and worst on the label Shirt with an accuracy below $72\%$.
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.38]{images/confusion_matrix.png}
+\caption{Confusion matrix}
+\label{fig:confusion-matrix}
+\end{figure}
+
+The model achieves an accuracy of $89.64\%$ on the testing dataset. It performs best on the label Sandal and Bag with an accuracy exceeding $97.5\%$ and worst on the label Shirt with an accuracy below $73\%$.
 
 Next, we select 10 samples from each of the 10 labels and visualize them after passing through the first and second layers. This will provide us with some intuition about the trained neural network. The visualizations are depicted in Figures \ref{fig:original-image}, \ref{fig:first-layer}, and \ref{fig:second-layer}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.4]{images/original_image.png}
+\includegraphics[scale=0.43]{images/original_image.png}
 \caption{Original images}
 \label{fig:original-image}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.4]{images/first_layer.png}
+\includegraphics[scale=0.43]{images/first_layer.png}
 \caption{Images after the first layer}
 \label{fig:first-layer}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[scale=0.4]{images/second_layer.png}
+\includegraphics[scale=0.43]{images/second_layer.png}
 \caption{Images after the second layer}
 \label{fig:second-layer}
 \end{figure}
 
-Upon examination, we notice that the images after the first layer for each class don't exhibit much similarity. This may be because the neural network hasn't learned sufficient information about the dataset in one single layer. However, in the images after the second layer, we can clearly observe that the network has learned distinct patterns for each class. Notably, the Trouser class shares the most similarity between the selected 10 images, while the patterns for the Shirt class are less consistent, consistent with our observations in the accuracy table.
+Upon inspection, it's evident that the images after the first layer for each class lack significant similarity. This may be attributed to the neural network's insufficient learning of dataset features within a single layer. However, in the images after the second layer, distinct patterns for each class become apparent. Notably, the Sandal and Bag classes exhibit the most similarity among the selected 10 images, while the patterns for the Shirt class are less consistent, consistent with the observations in the accuracy table.
+
+Lastly, the weights and biases of the trained neural network are depicted in Figure \ref{fig:weight-biases}. It can be observed that the weights in each element of $\vec{W}_1$ and $\vec{W}_2$ are relatively smaller compared to $\vec{W}_3$, possibly due to the regularization penalty imposed on the neural network and the gradient flow.
+
+\begin{figure}[]
+\centering
+\includegraphics[scale=0.4]{images/weight_biases.png}
+\caption{Weights and biases of the network}
+\label{fig:weight-biases}
+\end{figure}
 
 \section{Discussion}
 
@@ -462,7 +481,7 @@ Although we provided hyperparameters such as \texttt{lr\_decay}, \texttt{batch\_
 
 \section{Appendix}
 
-\subsection{Grid Search Results}
+\subsection{Grid Search Results} \label{subsec:grid-table}
 
 \begin{table}[h]
     \centering
@@ -502,7 +521,7 @@ Although we provided hyperparameters such as \texttt{lr\_decay}, \texttt{batch\_
 \end{table}
 
 \newpage
-\subsection{Random Search Results}
+\subsection{Random Search Results} \label{subsec:random-table}
 \begin{table}[h]
     \centering
     \begin{tabular}{|c|c|c|}
@@ -534,23 +553,12 @@ Although we provided hyperparameters such as \texttt{lr\_decay}, \texttt{batch\_
     \label{tab:random-search-results}
 \end{table}
 					
-% %----------------------------------------------------------
+%----------------------------------------------------------
 
-% \addcontentsline{toc}{section}{References}
-% \printbibliography
+\addcontentsline{toc}{section}{References}
+\printbibliography
 
-% %----------------------------------------------------------
+%----------------------------------------------------------
 
-% \begin{center}
-% 	\vskip10pt
-% 	Enjoy writing with tau \LaTeX\ class $\blacksmiley$ \\ 
-% 	\vskip10pt
-% 	\textit{Contact:} \\
-% 	\faLink\ \href{https://sites.google.com/view/memo-notess/p%C3%A1gina-principal}{https://sites.google.com/memo-notess} \\
-% 	\faEnvelope[regular]\ memo.notess1@gmail.com \\
-% 	\faInstagram\ memo.notess\\
-% \end{center}
-
-% %----------------------------------------------------------
 
 \end{document}
