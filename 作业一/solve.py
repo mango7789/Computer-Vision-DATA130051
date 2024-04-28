@@ -22,10 +22,10 @@ class Solver:
     accuracies of the model on the training and validation set at each epoch.
     Example usage might look something like this:
     data = {
-        'X_train': # training data
-        'y_train': # training labels
-        'X_val': # validation data
-        'y_val': # validation labels
+        'X_train':  # training data
+        'y_train':  # training labels
+        'X_val':    # validation data
+        'y_val':    # validation labels
     }
     model = FullConnectNet(hidden_size=100, reg=10)
     solver = Solver(
@@ -37,8 +37,8 @@ class Solver:
             },
             lr_decay=0.9,
             num_epochs=10, 
-            batch_size=100,
-            print_iter=100,
+            batch_size=64,
+            print_iter=500,
         )
     solver.train()
     """
@@ -130,6 +130,7 @@ class Solver:
         loss, grads = self.model.loss(X_batch, y_batch)
         self.train_loss_hist.append(float(loss))
         
+        # compute the validation loss if required
         if self.require_loss:
             val_mask = np.random.choice(np.arange(self.X_val.shape[0]), self.batch_size // 6, replace=False)
             val_X, val_y = self.X_val[val_mask], self.y_val[val_mask]
@@ -227,31 +228,47 @@ class Solver:
                         else:
                             self.best_params[k] = np.copy(v)
 
-            # replace the parameters with the best parameters
-            self.model.params = self.best_params
-
     def save(self, path: str):
         """
-        Save the best model
+        Save the model parameters in a `.npz` file in the `model` directory.
+
+        Inputs:
+        - path: The file name of the zipped model parmeters file.
         """
-        self.model.save(path)
+        save_params = {
+            'reg': self.model.reg,
+            'num_layers': self.model.num_layers,
+            'params': self.best_params
+        }
+        os.makedirs('model', exist_ok=True)
+        path = os.path.join('model', path)
+        np.savez(path, **save_params)
+        print("Model has been saved in {}".format(path))
 
     def load(self, path: str):
         """
-        Load the pre-trained model in the given path
+        Load the model parameters from a `.npy` file in the `model` directory.
+
+        Inputs:
+        - path: The file name of the zipped model parmeters file.
         """
-        self.model.load(path)
+        save_params = np.load(os.path.join('model', path), allow_pickle=True)
+        self.model.reg = save_params['reg']
+        self.model.num_layers = save_params['num_layers']
+        self.model.params = save_params['params'][()]
+
+        print("Successfully load model file: {}".format(path))
         
     def test_accuracy_table(self, X: np.array, y: np.array):
         """
-        Provide an accuracy table of the model on the provided data. Like the one 
-        offered by `sklearn.metrics`
+        Provide an accuracy table and confusion matrix of the model on the provided data. 
         Inputs:
         - X: Array of data, of shape (N, d_1, ..., d_k)
         - y: Array of labels, of shape (N,).
         Returns:
         - metrics_table: A numpy matrix with each row representing the (recall, precision, f1-score)
           scores for each label or the total average (last row).
+        - confusion_matrix: The confusion matrix for the predicted labels.
         """
         y_pred = []
         scores = self.model.loss(X)
@@ -264,8 +281,8 @@ class Solver:
         # initialize arrays to store metrics
         accuracy = np.zeros(num_labels)
         precision = np.zeros(num_labels)
-        recall = np.zeros(num_labels)
         f1_score = np.zeros(num_labels)
+        confusion_matrix = np.zeros((num_labels, num_labels), dtype=int)
 
         for i, label in enumerate(unique_labels):
             # mask to select instances with the current label
@@ -278,6 +295,11 @@ class Solver:
             accuracy[i] = np.mean(y[mask] == y_pred[mask])
             precision[i] = true_positives / (true_positives + false_positives)
             f1_score[i] = 2 * (precision[i] * accuracy[i]) / (precision[i] + accuracy[i])
+            
+            # update confusion matrix
+            for j, pred_label in enumerate(unique_labels):
+                confusion_matrix[i, j] = np.sum(np.logical_and(mask, y_pred == pred_label))
+
 
         # total metrics
         total_accuracy = np.mean(y == y_pred)
@@ -290,5 +312,5 @@ class Solver:
         # create table
         metrics_table = np.column_stack((accuracy, precision, f1_score))
 
-        return metrics_table
+        return metrics_table, confusion_matrix
         

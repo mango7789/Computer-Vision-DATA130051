@@ -95,34 +95,3 @@ class FullConnectNet:
             grads[f'W{j}'] += 2 * self.reg * self.params[f'W{j}']
 
         return loss, grads
-
-    def save(self, path: str):
-        """
-        Save the model parameters in a `.npz` file in the `model` directory.
-
-        Inputs:
-        - path: The file name of the zipped model parmeters file.
-        """
-        save_params = {
-            'reg': self.reg,
-            'num_layers': self.num_layers,
-            'params': self.params
-        }
-        os.makedirs('model', exist_ok=True)
-        path = os.path.join('model', path)
-        np.savez(path, **save_params)
-        print("Model has been saved in {}".format(path))
-
-    def load(self, path: str):
-        """
-        Load the model parameters from a `.npy` file in the `model` directory.
-
-        Inputs:
-        - path: The file name of the zipped model parmeters file.
-        """
-        save_params = np.load(os.path.join('model', path), allow_pickle=True)
-        self.reg = save_params['reg']
-        self.num_layers = save_params['num_layers']
-        self.params = save_params['params'][()]
-
-        print("Successfully load model file: {}".format(path))

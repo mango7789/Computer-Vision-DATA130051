@@ -115,16 +115,23 @@ def show_net_weights(net: Solver):
     Visualize the weights of the network
     """
     weights = [val for key, val in net.model.params.items() if key[0] == 'W']
-    max_shape = np.max([weight.shape for weight in weights], axis=0)
-    fig, axs = plt.subplots(1, len(weights), figsize=(15, 5))
-    # subplots
-    for index, weight in enumerate(weights):
-        img = axs[index].imshow(weight, cmap='inferno')
-        axs[index].set_title('W{}'.format(index + 1))
-    plt.colorbar(img, ax=axs.ravel().tolist(), shrink=0.65)
-    plt.suptitle('Weights of the network')
+    biases = [val for key, val in net.model.params.items() if key[0] == 'b']
+    
+    num_params = len(weights)
+    fig, axs = plt.subplots(num_params, 2, figsize=(15, 15))
+    
+    # Plot weights and biases
+    for index, (weight, bias) in enumerate(zip(weights, biases)):
+        # Plot weight matrix
+        img = axs[index, 0].imshow(weight, cmap='viridis', vmin=np.min(weight), vmax=np.max(weight))
+        plt.colorbar(img, ax=axs[index, :].ravel().tolist())
+        axs[index, 0].set_title('W{}'.format(index + 1))
+        
+        # Plot bias vector
+        axs[index, 1].bar(np.arange(bias.shape[0]), bias)
+        axs[index, 1].set_title('b{}'.format(index + 1))
+        
     plt.show()
-    print([weight.shape for weight in weights])
 
 def train_val_split(data: Dict, k: int=5):
     """
