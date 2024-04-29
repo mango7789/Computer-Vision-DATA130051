@@ -428,7 +428,9 @@ Having successfully trained the three-layer neural network and saved the weight 
 \label{fig:confusion-matrix}
 \end{figure}
 
-The model achieves an accuracy of $89.64\%$ on the testing dataset. It performs best on the label Sandal and Bag with an accuracy exceeding $97.5\%$ and worst on the label Shirt with an accuracy below $73\%$.
+The model achieves an accuracy of $89.64\%$ on the testing dataset. It performs exceptionally well on the labels "Sandal" and "Bag," with accuracies exceeding $97.5\%$. However, it struggles with the "Shirt" category, achieving an accuracy below $73\%$.
+
+Examining the confusion matrix reveals notable misclassifications between "T-shirt/top" and "Shirt," as well as between "Pullover" and "Coat." These errors likely stem from the similarities in their shapes. Conversely, "Sandal" and "Bag" exhibit unique shapes, contributing to their high accuracy. This demonstrates that our neural network has indeed gleaned insightful knowledge about the dataset.
 
 Next, we select 10 samples from each of the 10 labels and visualize them after passing through the first and second layers. This will provide us with some intuition about the trained neural network. The visualizations are depicted in Figures \ref{fig:original-image}, \ref{fig:first-layer}, and \ref{fig:second-layer}.
 
@@ -455,7 +457,7 @@ Next, we select 10 samples from each of the 10 labels and visualize them after p
 
 Upon inspection, it's evident that the images after the first layer for each class lack significant similarity. This may be attributed to the neural network's insufficient learning of dataset features within a single layer. However, in the images after the second layer, distinct patterns for each class become apparent. Notably, the Sandal and Bag classes exhibit the most similarity among the selected 10 images, while the patterns for the Shirt class are less consistent, consistent with the observations in the accuracy table.
 
-Lastly, the weights and biases of the trained neural network are depicted in Figure \ref{fig:weight-biases}. It can be observed that the weights in each element of $\vec{W}_1$ and $\vec{W}_2$ are relatively smaller compared to $\vec{W}_3$, possibly due to the regularization penalty imposed on the neural network and the gradient flow.
+Lastly, the weights and biases of the trained neural network are depicted in Figure \ref{fig:weight-biases}.
 
 \begin{figure}[]
 \centering
