@@ -58,6 +58,7 @@ git clone https://github.com/mango7789/Computer-Vision-HW1.git
     ```bash
     # use help to check the provided args
     python main.py train -h
+
     options:
     -h, --help            show this help message and exit
     --hidden_dims HIDDEN_DIMS [HIDDEN_DIMS ...]
@@ -86,7 +87,6 @@ git clone https://github.com/mango7789/Computer-Vision-HW1.git
     ```bash
     # use help to check the provided args
     python main.py test -h 
-    usage: Train and test a three layer neural network on the Fashion-MNIST dataset test [-h] [--path PATH]
 
     options:
     -h, --help   show this help message and exit
