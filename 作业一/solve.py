@@ -88,7 +88,7 @@ class Solver:
         self.iters = kwargs.pop('iters', 6000)
 
         # unpack arguments related to output of the solver
-        self.print_iter = kwargs.pop('print_iter', 10)
+        self.print_iter = kwargs.pop('print_iter', 100)
         self.verbose = kwargs.pop('verbose', True)
         self.require_loss = kwargs.pop('require_loss', False)
         

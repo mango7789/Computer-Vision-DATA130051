@@ -10,7 +10,7 @@ class FullConnectNet:
             activation: List[Literal['relu', 'tanh', 'sigmoid']] | str=['relu'],
             input_dim: int=1*28*28,
             num_classes: int=10,
-            reg: float=0.0,
+            reg: float=0.01,
             weight_scale: float=0.01,
         ):
         """

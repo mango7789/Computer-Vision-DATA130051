@@ -4,7 +4,7 @@ def get_optim_func(method: str):
     """
     Create a new optimization method based on the input of method. 
     Inputs:
-    - method: should be in ['sgd', 'sgd_momentum', 'rmsprop', 'adam'](ignore case).
+    - method: should be in ['sgd', 'sgd_momentum', 'rmsprop', 'adam'](ignore cases).
     """
     method = method.lower()
     if method == 'sgd':
