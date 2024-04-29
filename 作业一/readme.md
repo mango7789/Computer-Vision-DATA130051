@@ -55,6 +55,10 @@ git clone https://github.com/mango7789/Computer-Vision-HW1.git
 
 - 在`main.ipynb`中根据说明运行cell中的代码
 - 在终端中运行
+  - 安装依赖库
+    ```bash
+    pip install -r requirements.txt
+    ``` 
   - 训练
     ```bash
     # use help to check the provided args

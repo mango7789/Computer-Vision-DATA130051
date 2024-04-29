@@ -3,45 +3,6 @@ from full_connect_network import FullConnectNet
 from optimization import get_optim_func
 
 class Solver:
-    """
-    A Solver encapsulates all the logic necessary for training classification
-    models. The Solver performs stochastic gradient descent using different
-    update rules.
-    The solver accepts both training and validation data and labels so it can
-    periodically check classification accuracy on both training and validation
-    data to watch out for overfitting.
-    To train a model, you will first construct a Solver instance, passing the
-    model, dataset, and various options (learning rate, batch size, etc) to the
-    constructor. You will then call the train() method to run the optimization
-    procedure and train the model.
-    After the train() method returns, model.params will contain the parameters
-    that performed best on the validation set over the course of training.
-    In addition, the instance variable solver.train_loss_hist will contain a 
-    list of all losses encountered during training and the instance variables
-    solver.train_acc_hist and solver.val_acc_hist will be lists of the
-    accuracies of the model on the training and validation set at each epoch.
-    Example usage might look something like this:
-    data = {
-        'X_train':  # training data
-        'y_train':  # training labels
-        'X_val':    # validation data
-        'y_val':    # validation labels
-    }
-    model = FullConnectNet(hidden_size=100, reg=10)
-    solver = Solver(
-            model, 
-            data,
-            update_rule='sgd',
-            optim_config={
-                'learning_rate': 1e-3,
-            },
-            lr_decay=0.9,
-            num_epochs=10, 
-            batch_size=64,
-            print_iter=500,
-        )
-    solver.train()
-    """
     def __init__(self, model: FullConnectNet, data: Dict, **kwargs) -> None:
         """
         Construct a new Solver instance.
