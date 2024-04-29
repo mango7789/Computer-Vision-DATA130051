@@ -41,6 +41,7 @@ Three Layer Net (按推荐阅读顺序[从上往下])
 
 ```bash
 mkdir Computer-Vision-HW1
+cd Computer-Vision-HW1 
 git clone https://github.com/mango7789/Computer-Vision-HW1.git
 ```
 
