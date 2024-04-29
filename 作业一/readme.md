@@ -13,8 +13,9 @@ Three Layer Net (按推荐阅读顺序[从上往下])
 ├──optimization.py          # 优化器
 ├──solver.py                # 求解器，包括训练、预测、保存模型、导入模型
 ├──utils.py                 # 可视化神经网络相关函数
-├──main.py                  # 主函数，定义parser
+├──main.py                  # 主函数，定义parser，用于在终端运行代码
 ├──main.ipynb               # 包含训练、导入、测试的notebook文件
+├──main.html                # notebook文件的html形式
 ├──data                     # 数据集
     ├──train-images-idx3-ubyte.gz   # 训练图片
     ├──train-labels-idx1-ubyte.gz   # 训练标签
