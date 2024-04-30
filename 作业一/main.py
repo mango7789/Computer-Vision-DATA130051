@@ -19,9 +19,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser("Train and test a three layer neural network on the Fashion-MNIST dataset\n")
     subparsers = parser.add_subparsers(title='mode', dest='mode')
     
-    ###########################################################################################
-    #########                               train                                   ###########
-    ###########################################################################################
+    #######################################################################
+    #                             train                                   #
+    #######################################################################
 
     train_parser = subparsers.add_parser('train')
     # parameters of the three layer neural network
@@ -43,9 +43,9 @@ if __name__ == "__main__":
     train_parser.add_argument("--batch_size"   , type=int  , default=64                                               , help="Batch size, default is 64.")
     train_parser.add_argument("--save"         , type=bool , default=False                                            , help="The trained model should be saved or not, default is False.")
     
-    ###########################################################################################
-    #########                               test                                    ###########
-    ###########################################################################################
+    #######################################################################
+    #                             test                                    #
+    #######################################################################
     
     test_parser = subparsers.add_parser('test')
     test_parser.add_argument("--path", type=str, default='fcnn.npz', help="The path of the trained model in dir ./model.")

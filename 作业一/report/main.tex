@@ -457,11 +457,11 @@ Next, we select 10 samples from each of the 10 labels and visualize them after p
 
 Upon inspection, it's evident that the images after the first layer for each class lack significant similarity. This may be attributed to the neural network's insufficient learning of dataset features within a single layer. However, in the images after the second layer, distinct patterns for each class become apparent. Notably, the Sandal and Bag classes exhibit the most similarity among the selected 10 images, while the patterns for the Shirt class are less consistent, consistent with the observations in the accuracy table.
 
-Lastly, the weights and biases of the trained neural network are depicted in Figure \ref{fig:weight-biases}.
+Lastly, the weights and biases of the trained neural network are depicted in Figure \ref{fig:weight-biases}. We observe that the absolute values of $\vec{W}_1$ and $\vec{W}_2$ are slightly lower than those of $\vec{W}_3$, potentially due to the combined effect of the $l_2$ penalty imposed on the weight matrices and gradient flow. Additionally, a discernible pattern emerges in each row or column of $\vec{W}_1$, characterized by alternating positive and negative values. This behavior suggests that the weight matrix may be capturing information related to edge detection in the image data. However, for $\vec{W}_2$ and $\vec{W}_3$, the patterns appear random and lack a clear explanation.
 
 \begin{figure}[]
 \centering
-\includegraphics[scale=0.4]{images/weight_biases.png}
+\includegraphics[scale=0.3]{images/weight_biases.png}
 \caption{Weights and biases of the network}
 \label{fig:weight-biases}
 \end{figure}

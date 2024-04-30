@@ -19,7 +19,7 @@ class FullConnectNet:
         Inputs:
         - hidden_dims: A list of integers giving the size of each
           hidden layer.
-		    - types: A list of strings giving the type of each activation function.
+		- types: A list of strings giving the type of each activation function.
         - input_dim: An integer giving the size of the input.
         - num_classes: An integer giving the number of classes to classify.
         - reg: Scalar giving L2 regularization strength.

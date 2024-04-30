@@ -120,14 +120,14 @@ def show_net_weights(net: Solver):
     num_params = len(weights)
     fig, axs = plt.subplots(num_params, 2, figsize=(15, 15))
     
-    # Plot weights and biases
+    # plot weights and biases
     for index, (weight, bias) in enumerate(zip(weights, biases)):
-        # Plot weight matrix
-        img = axs[index, 0].imshow(weight, cmap='viridis', vmin=np.min(weight), vmax=np.max(weight))
+        # plot weight matrix
+        img = axs[index, 0].imshow(weight, cmap='viridis', vmin=np.min(weight), vmax=np.max(weight), aspect='auto')
         plt.colorbar(img, ax=axs[index, :].ravel().tolist())
         axs[index, 0].set_title('W{}'.format(index + 1))
         
-        # Plot bias vector
+        # plot bias vector
         axs[index, 1].bar(np.arange(bias.shape[0]), bias)
         axs[index, 1].set_title('b{}'.format(index + 1))
         
@@ -139,7 +139,6 @@ def train_val_split(data: Dict, k: int=5):
     """
     train_samples = len(data['X_train'])
     val_samples = train_samples // k
-    accuracy = 0.
     # find the indices of the validation samples
     indices = np.arange(train_samples)
     np.random.shuffle(indices)

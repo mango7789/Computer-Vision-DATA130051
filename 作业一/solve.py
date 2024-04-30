@@ -26,10 +26,10 @@ class Solver:
         - num_epochs: The number of epochs to run for during training.
         - iters: The number of iterations to run for the entire training.
         - print_iter: Integer; training losses will be printed every
-          print_iter iterations.
+          `print_iter` iterations.
         - verbose: Boolean; if set to false then no output will be printed
           during training.
-        - require_loss: Boolean; if set to true, then the validation loss will
+        - require_loss: Boolean; if set to true then the validation loss will
           be computed in each step.
         """
         # get the model and data
@@ -99,7 +99,7 @@ class Solver:
         
         # update
         for p, w in self.model.params.items():
-            # skip the activation layer and loss function
+            # skip the activation layer
             if 'A' in p:
                 continue
             dw = grads[p]
@@ -191,7 +191,7 @@ class Solver:
 
     def save(self, path: str):
         """
-        Save the model parameters in a `.npz` file in the `model` directory.
+        Save the model parameters as a `.npz` file in the `./model` directory.
 
         Inputs:
         - path: The file name of the zipped model parmeters file.
@@ -208,7 +208,7 @@ class Solver:
 
     def load(self, path: str):
         """
-        Load the model parameters from a `.npy` file in the `model` directory.
+        Load the model parameters from a `.npy` file in the `./model` directory.
 
         Inputs:
         - path: The file name of the zipped model parmeters file.
@@ -222,7 +222,7 @@ class Solver:
         
     def test_accuracy_table(self, X: np.array, y: np.array):
         """
-        Provide an accuracy table and confusion matrix of the model on the provided data. 
+        Provide an accuracy table and confusion matrix of the model based on the test data. 
         Inputs:
         - X: Array of data, of shape (N, d_1, ..., d_k)
         - y: Array of labels, of shape (N,).
