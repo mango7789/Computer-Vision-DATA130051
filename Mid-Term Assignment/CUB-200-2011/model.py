@@ -27,4 +27,3 @@ class CUB_ResNet_18(nn.Module):
         Forward pass of the network.
         """
         return self.resnet18(x)
-    
