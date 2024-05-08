@@ -61,14 +61,15 @@ class CUB_ImageFolder(Dataset):
         image_matrix = Image.open(os.path.join(self.root, 'images', image_path)).convert('RGB')
         if self.transform:
             image_matrix = self.transform(image_matrix)
-        # convert the returned label into a tensor
+        # convert the returned label into a tensor, here we need "minius one" to align with the 
+        # custom that Python's index starts from 0
         image_label = torch.tensor(int(image_label) - 1)
         return image_matrix, image_label
 
 
 def preprocess_data(batch_size: int=128) -> tuple[DataLoader, DataLoader]:
     """
-    Preprocess the CUB-200-2011 dataset and return the train and test batches.
+    Preprocess the CUB-200-2011 dataset and return the train and test 'DataLoader'.
     
     Args:
     - batch_size: The number of samples in one batch, default is 128.
