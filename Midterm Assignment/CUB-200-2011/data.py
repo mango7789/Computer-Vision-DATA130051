@@ -26,7 +26,7 @@ class CUB_ImageFolder(Dataset):
         self._load_dataset()
         self._get_train_test()
         
-        self.idx = self.train_idx if train else self.test_idx
+        self.idx = self.train_idx if self.train else self.test_idx
         
     def _load_dataset(self):
         """
@@ -55,7 +55,7 @@ class CUB_ImageFolder(Dataset):
         return len(self.idx) 
 
     def __getitem__(self, index):
-        image_id = self.idx[index]
+        image_id = self.idx[index] - 1
         image_path, image_label = self.images[image_id], self.labels[image_id]
         # get raw images and apply transformation
         image_matrix = Image.open(os.path.join(self.root, 'images', image_path)).convert('RGB')

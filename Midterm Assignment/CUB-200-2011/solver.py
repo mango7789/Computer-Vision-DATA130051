@@ -1,10 +1,22 @@
-from tqdm import tqdm
+import os
+# set the working directory
+try:
+    os.chdir('./Midterm Assignment/CUB-200-2011')
+except:
+    pass
+# set the environment variable
+os.putenv('TF_ENABLE_ONEDNN_OPTS', '0')
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
+torch.manual_seed(509)
+
+from tqdm import tqdm
 from data import preprocess_data
 from model import CUB_ResNet_18
+
 
 def get_data_model_criterion(pretrain: bool=True):
     """
@@ -14,14 +26,14 @@ def get_data_model_criterion(pretrain: bool=True):
     train_loader, test_loader = preprocess_data()
 
     # get the pretrained model
-    model = CUB_ResNet_18()
+    model = CUB_ResNet_18(pretrain=pretrain)
 
     # define loss function
-    criterion = nn.CrossEntropyLoss(pretrain=pretrain)
+    criterion = nn.CrossEntropyLoss()
     
     return train_loader, test_loader, model, criterion
 
-def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True):
+def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs):
     """
     Train the modified ResNet-18 model using the CUB-200-2011 dataset. Some hyper-parameters can be modified here.
     
@@ -34,30 +46,35 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
     # get the dataset, model and loss criterion
     train_loader, test_loader, model, criterion = get_data_model_criterion(pretrain)
     
+    # move the model to CUDA (GPU)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    
+    # get the parameters of the model expect the last layer
+    former_params = [p for name, p in model.resnet18.named_parameters() if 'fc' not in name]
+    
+    # pop the hyper-parameters from the kwargs dict
+    momentum = kwargs.pop('momentum', 0.9)
+        
     # define optimizer
     optimizer = optim.SGD([
-                {'params': model.resnet18.conv1.parameters(), 'lr': fine_tuning_lr},  
-                {'params': model.resnet18.bn1.parameters(), 'lr': fine_tuning_lr},
-                {'params': model.resnet18.layer1.parameters(), 'lr': fine_tuning_lr},
-                {'params': model.resnet18.layer2.parameters(), 'lr': fine_tuning_lr},
-                {'params': model.resnet18.layer3.parameters(), 'lr': fine_tuning_lr},
-                {'params': model.resnet18.layer4.parameters(), 'lr': fine_tuning_lr},
+                {'params': former_params, 'lr': fine_tuning_lr},
                 {'params': model.resnet18.fc.parameters()}
-            ], 
-            lr=output_lr, 
+            ], lr=output_lr, momentum=momentum
         )
     
     # init the tensorboard
-    writer = SummaryWriter("Fine_Tuning_With_Pretrain", comment="-{}-{}-{}".format(num_epoch, fine_tuning_lr, output_lr))\
-                    if pretrain else SummaryWriter("Fine_Tuning_Random_Init", comment="-{}-{}-{}".format(num_epoch, fine_tuning_lr, output_lr))
-    
+    tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
+    writer = SummaryWriter(tensorboard_name, comment="-{}-{}-{}".format(num_epoch, fine_tuning_lr, output_lr))
+        
     # iterate
-    for epoch in tqdm(range(num_epoch)):
+    for epoch in range(num_epoch):
         # train
         model.train()
         running_loss = 0.0
         samples = 0
         for inputs, labels in tqdm(train_loader):
+            inputs, labels = inputs.to(device), labels.to(device)
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, labels)
@@ -67,6 +84,7 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
             running_loss += loss.item() * inputs.size(0)
         
         epoch_loss = running_loss / samples
+        print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, num_epoch, epoch_loss))
         writer.add_scalar('Train/Loss', epoch_loss, epoch)
 
         # test
@@ -75,7 +93,8 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
         total = 0
         running_loss = 0.0
         with torch.no_grad():
-            for inputs, labels in test_loader:
+            for inputs, labels in tqdm(test_loader):
+                inputs, labels = inputs.to(device), labels.to(device)
                 outputs = model(inputs)
                 _, predicted = torch.max(outputs, 1)
                 total += labels.size(0)
@@ -86,6 +105,11 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
         writer.add_scalar('Validation/Loss', epoch_loss, epoch)
         accuracy = correct / total
         writer.add_scalar('Validation/Accuracy', accuracy, epoch)
+        print("[Epoch {:>2} / {:>2}], Validation loss is {:>8.6f}, Validation accuracy is {:>8.6f}".format(
+            epoch + 1, num_epoch, epoch_loss, accuracy
+        ))
 
     # close the tensorboard
     writer.close()
+
+train_resnet_with_cub()

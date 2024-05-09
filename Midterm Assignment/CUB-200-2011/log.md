@@ -1,4 +1,4 @@
-### 2024.02.05
+### 2024.05.02
 
 - The `transforms.Normalize` transformation is commonly used in computer vision tasks, including training deep learning models. It helps to standardize the input data, making it easier for the model to learn and improving convergence during training.
 - The normalization process involves subtracting the mean and dividing by the standard deviation for each channel of the image. In this case, the mean and standard deviation values [0.485, 0.456, 0.406] and [0.229, 0.224, 0.225], respectively, are the precomputed mean and standard deviation of the ImageNet dataset. These values are commonly used for many pretrained models, including ResNet, because they were used during training of the models on the ImageNet dataset.

@@ -11,7 +11,7 @@ class CUB_ResNet_18(nn.Module):
         Args:
         - num_classes: Number of classes(labels), default is 200.
         - pretrain: Boolean, whether the paramters of ResNet-18 is pretrained or not. Default
-          is True.
+        is True.
         """
         super(CUB_ResNet_18, self).__init__()
         # initialize the parameters
