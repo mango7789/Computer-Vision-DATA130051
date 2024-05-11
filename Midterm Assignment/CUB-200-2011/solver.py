@@ -1,12 +1,3 @@
-import os
-# set the working directory
-try:
-    os.chdir('./Midterm Assignment/CUB-200-2011')
-except:
-    pass
-# set the environment variable
-os.putenv('TF_ENABLE_ONEDNN_OPTS', '0')
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -18,7 +9,7 @@ from data import preprocess_data
 from model import CUB_ResNet_18
 
 
-def get_data_model_criterion(pretrain: bool=True):
+def get_data_model_criterion(pretrain: bool=True) -> tuple:
     """
     Get the DataLoader, model and loss criterion.
     """
@@ -33,15 +24,20 @@ def get_data_model_criterion(pretrain: bool=True):
     
     return train_loader, test_loader, model, criterion
 
-def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs):
+
+def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs) -> float:
     """
-    Train the modified ResNet-18 model using the CUB-200-2011 dataset. Some hyper-parameters can be modified here.
+    Train the modified ResNet-18 model using the CUB-200-2011 dataset and return the best accuracy.
+    Some hyper-parameters can be modified here.
     
     Args:
     - num_epoch: The number of training epochs, default is 10.
     - fine_tuning_lr: Learning rate of the parameters outside the output layer, default is 0.0001.
     - output_lr: Learning rate of the parameters inside the output layer, default is 0.001.
     - pretrain: Boolean, whether the ResNet-18 model is pretrained or not. Default is True.
+    
+    Return:
+    - best_acc: The best validation accuracy during the training process.
     """
     # get the dataset, model and loss criterion
     train_loader, test_loader, model, criterion = get_data_model_criterion(pretrain)
@@ -66,6 +62,9 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
     # init the tensorboard
     tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
     writer = SummaryWriter(tensorboard_name, comment="-{}-{}-{}".format(num_epoch, fine_tuning_lr, output_lr))
+        
+    # best accuracy
+    best_acc = 0.0
         
     # iterate
     for epoch in range(num_epoch):
@@ -108,8 +107,9 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
         print("[Epoch {:>2} / {:>2}], Validation loss is {:>8.6f}, Validation accuracy is {:>8.6f}".format(
             epoch + 1, num_epoch, epoch_loss, accuracy
         ))
+        best_acc = max(best_acc, accuracy)
 
     # close the tensorboard
     writer.close()
-
-train_resnet_with_cub()
+    
+    return best_acc
