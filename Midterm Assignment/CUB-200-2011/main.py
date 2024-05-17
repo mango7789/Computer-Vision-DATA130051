@@ -11,9 +11,9 @@ from itertools import product
 from solver import train_resnet_with_cub
 
 # set hyper-parameters here
-num_epochs = [10, 15, 20, 25, 30]
+num_epochs = [10, 15, 20]
 fine_tuning_lrs = [0.0001, 0.0005, 0.01]
-output_lrs = [0.01, 0.02, 0.04, 0.06, 0.08, 0.1]
+output_lrs = [0.01, 0.02, 0.04, 0.06]
 
 configurations = list(product(num_epochs, fine_tuning_lrs, output_lrs))
 

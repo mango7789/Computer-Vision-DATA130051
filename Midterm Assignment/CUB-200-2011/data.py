@@ -82,7 +82,7 @@ def preprocess_data(batch_size: int=128) -> tuple[DataLoader, DataLoader]:
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
 
-    data_dir = './Dataset/CUB_200_2011'
+    data_dir = './data/CUB_200_2011'
 
     # load the dataset and extract the train/test Dataloader
     train_dataset = CUB_ImageFolder(data_dir, transform=transform)
