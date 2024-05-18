@@ -68,6 +68,9 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
     store_best_acc, count = [0 for _ in range(len(num_epochs))], 0
     max_num_epoch = max(num_epochs)
     
+    print("=" * 70)
+    print("Training with configuration ({:>6.4f}, {:>6.4f})".format(fine_tuning_lr, output_lr))
+    
     # iterate
     for epoch in range(max_num_epoch):
         # train
