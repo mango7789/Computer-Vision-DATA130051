@@ -25,13 +25,13 @@ def get_data_model_criterion(pretrain: bool=True) -> tuple:
     return train_loader, test_loader, model, criterion
 
 
-def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs) -> float:
+def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs) -> list:
     """
     Train the modified ResNet-18 model using the CUB-200-2011 dataset and return the best accuracy.
     Some hyper-parameters can be modified here.
     
     Args:
-    - num_epoch: The number of training epochs, default is 10.
+    - num_epochs: A list of number of training epochs.
     - fine_tuning_lr: Learning rate of the parameters outside the output layer, default is 0.0001.
     - output_lr: Learning rate of the parameters inside the output layer, default is 0.001.
     - pretrain: Boolean, whether the ResNet-18 model is pretrained or not. Default is True.
@@ -61,13 +61,15 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
     
     # init the tensorboard
     tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
-    writer = SummaryWriter(tensorboard_name, comment="-{}-{}-{}".format(num_epoch, fine_tuning_lr, output_lr))
+    writer = SummaryWriter(tensorboard_name, comment="-{}-{}".format(fine_tuning_lr, output_lr))
         
     # best accuracy
     best_acc = 0.0
-        
+    store_best_acc, count = [0 for _ in range(len(num_epochs))], 0
+    max_num_epoch = max(num_epochs)
+    
     # iterate
-    for epoch in range(num_epoch):
+    for epoch in range(max_num_epoch):
         # train
         model.train()
         running_loss = 0.0
@@ -83,7 +85,7 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
             running_loss += loss.item() * inputs.size(0)
         
         epoch_loss = running_loss / samples
-        print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, num_epoch, epoch_loss))
+        print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, max_num_epoch, epoch_loss))
         writer.add_scalar('Train/Loss', epoch_loss, epoch)
 
         # test
@@ -105,11 +107,15 @@ def train_resnet_with_cub(num_epoch: int=10, fine_tuning_lr: float=0.0001, outpu
         accuracy = correct / total
         writer.add_scalar('Validation/Accuracy', accuracy, epoch)
         print("[Epoch {:>2} / {:>2}], Validation loss is {:>8.6f}, Validation accuracy is {:>8.6f}".format(
-            epoch + 1, num_epoch, epoch_loss, accuracy
+            epoch + 1, max_num_epoch, epoch_loss, accuracy
         ))
         best_acc = max(best_acc, accuracy)
+        
+        if epoch + 1 == num_epochs[count]:
+            store_best_acc[count] = best_acc
+            count += 1
 
     # close the tensorboard
     writer.close()
     
-    return best_acc
+    return store_best_acc
