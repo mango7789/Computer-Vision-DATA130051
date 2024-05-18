@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
-torch.manual_seed(509)
+torch.manual_seed(509) # set the random seed
 
 from tqdm import tqdm
 from data import preprocess_data
@@ -25,7 +25,7 @@ def get_data_model_criterion(pretrain: bool=True) -> tuple:
     return train_loader, test_loader, model, criterion
 
 
-def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs) -> list:
+def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs) -> list[float]:
     """
     Train the modified ResNet-18 model using the CUB-200-2011 dataset and return the best accuracy.
     Some hyper-parameters can be modified here.
@@ -37,7 +37,7 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
     - pretrain: Boolean, whether the ResNet-18 model is pretrained or not. Default is True.
     
     Return:
-    - best_acc: The best validation accuracy during the training process.
+    - best_acc: The best validation accuracy list during the training process.
     """
     # get the dataset, model and loss criterion
     train_loader, test_loader, model, criterion = get_data_model_criterion(pretrain)
@@ -67,7 +67,7 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
     best_acc = 0.0
     store_best_acc, count = [0 for _ in range(len(num_epochs))], 0
     max_num_epoch = max(num_epochs)
-    
+
     print("=" * 70)
     print("Training with configuration ({:>6.4f}, {:>6.4f})".format(fine_tuning_lr, output_lr))
     
@@ -77,7 +77,7 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
         model.train()
         running_loss = 0.0
         samples = 0
-        for inputs, labels in tqdm(train_loader):
+        for inputs, labels in train_loader:
             inputs, labels = inputs.to(device), labels.to(device)
             optimizer.zero_grad()
             outputs = model(inputs)
@@ -97,7 +97,7 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
         total = 0
         running_loss = 0.0
         with torch.no_grad():
-            for inputs, labels in tqdm(test_loader):
+            for inputs, labels in test_loader:
                 inputs, labels = inputs.to(device), labels.to(device)
                 outputs = model(inputs)
                 _, predicted = torch.max(outputs, 1)
