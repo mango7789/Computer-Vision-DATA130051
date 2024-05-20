@@ -77,8 +77,19 @@ def train_resnet_with_cub(
             ], lr=output_lr, momentum=momentum
         )
     
-    # define scheduler
-    scheduler = StepLR(optimizer, step_size=10, gamma=kwargs.pop('gamma', 0.1))
+    # scheduler step size and gamma
+    step_size = 5
+    gamma = kwargs.pop('gamma', 0.5)
+
+    # custom step scheduler
+    def custom_step_scheduler(optimizer, epoch, step_size, gamma):
+        """
+        Decay the learning rate of the second parameter group by gamma every step_size epochs.
+        """
+        if epoch % step_size == 0 and epoch > 0:
+            for index, param_group in enumerate(optimizer.param_groups):
+                if index == 1:  
+                    param_group['lr'] *= gamma
     
     # init the tensorboard
     tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
@@ -108,7 +119,7 @@ def train_resnet_with_cub(
             samples += inputs.size(0)
             running_loss += loss.item() * inputs.size(0)
         
-        scheduler.step()
+        custom_step_scheduler(optimizer, epoch, step_size, gamma)
         epoch_loss = running_loss / samples
         print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, max_num_epoch, epoch_loss))
         writer.add_scalar('Train/Loss', epoch_loss, epoch)
