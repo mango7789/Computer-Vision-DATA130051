@@ -3,7 +3,7 @@ import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim.lr_scheduler import StepLR
+from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
 from torch.utils.tensorboard import SummaryWriter
 
 from data import preprocess_data
@@ -78,7 +78,7 @@ def train_resnet_with_cub(
         )
     
     # define scheduler
-    scheduler = StepLR(optimizer, step_size=1, gamma=kwargs.pop('gamma', 0.9))
+    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=2)
     
     # init the tensorboard
     tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
@@ -90,7 +90,7 @@ def train_resnet_with_cub(
     max_num_epoch = max(num_epochs)
 
     print("=" * 70)
-    print("Training with configuration ({:>6.4f}, {:>6.4f})".format(fine_tuning_lr, output_lr))
+    print("Training with configuration ({:>7.5f}, {:>7.5f})".format(fine_tuning_lr, output_lr))
     
     # iterate
     for epoch in range(max_num_epoch):
@@ -108,7 +108,6 @@ def train_resnet_with_cub(
             samples += inputs.size(0)
             running_loss += loss.item() * inputs.size(0)
         
-        scheduler.step()
         epoch_loss = running_loss / samples
         print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, max_num_epoch, epoch_loss))
         writer.add_scalar('Train/Loss', epoch_loss, epoch)
@@ -134,6 +133,7 @@ def train_resnet_with_cub(
         print("[Epoch {:>2} / {:>2}], Validation loss is {:>8.6f}, Validation accuracy is {:>8.6f}".format(
             epoch + 1, max_num_epoch, epoch_loss, accuracy
         ))
+        scheduler.step(accuracy)
         best_acc = max(best_acc, accuracy)
         
         if epoch + 1 == num_epochs[count]:
