@@ -1,13 +1,23 @@
+import os
+import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.optim.lr_scheduler import StepLR
 from torch.utils.tensorboard import SummaryWriter
-torch.manual_seed(509) # set the random seed
 
-from tqdm import tqdm
 from data import preprocess_data
 from model import CUB_ResNet_18
 
+def seed_everything(seed: int=509):
+    """
+    Set the random seed for the whole neural network.
+    """
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
 
 def get_data_model_criterion(pretrain: bool=True) -> tuple:
     """
@@ -24,8 +34,13 @@ def get_data_model_criterion(pretrain: bool=True) -> tuple:
     
     return train_loader, test_loader, model, criterion
 
-
-def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, output_lr: float=0.001, pretrain: bool=True, **kwargs) -> list[float]:
+def train_resnet_with_cub(
+    num_epochs: list[int], 
+    fine_tuning_lr: float=0.0001, 
+    output_lr: float=0.001, 
+    pretrain: bool=True, 
+    **kwargs: dict
+) -> list[float]:
     """
     Train the modified ResNet-18 model using the CUB-200-2011 dataset and return the best accuracy.
     Some hyper-parameters can be modified here.
@@ -39,6 +54,9 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
     Return:
     - best_acc: The best validation accuracy list during the training process.
     """
+    # set the random seed
+    seed_everything(kwargs.pop('seed', 509))
+    
     # get the dataset, model and loss criterion
     train_loader, test_loader, model, criterion = get_data_model_criterion(pretrain)
     
@@ -58,6 +76,9 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
                 {'params': model.resnet18.fc.parameters()}
             ], lr=output_lr, momentum=momentum
         )
+    
+    # define scheduler
+    scheduler = StepLR(optimizer, step_size=1, gamma=kwargs.pop('gamma', 0.9))
     
     # init the tensorboard
     tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
@@ -87,6 +108,7 @@ def train_resnet_with_cub(num_epochs: list[int], fine_tuning_lr: float=0.0001, o
             samples += inputs.size(0)
             running_loss += loss.item() * inputs.size(0)
         
+        scheduler.step()
         epoch_loss = running_loss / samples
         print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, max_num_epoch, epoch_loss))
         writer.add_scalar('Train/Loss', epoch_loss, epoch)
