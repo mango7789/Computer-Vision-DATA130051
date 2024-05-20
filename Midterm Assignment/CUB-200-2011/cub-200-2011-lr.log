@@ -1,0 +1,649 @@
+[{"stream_name":"stderr","time":14.290537089,"data":"2024-05-20 07:51:38.183121: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered\n"}
+,{"stream_name":"stderr","time":14.29117046,"data":"2024-05-20 07:51:38.183240: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered\n"}
+,{"stream_name":"stderr","time":14.291201566,"data":"2024-05-20 07:51:38.303594: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered\n"}
+,{"stream_name":"stderr","time":14.493720596,"data":"2024-05-20 07:51:38.183121: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered\n"}
+,{"stream_name":"stderr","time":14.493752909,"data":"2024-05-20 07:51:38.183240: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered\n"}
+,{"stream_name":"stderr","time":14.493760419000001,"data":"2024-05-20 07:51:38.303594: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered\n"}
+,{"stream_name":"stderr","time":23.186288877,"data":"Downloading: \"https://download.pytorch.org/models/resnet18-f37072fd.pth\" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth\n"}
+,{"stream_name":"stderr","time":23.633552927,"data":"\r  0%|          | 0.00/44.7M [00:00\u003c?, ?B/s]\r 11%|¨€         | 4.94M/44.7M [00:00\u003c00:00, 51.8MB/s]\r 49%|¨€¨€¨€¨€¨‚     | 21.8M/44.7M [00:00\u003c00:00, 125MB/s] \r 86%|¨€¨€¨€¨€¨€¨€¨€¨€¨„ | 38.5M/44.7M [00:00\u003c00:00, 148MB/s]\r100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 44.7M/44.7M [00:00\u003c00:00, 139MB/s]\n"}
+,{"stream_name":"stdout","time":24.00921601,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":24.009263825,"data":"Training with configuration (0.0001, 0.0010)\n"}
+,{"stream_name":"stdout","time":89.688563996,"data":"[Epoch  1 / 20], Training loss is 5.435428\n"}
+,{"stream_name":"stdout","time":145.875928486,"data":"[Epoch  1 / 20], Validation loss is 5.309749, Validation accuracy is 0.008457\n"}
+,{"stream_name":"stdout","time":187.399115789,"data":"[Epoch  2 / 20], Training loss is 5.216454\n"}
+,{"stream_name":"stdout","time":221.414857408,"data":"[Epoch  2 / 20], Validation loss is 5.148644, Validation accuracy is 0.016914\n"}
+,{"stream_name":"stdout","time":263.340498766,"data":"[Epoch  3 / 20], Training loss is 5.052017\n"}
+,{"stream_name":"stdout","time":297.721171825,"data":"[Epoch  3 / 20], Validation loss is 5.011610, Validation accuracy is 0.035036\n"}
+,{"stream_name":"stdout","time":338.565141608,"data":"[Epoch  4 / 20], Training loss is 4.900050\n"}
+,{"stream_name":"stdout","time":372.011459904,"data":"[Epoch  4 / 20], Validation loss is 4.879618, Validation accuracy is 0.058854\n"}
+,{"stream_name":"stdout","time":413.390616072,"data":"[Epoch  5 / 20], Training loss is 4.753274\n"}
+,{"stream_name":"stdout","time":446.644138437,"data":"[Epoch  5 / 20], Validation loss is 4.751425, Validation accuracy is 0.083190\n"}
+,{"stream_name":"stdout","time":488.222985203,"data":"[Epoch  6 / 20], Training loss is 4.607723\n"}
+,{"stream_name":"stdout","time":522.863903267,"data":"[Epoch  6 / 20], Validation loss is 4.623672, Validation accuracy is 0.118571\n"}
+,{"stream_name":"stdout","time":564.745174438,"data":"[Epoch  7 / 20], Training loss is 4.487290\n"}
+,{"stream_name":"stdout","time":599.451407695,"data":"[Epoch  7 / 20], Validation loss is 4.554898, Validation accuracy is 0.137384\n"}
+,{"stream_name":"stdout","time":641.552617534,"data":"[Epoch  8 / 20], Training loss is 4.411464\n"}
+,{"stream_name":"stdout","time":675.805840877,"data":"[Epoch  8 / 20], Validation loss is 4.486770, Validation accuracy is 0.154815\n"}
+,{"stream_name":"stdout","time":716.897574297,"data":"[Epoch  9 / 20], Training loss is 4.334139\n"}
+,{"stream_name":"stdout","time":750.740062535,"data":"[Epoch  9 / 20], Validation loss is 4.418458, Validation accuracy is 0.172247\n"}
+,{"stream_name":"stdout","time":791.939907351,"data":"[Epoch 10 / 20], Training loss is 4.256573\n"}
+,{"stream_name":"stdout","time":825.605816821,"data":"[Epoch 10 / 20], Validation loss is 4.353149, Validation accuracy is 0.190197\n"}
+,{"stream_name":"stdout","time":866.752610525,"data":"[Epoch 11 / 20], Training loss is 4.178321\n"}
+,{"stream_name":"stdout","time":901.251528339,"data":"[Epoch 11 / 20], Validation loss is 4.282987, Validation accuracy is 0.207629\n"}
+,{"stream_name":"stdout","time":944.332730974,"data":"[Epoch 12 / 20], Training loss is 4.113286\n"}
+,{"stream_name":"stdout","time":979.076145101,"data":"[Epoch 12 / 20], Validation loss is 4.239644, Validation accuracy is 0.217294\n"}
+,{"stream_name":"stdout","time":1020.91112709,"data":"[Epoch 13 / 20], Training loss is 4.066810\n"}
+,{"stream_name":"stdout","time":1055.69031396,"data":"[Epoch 13 / 20], Validation loss is 4.200103, Validation accuracy is 0.226786\n"}
+,{"stream_name":"stdout","time":1097.946503714,"data":"[Epoch 14 / 20], Training loss is 4.022062\n"}
+,{"stream_name":"stdout","time":1133.803512135,"data":"[Epoch 14 / 20], Validation loss is 4.162499, Validation accuracy is 0.238868\n"}
+,{"stream_name":"stdout","time":1176.75618892,"data":"[Epoch 15 / 20], Training loss is 3.975841\n"}
+,{"stream_name":"stdout","time":1211.144818161,"data":"[Epoch 15 / 20], Validation loss is 4.121303, Validation accuracy is 0.244909\n"}
+,{"stream_name":"stdout","time":1253.142783028,"data":"[Epoch 16 / 20], Training loss is 3.931602\n"}
+,{"stream_name":"stdout","time":1287.641150086,"data":"[Epoch 16 / 20], Validation loss is 4.078043, Validation accuracy is 0.255264\n"}
+,{"stream_name":"stdout","time":1328.65525818,"data":"[Epoch 17 / 20], Training loss is 3.892781\n"}
+,{"stream_name":"stdout","time":1362.34068338,"data":"[Epoch 17 / 20], Validation loss is 4.057866, Validation accuracy is 0.262340\n"}
+,{"stream_name":"stdout","time":1403.750768514,"data":"[Epoch 18 / 20], Training loss is 3.864463\n"}
+,{"stream_name":"stdout","time":1438.576909995,"data":"[Epoch 18 / 20], Validation loss is 4.028602, Validation accuracy is 0.267518\n"}
+,{"stream_name":"stdout","time":1487.661899597,"data":"[Epoch 19 / 20], Training loss is 3.832808\n"}
+,{"stream_name":"stdout","time":1522.474354106,"data":"[Epoch 19 / 20], Validation loss is 4.001200, Validation accuracy is 0.273731\n"}
+,{"stream_name":"stdout","time":1564.564400156,"data":"[Epoch 20 / 20], Training loss is 3.802218\n"}
+,{"stream_name":"stdout","time":1599.149309151,"data":"[Epoch 20 / 20], Validation loss is 3.973923, Validation accuracy is 0.277356\n"}
+,{"stream_name":"stdout","time":1599.441101648,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":1599.441131087,"data":"Training with configuration (0.0001, 0.0020)\n"}
+,{"stream_name":"stdout","time":1641.24719966,"data":"[Epoch  1 / 20], Training loss is 5.349063\n"}
+,{"stream_name":"stdout","time":1676.135180402,"data":"[Epoch  1 / 20], Validation loss is 5.157231, Validation accuracy is 0.018640\n"}
+,{"stream_name":"stdout","time":1718.565073493,"data":"[Epoch  2 / 20], Training loss is 5.019017\n"}
+,{"stream_name":"stdout","time":1752.808988732,"data":"[Epoch  2 / 20], Validation loss is 4.901494, Validation accuracy is 0.062651\n"}
+,{"stream_name":"stdout","time":1795.494935342,"data":"[Epoch  3 / 20], Training loss is 4.735698\n"}
+,{"stream_name":"stdout","time":1830.65282488,"data":"[Epoch  3 / 20], Validation loss is 4.659739, Validation accuracy is 0.115292\n"}
+,{"stream_name":"stdout","time":1873.063547322,"data":"[Epoch  4 / 20], Training loss is 4.469540\n"}
+,{"stream_name":"stdout","time":1908.589580085,"data":"[Epoch  4 / 20], Validation loss is 4.430318, Validation accuracy is 0.170521\n"}
+,{"stream_name":"stdout","time":1950.592313192,"data":"[Epoch  5 / 20], Training loss is 4.221744\n"}
+,{"stream_name":"stdout","time":1985.736697466,"data":"[Epoch  5 / 20], Validation loss is 4.217956, Validation accuracy is 0.220400\n"}
+,{"stream_name":"stdout","time":2027.991924857,"data":"[Epoch  6 / 20], Training loss is 3.983754\n"}
+,{"stream_name":"stdout","time":2062.727182328,"data":"[Epoch  6 / 20], Validation loss is 4.017086, Validation accuracy is 0.259924\n"}
+,{"stream_name":"stdout","time":2105.824377057,"data":"[Epoch  7 / 20], Training loss is 3.792350\n"}
+,{"stream_name":"stdout","time":2140.901983714,"data":"[Epoch  7 / 20], Validation loss is 3.911870, Validation accuracy is 0.283224\n"}
+,{"stream_name":"stdout","time":2182.421414868,"data":"[Epoch  8 / 20], Training loss is 3.671256\n"}
+,{"stream_name":"stdout","time":2217.631693882,"data":"[Epoch  8 / 20], Validation loss is 3.809449, Validation accuracy is 0.305316\n"}
+,{"stream_name":"stdout","time":2259.012644425,"data":"[Epoch  9 / 20], Training loss is 3.556594\n"}
+,{"stream_name":"stdout","time":2292.973885973,"data":"[Epoch  9 / 20], Validation loss is 3.713833, Validation accuracy is 0.329824\n"}
+,{"stream_name":"stdout","time":2334.625430039,"data":"[Epoch 10 / 20], Training loss is 3.445351\n"}
+,{"stream_name":"stdout","time":2368.759047468,"data":"[Epoch 10 / 20], Validation loss is 3.612649, Validation accuracy is 0.340352\n"}
+,{"stream_name":"stdout","time":2409.975351084,"data":"[Epoch 11 / 20], Training loss is 3.336054\n"}
+,{"stream_name":"stdout","time":2444.108348482,"data":"[Epoch 11 / 20], Validation loss is 3.520419, Validation accuracy is 0.357957\n"}
+,{"stream_name":"stdout","time":2484.761222682,"data":"[Epoch 12 / 20], Training loss is 3.241330\n"}
+,{"stream_name":"stdout","time":2519.459956098,"data":"[Epoch 12 / 20], Validation loss is 3.470051, Validation accuracy is 0.369175\n"}
+,{"stream_name":"stdout","time":2562.006370442,"data":"[Epoch 13 / 20], Training loss is 3.182870\n"}
+,{"stream_name":"stdout","time":2596.444927699,"data":"[Epoch 13 / 20], Validation loss is 3.413478, Validation accuracy is 0.374698\n"}
+,{"stream_name":"stdout","time":2638.723536644,"data":"[Epoch 14 / 20], Training loss is 3.123263\n"}
+,{"stream_name":"stdout","time":2672.975125426,"data":"[Epoch 14 / 20], Validation loss is 3.361305, Validation accuracy is 0.384018\n"}
+,{"stream_name":"stdout","time":2714.756058815,"data":"[Epoch 15 / 20], Training loss is 3.066212\n"}
+,{"stream_name":"stdout","time":2749.815504937,"data":"[Epoch 15 / 20], Validation loss is 3.310639, Validation accuracy is 0.389196\n"}
+,{"stream_name":"stdout","time":2792.043794283,"data":"[Epoch 16 / 20], Training loss is 3.007830\n"}
+,{"stream_name":"stdout","time":2826.01165391,"data":"[Epoch 16 / 20], Validation loss is 3.262905, Validation accuracy is 0.398516\n"}
+,{"stream_name":"stdout","time":2868.710077963,"data":"[Epoch 17 / 20], Training loss is 2.961496\n"}
+,{"stream_name":"stdout","time":2903.064369371,"data":"[Epoch 17 / 20], Validation loss is 3.232957, Validation accuracy is 0.405247\n"}
+,{"stream_name":"stdout","time":2944.869179827,"data":"[Epoch 18 / 20], Training loss is 2.925295\n"}
+,{"stream_name":"stdout","time":2979.276083834,"data":"[Epoch 18 / 20], Validation loss is 3.208970, Validation accuracy is 0.409044\n"}
+,{"stream_name":"stdout","time":3020.40713051,"data":"[Epoch 19 / 20], Training loss is 2.888507\n"}
+,{"stream_name":"stdout","time":3055.391953958,"data":"[Epoch 19 / 20], Validation loss is 3.173733, Validation accuracy is 0.413876\n"}
+,{"stream_name":"stdout","time":3097.286485986,"data":"[Epoch 20 / 20], Training loss is 2.856854\n"}
+,{"stream_name":"stdout","time":3131.571834022,"data":"[Epoch 20 / 20], Validation loss is 3.147321, Validation accuracy is 0.419399\n"}
+,{"stream_name":"stdout","time":3131.865294562,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":3131.865328187,"data":"Training with configuration (0.0001, 0.0050)\n"}
+,{"stream_name":"stdout","time":3173.595228597,"data":"[Epoch  1 / 20], Training loss is 5.222188\n"}
+,{"stream_name":"stdout","time":3208.893851205,"data":"[Epoch  1 / 20], Validation loss is 4.864973, Validation accuracy is 0.065412\n"}
+,{"stream_name":"stdout","time":3250.990118047,"data":"[Epoch  2 / 20], Training loss is 4.550513\n"}
+,{"stream_name":"stdout","time":3285.41853778,"data":"[Epoch  2 / 20], Validation loss is 4.322284, Validation accuracy is 0.174146\n"}
+,{"stream_name":"stdout","time":3326.359448077,"data":"[Epoch  3 / 20], Training loss is 3.976796\n"}
+,{"stream_name":"stdout","time":3360.347201681,"data":"[Epoch  3 / 20], Validation loss is 3.869078, Validation accuracy is 0.283224\n"}
+,{"stream_name":"stdout","time":3401.879056942,"data":"[Epoch  4 / 20], Training loss is 3.493030\n"}
+,{"stream_name":"stdout","time":3435.526693296,"data":"[Epoch  4 / 20], Validation loss is 3.507400, Validation accuracy is 0.341733\n"}
+,{"stream_name":"stdout","time":3477.637800421,"data":"[Epoch  5 / 20], Training loss is 3.103233\n"}
+,{"stream_name":"stdout","time":3511.891848576,"data":"[Epoch  5 / 20], Validation loss is 3.191360, Validation accuracy is 0.396617\n"}
+,{"stream_name":"stdout","time":3553.235371917,"data":"[Epoch  6 / 20], Training loss is 2.764613\n"}
+,{"stream_name":"stdout","time":3587.916836954,"data":"[Epoch  6 / 20], Validation loss is 2.947145, Validation accuracy is 0.426303\n"}
+,{"stream_name":"stdout","time":3628.916967188,"data":"[Epoch  7 / 20], Training loss is 2.516809\n"}
+,{"stream_name":"stdout","time":3662.790021717,"data":"[Epoch  7 / 20], Validation loss is 2.812207, Validation accuracy is 0.463065\n"}
+,{"stream_name":"stdout","time":3703.995233159,"data":"[Epoch  8 / 20], Training loss is 2.369570\n"}
+,{"stream_name":"stdout","time":3738.164046533,"data":"[Epoch  8 / 20], Validation loss is 2.701682, Validation accuracy is 0.479289\n"}
+,{"stream_name":"stdout","time":3779.497660841,"data":"[Epoch  9 / 20], Training loss is 2.241900\n"}
+,{"stream_name":"stdout","time":3813.659448237,"data":"[Epoch  9 / 20], Validation loss is 2.601765, Validation accuracy is 0.489817\n"}
+,{"stream_name":"stdout","time":3854.704044847,"data":"[Epoch 10 / 20], Training loss is 2.128664\n"}
+,{"stream_name":"stdout","time":3888.62589456,"data":"[Epoch 10 / 20], Validation loss is 2.517140, Validation accuracy is 0.505350\n"}
+,{"stream_name":"stdout","time":3929.438345178,"data":"[Epoch 11 / 20], Training loss is 2.029364\n"}
+,{"stream_name":"stdout","time":3963.161720144,"data":"[Epoch 11 / 20], Validation loss is 2.430551, Validation accuracy is 0.515533\n"}
+,{"stream_name":"stdout","time":4004.635797224,"data":"[Epoch 12 / 20], Training loss is 1.935308\n"}
+,{"stream_name":"stdout","time":4038.462923222,"data":"[Epoch 12 / 20], Validation loss is 2.389050, Validation accuracy is 0.523300\n"}
+,{"stream_name":"stdout","time":4080.057520926,"data":"[Epoch 13 / 20], Training loss is 1.875177\n"}
+,{"stream_name":"stdout","time":4114.20240875,"data":"[Epoch 13 / 20], Validation loss is 2.345432, Validation accuracy is 0.530549\n"}
+,{"stream_name":"stdout","time":4155.621721231,"data":"[Epoch 14 / 20], Training loss is 1.832785\n"}
+,{"stream_name":"stdout","time":4191.032002477,"data":"[Epoch 14 / 20], Validation loss is 2.299207, Validation accuracy is 0.538143\n"}
+,{"stream_name":"stdout","time":4233.112423491,"data":"[Epoch 15 / 20], Training loss is 1.785803\n"}
+,{"stream_name":"stdout","time":4267.509039969,"data":"[Epoch 15 / 20], Validation loss is 2.263484, Validation accuracy is 0.539351\n"}
+,{"stream_name":"stdout","time":4309.58998076,"data":"[Epoch 16 / 20], Training loss is 1.741015\n"}
+,{"stream_name":"stdout","time":4344.638530945,"data":"[Epoch 16 / 20], Validation loss is 2.227775, Validation accuracy is 0.544529\n"}
+,{"stream_name":"stdout","time":4387.587166032,"data":"[Epoch 17 / 20], Training loss is 1.694921\n"}
+,{"stream_name":"stdout","time":4422.952390736,"data":"[Epoch 17 / 20], Validation loss is 2.206716, Validation accuracy is 0.549361\n"}
+,{"stream_name":"stdout","time":4464.924216673,"data":"[Epoch 18 / 20], Training loss is 1.667665\n"}
+,{"stream_name":"stdout","time":4499.518904737,"data":"[Epoch 18 / 20], Validation loss is 2.185868, Validation accuracy is 0.550742\n"}
+,{"stream_name":"stdout","time":4541.631693321,"data":"[Epoch 19 / 20], Training loss is 1.640218\n"}
+,{"stream_name":"stdout","time":4575.592302904,"data":"[Epoch 19 / 20], Validation loss is 2.161978, Validation accuracy is 0.555920\n"}
+,{"stream_name":"stdout","time":4617.004556952,"data":"[Epoch 20 / 20], Training loss is 1.613639\n"}
+,{"stream_name":"stdout","time":4651.278032646,"data":"[Epoch 20 / 20], Validation loss is 2.139378, Validation accuracy is 0.559199\n"}
+,{"stream_name":"stdout","time":4651.569000693,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":4651.569040274,"data":"Training with configuration (0.0001, 0.0080)\n"}
+,{"stream_name":"stdout","time":4693.315393644,"data":"[Epoch  1 / 20], Training loss is 5.109028\n"}
+,{"stream_name":"stdout","time":4727.963373924,"data":"[Epoch  1 / 20], Validation loss is 4.615213, Validation accuracy is 0.111495\n"}
+,{"stream_name":"stdout","time":4770.236872348,"data":"[Epoch  2 / 20], Training loss is 4.149505\n"}
+,{"stream_name":"stdout","time":4805.104183011,"data":"[Epoch  2 / 20], Validation loss is 3.869725, Validation accuracy is 0.263894\n"}
+,{"stream_name":"stdout","time":4846.907032939,"data":"[Epoch  3 / 20], Training loss is 3.402677\n"}
+,{"stream_name":"stdout","time":4880.594493261,"data":"[Epoch  3 / 20], Validation loss is 3.337350, Validation accuracy is 0.353814\n"}
+,{"stream_name":"stdout","time":4922.303673669,"data":"[Epoch  4 / 20], Training loss is 2.851558\n"}
+,{"stream_name":"stdout","time":4956.578421119,"data":"[Epoch  4 / 20], Validation loss is 2.944574, Validation accuracy is 0.412841\n"}
+,{"stream_name":"stdout","time":4997.6373781,"data":"[Epoch  5 / 20], Training loss is 2.429238\n"}
+,{"stream_name":"stdout","time":5031.651418365,"data":"[Epoch  5 / 20], Validation loss is 2.659887, Validation accuracy is 0.445979\n"}
+,{"stream_name":"stdout","time":5072.949643682,"data":"[Epoch  6 / 20], Training loss is 2.106168\n"}
+,{"stream_name":"stdout","time":5106.978006751,"data":"[Epoch  6 / 20], Validation loss is 2.444138, Validation accuracy is 0.482913\n"}
+,{"stream_name":"stdout","time":5148.271716725,"data":"[Epoch  7 / 20], Training loss is 1.877737\n"}
+,{"stream_name":"stdout","time":5181.787438571,"data":"[Epoch  7 / 20], Validation loss is 2.318475, Validation accuracy is 0.514843\n"}
+,{"stream_name":"stdout","time":5222.558013917,"data":"[Epoch  8 / 20], Training loss is 1.750715\n"}
+,{"stream_name":"stdout","time":5256.288697605,"data":"[Epoch  8 / 20], Validation loss is 2.234997, Validation accuracy is 0.526234\n"}
+,{"stream_name":"stdout","time":5297.323293142,"data":"[Epoch  9 / 20], Training loss is 1.651203\n"}
+,{"stream_name":"stdout","time":5332.295693034,"data":"[Epoch  9 / 20], Validation loss is 2.155584, Validation accuracy is 0.534691\n"}
+,{"stream_name":"stdout","time":5373.382253635,"data":"[Epoch 10 / 20], Training loss is 1.554965\n"}
+,{"stream_name":"stdout","time":5407.252447819,"data":"[Epoch 10 / 20], Validation loss is 2.094580, Validation accuracy is 0.539869\n"}
+,{"stream_name":"stdout","time":5448.874130738,"data":"[Epoch 11 / 20], Training loss is 1.475687\n"}
+,{"stream_name":"stdout","time":5482.564568744,"data":"[Epoch 11 / 20], Validation loss is 2.034484, Validation accuracy is 0.546773\n"}
+,{"stream_name":"stdout","time":5523.302234554,"data":"[Epoch 12 / 20], Training loss is 1.398914\n"}
+,{"stream_name":"stdout","time":5557.440839917,"data":"[Epoch 12 / 20], Validation loss is 2.001171, Validation accuracy is 0.556783\n"}
+,{"stream_name":"stdout","time":5598.340265023,"data":"[Epoch 13 / 20], Training loss is 1.352298\n"}
+,{"stream_name":"stdout","time":5633.306428264,"data":"[Epoch 13 / 20], Validation loss is 1.970780, Validation accuracy is 0.557991\n"}
+,{"stream_name":"stdout","time":5674.886497526,"data":"[Epoch 14 / 20], Training loss is 1.314912\n"}
+,{"stream_name":"stdout","time":5709.949267452,"data":"[Epoch 14 / 20], Validation loss is 1.938386, Validation accuracy is 0.564550\n"}
+,{"stream_name":"stdout","time":5752.504346057,"data":"[Epoch 15 / 20], Training loss is 1.279105\n"}
+,{"stream_name":"stdout","time":5786.972050365,"data":"[Epoch 15 / 20], Validation loss is 1.914627, Validation accuracy is 0.568347\n"}
+,{"stream_name":"stdout","time":5828.98378891,"data":"[Epoch 16 / 20], Training loss is 1.243261\n"}
+,{"stream_name":"stdout","time":5863.649831869,"data":"[Epoch 16 / 20], Validation loss is 1.883972, Validation accuracy is 0.572144\n"}
+,{"stream_name":"stdout","time":5905.299088174,"data":"[Epoch 17 / 20], Training loss is 1.207273\n"}
+,{"stream_name":"stdout","time":5940.763201125,"data":"[Epoch 17 / 20], Validation loss is 1.867055, Validation accuracy is 0.575250\n"}
+,{"stream_name":"stdout","time":5983.768494477,"data":"[Epoch 18 / 20], Training loss is 1.187868\n"}
+,{"stream_name":"stdout","time":6018.478773757,"data":"[Epoch 18 / 20], Validation loss is 1.851496, Validation accuracy is 0.576631\n"}
+,{"stream_name":"stdout","time":6060.275618119,"data":"[Epoch 19 / 20], Training loss is 1.169769\n"}
+,{"stream_name":"stdout","time":6095.012090811,"data":"[Epoch 19 / 20], Validation loss is 1.839049, Validation accuracy is 0.580255\n"}
+,{"stream_name":"stdout","time":6137.078582256,"data":"[Epoch 20 / 20], Training loss is 1.144206\n"}
+,{"stream_name":"stdout","time":6172.314127263,"data":"[Epoch 20 / 20], Validation loss is 1.824000, Validation accuracy is 0.582327\n"}
+,{"stream_name":"stdout","time":6172.668338901,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":6172.668370192,"data":"Training with configuration (0.0001, 0.0100)\n"}
+,{"stream_name":"stdout","time":6215.537767002,"data":"[Epoch  1 / 20], Training loss is 5.082771\n"}
+,{"stream_name":"stdout","time":6251.002989871,"data":"[Epoch  1 / 20], Validation loss is 4.478185, Validation accuracy is 0.139972\n"}
+,{"stream_name":"stdout","time":6294.094047778,"data":"[Epoch  2 / 20], Training loss is 3.937225\n"}
+,{"stream_name":"stdout","time":6328.723505301,"data":"[Epoch  2 / 20], Validation loss is 3.647337, Validation accuracy is 0.279772\n"}
+,{"stream_name":"stdout","time":6371.007009375,"data":"[Epoch  3 / 20], Training loss is 3.115755\n"}
+,{"stream_name":"stdout","time":6406.334543173,"data":"[Epoch  3 / 20], Validation loss is 3.081608, Validation accuracy is 0.393511\n"}
+,{"stream_name":"stdout","time":6449.214181113,"data":"[Epoch  4 / 20], Training loss is 2.537259\n"}
+,{"stream_name":"stdout","time":6485.324852388,"data":"[Epoch  4 / 20], Validation loss is 2.694808, Validation accuracy is 0.444770\n"}
+,{"stream_name":"stdout","time":6529.185890063,"data":"[Epoch  5 / 20], Training loss is 2.135969\n"}
+,{"stream_name":"stdout","time":6565.32252137,"data":"[Epoch  5 / 20], Validation loss is 2.436817, Validation accuracy is 0.492061\n"}
+,{"stream_name":"stdout","time":6607.499713343,"data":"[Epoch  6 / 20], Training loss is 1.839930\n"}
+,{"stream_name":"stdout","time":6643.043226197,"data":"[Epoch  6 / 20], Validation loss is 2.257790, Validation accuracy is 0.510873\n"}
+,{"stream_name":"stdout","time":6685.984529283,"data":"[Epoch  7 / 20], Training loss is 1.620106\n"}
+,{"stream_name":"stdout","time":6722.267645636,"data":"[Epoch  7 / 20], Validation loss is 2.134277, Validation accuracy is 0.542458\n"}
+,{"stream_name":"stdout","time":6768.482794332,"data":"[Epoch  8 / 20], Training loss is 1.506352\n"}
+,{"stream_name":"stdout","time":6805.188570914,"data":"[Epoch  8 / 20], Validation loss is 2.059591, Validation accuracy is 0.551605\n"}
+,{"stream_name":"stdout","time":6848.063714334,"data":"[Epoch  9 / 20], Training loss is 1.415975\n"}
+,{"stream_name":"stdout","time":6883.093014287,"data":"[Epoch  9 / 20], Validation loss is 2.000033, Validation accuracy is 0.557646\n"}
+,{"stream_name":"stdout","time":6926.369906799,"data":"[Epoch 10 / 20], Training loss is 1.330230\n"}
+,{"stream_name":"stdout","time":6964.263489197,"data":"[Epoch 10 / 20], Validation loss is 1.948297, Validation accuracy is 0.564204\n"}
+,{"stream_name":"stdout","time":7007.903522521,"data":"[Epoch 11 / 20], Training loss is 1.256693\n"}
+,{"stream_name":"stdout","time":7044.594621099,"data":"[Epoch 11 / 20], Validation loss is 1.895920, Validation accuracy is 0.569555\n"}
+,{"stream_name":"stdout","time":7088.161313162,"data":"[Epoch 12 / 20], Training loss is 1.190386\n"}
+,{"stream_name":"stdout","time":7122.737662638,"data":"[Epoch 12 / 20], Validation loss is 1.864790, Validation accuracy is 0.580255\n"}
+,{"stream_name":"stdout","time":7164.465784764,"data":"[Epoch 13 / 20], Training loss is 1.150291\n"}
+,{"stream_name":"stdout","time":7199.211288869,"data":"[Epoch 13 / 20], Validation loss is 1.832919, Validation accuracy is 0.584225\n"}
+,{"stream_name":"stdout","time":7241.188614856,"data":"[Epoch 14 / 20], Training loss is 1.116300\n"}
+,{"stream_name":"stdout","time":7276.192078756,"data":"[Epoch 14 / 20], Validation loss is 1.811136, Validation accuracy is 0.585778\n"}
+,{"stream_name":"stdout","time":7318.880070359,"data":"[Epoch 15 / 20], Training loss is 1.087771\n"}
+,{"stream_name":"stdout","time":7353.699019638,"data":"[Epoch 15 / 20], Validation loss is 1.787889, Validation accuracy is 0.591129\n"}
+,{"stream_name":"stdout","time":7394.614596853,"data":"[Epoch 16 / 20], Training loss is 1.054664\n"}
+,{"stream_name":"stdout","time":7428.363419858,"data":"[Epoch 16 / 20], Validation loss is 1.763519, Validation accuracy is 0.590784\n"}
+,{"stream_name":"stdout","time":7470.604320533,"data":"[Epoch 17 / 20], Training loss is 1.022213\n"}
+,{"stream_name":"stdout","time":7505.65716883,"data":"[Epoch 17 / 20], Validation loss is 1.752591, Validation accuracy is 0.594063\n"}
+,{"stream_name":"stdout","time":7547.001749913,"data":"[Epoch 18 / 20], Training loss is 1.002497\n"}
+,{"stream_name":"stdout","time":7580.907306012,"data":"[Epoch 18 / 20], Validation loss is 1.739884, Validation accuracy is 0.593890\n"}
+,{"stream_name":"stdout","time":7622.043406274,"data":"[Epoch 19 / 20], Training loss is 0.983323\n"}
+,{"stream_name":"stdout","time":7656.209012904,"data":"[Epoch 19 / 20], Validation loss is 1.726000, Validation accuracy is 0.596997\n"}
+,{"stream_name":"stdout","time":7697.168637338,"data":"[Epoch 20 / 20], Training loss is 0.966890\n"}
+,{"stream_name":"stdout","time":7731.520597273,"data":"[Epoch 20 / 20], Validation loss is 1.716782, Validation accuracy is 0.599413\n"}
+,{"stream_name":"stdout","time":7731.803273728,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":7731.803314509,"data":"Training with configuration (0.0001, 0.0010)\n"}
+,{"stream_name":"stdout","time":7773.092666036,"data":"[Epoch  1 / 20], Training loss is 5.407490\n"}
+,{"stream_name":"stdout","time":7807.127998765,"data":"[Epoch  1 / 20], Validation loss is 5.286394, Validation accuracy is 0.009147\n"}
+,{"stream_name":"stdout","time":7849.170187328,"data":"[Epoch  2 / 20], Training loss is 5.193728\n"}
+,{"stream_name":"stdout","time":7882.871230095,"data":"[Epoch  2 / 20], Validation loss is 5.126286, Validation accuracy is 0.020884\n"}
+,{"stream_name":"stdout","time":7924.232169912,"data":"[Epoch  3 / 20], Training loss is 5.019347\n"}
+,{"stream_name":"stdout","time":7958.792433522,"data":"[Epoch  3 / 20], Validation loss is 4.984062, Validation accuracy is 0.047118\n"}
+,{"stream_name":"stdout","time":7999.899218234,"data":"[Epoch  4 / 20], Training loss is 4.861704\n"}
+,{"stream_name":"stdout","time":8034.480514086,"data":"[Epoch  4 / 20], Validation loss is 4.843917, Validation accuracy is 0.073870\n"}
+,{"stream_name":"stdout","time":8076.079537838,"data":"[Epoch  5 / 20], Training loss is 4.701200\n"}
+,{"stream_name":"stdout","time":8111.072992828,"data":"[Epoch  5 / 20], Validation loss is 4.705392, Validation accuracy is 0.106835\n"}
+,{"stream_name":"stdout","time":8153.014753904,"data":"[Epoch  6 / 20], Training loss is 4.548800\n"}
+,{"stream_name":"stdout","time":8187.92828007,"data":"[Epoch  6 / 20], Validation loss is 4.565112, Validation accuracy is 0.137038\n"}
+,{"stream_name":"stdout","time":8229.709747967,"data":"[Epoch  7 / 20], Training loss is 4.411182\n"}
+,{"stream_name":"stdout","time":8263.831870142,"data":"[Epoch  7 / 20], Validation loss is 4.485955, Validation accuracy is 0.154988\n"}
+,{"stream_name":"stdout","time":8304.616351936,"data":"[Epoch  8 / 20], Training loss is 4.318536\n"}
+,{"stream_name":"stdout","time":8338.466413446,"data":"[Epoch  8 / 20], Validation loss is 4.404359, Validation accuracy is 0.173800\n"}
+,{"stream_name":"stdout","time":8381.068041181,"data":"[Epoch  9 / 20], Training loss is 4.226245\n"}
+,{"stream_name":"stdout","time":8414.732271304,"data":"[Epoch  9 / 20], Validation loss is 4.323165, Validation accuracy is 0.192268\n"}
+,{"stream_name":"stdout","time":8456.624230165,"data":"[Epoch 10 / 20], Training loss is 4.134886\n"}
+,{"stream_name":"stdout","time":8490.815535992,"data":"[Epoch 10 / 20], Validation loss is 4.241831, Validation accuracy is 0.208837\n"}
+,{"stream_name":"stdout","time":8531.839261141,"data":"[Epoch 11 / 20], Training loss is 4.047652\n"}
+,{"stream_name":"stdout","time":8565.851839611,"data":"[Epoch 11 / 20], Validation loss is 4.164171, Validation accuracy is 0.229893\n"}
+,{"stream_name":"stdout","time":8606.995147928,"data":"[Epoch 12 / 20], Training loss is 3.968111\n"}
+,{"stream_name":"stdout","time":8641.369111366,"data":"[Epoch 12 / 20], Validation loss is 4.112860, Validation accuracy is 0.241457\n"}
+,{"stream_name":"stdout","time":8682.804200951,"data":"[Epoch 13 / 20], Training loss is 3.908235\n"}
+,{"stream_name":"stdout","time":8716.44693718,"data":"[Epoch 13 / 20], Validation loss is 4.060971, Validation accuracy is 0.252503\n"}
+,{"stream_name":"stdout","time":8758.252675071,"data":"[Epoch 14 / 20], Training loss is 3.850462\n"}
+,{"stream_name":"stdout","time":8792.123616359,"data":"[Epoch 14 / 20], Validation loss is 4.009964, Validation accuracy is 0.258889\n"}
+,{"stream_name":"stdout","time":8833.768149884,"data":"[Epoch 15 / 20], Training loss is 3.795746\n"}
+,{"stream_name":"stdout","time":8868.523986238,"data":"[Epoch 15 / 20], Validation loss is 3.962663, Validation accuracy is 0.266655\n"}
+,{"stream_name":"stdout","time":8910.658689999,"data":"[Epoch 16 / 20], Training loss is 3.743118\n"}
+,{"stream_name":"stdout","time":8945.771422064,"data":"[Epoch 16 / 20], Validation loss is 3.917531, Validation accuracy is 0.276320\n"}
+,{"stream_name":"stdout","time":8987.760791018,"data":"[Epoch 17 / 20], Training loss is 3.691843\n"}
+,{"stream_name":"stdout","time":9022.04703113,"data":"[Epoch 17 / 20], Validation loss is 3.876707, Validation accuracy is 0.278046\n"}
+,{"stream_name":"stdout","time":9064.131187977,"data":"[Epoch 18 / 20], Training loss is 3.653223\n"}
+,{"stream_name":"stdout","time":9098.82034462,"data":"[Epoch 18 / 20], Validation loss is 3.848561, Validation accuracy is 0.285123\n"}
+,{"stream_name":"stdout","time":9141.268386719,"data":"[Epoch 19 / 20], Training loss is 3.615906\n"}
+,{"stream_name":"stdout","time":9176.069271857,"data":"[Epoch 19 / 20], Validation loss is 3.810220, Validation accuracy is 0.291336\n"}
+,{"stream_name":"stdout","time":9218.290613371,"data":"[Epoch 20 / 20], Training loss is 3.579921\n"}
+,{"stream_name":"stdout","time":9252.671560235,"data":"[Epoch 20 / 20], Validation loss is 3.784031, Validation accuracy is 0.297549\n"}
+,{"stream_name":"stdout","time":9252.962652745,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":9252.962692944,"data":"Training with configuration (0.0001, 0.0020)\n"}
+,{"stream_name":"stdout","time":9294.814460546,"data":"[Epoch  1 / 20], Training loss is 5.378534\n"}
+,{"stream_name":"stdout","time":9329.685332898,"data":"[Epoch  1 / 20], Validation loss is 5.172489, Validation accuracy is 0.018985\n"}
+,{"stream_name":"stdout","time":9371.363408241,"data":"[Epoch  2 / 20], Training loss is 5.039029\n"}
+,{"stream_name":"stdout","time":9406.069802565,"data":"[Epoch  2 / 20], Validation loss is 4.905180, Validation accuracy is 0.060925\n"}
+,{"stream_name":"stdout","time":9447.693700913,"data":"[Epoch  3 / 20], Training loss is 4.742503\n"}
+,{"stream_name":"stdout","time":9482.168321332,"data":"[Epoch  3 / 20], Validation loss is 4.654824, Validation accuracy is 0.121160\n"}
+,{"stream_name":"stdout","time":9524.117722979,"data":"[Epoch  4 / 20], Training loss is 4.462852\n"}
+,{"stream_name":"stdout","time":9559.173180598,"data":"[Epoch  4 / 20], Validation loss is 4.410121, Validation accuracy is 0.175354\n"}
+,{"stream_name":"stdout","time":9603.015267753,"data":"[Epoch  5 / 20], Training loss is 4.191244\n"}
+,{"stream_name":"stdout","time":9639.203711301,"data":"[Epoch  5 / 20], Validation loss is 4.175388, Validation accuracy is 0.228857\n"}
+,{"stream_name":"stdout","time":9680.904277033,"data":"[Epoch  6 / 20], Training loss is 3.930650\n"}
+,{"stream_name":"stdout","time":9717.414401027,"data":"[Epoch  6 / 20], Validation loss is 3.948863, Validation accuracy is 0.273214\n"}
+,{"stream_name":"stdout","time":9760.617863359,"data":"[Epoch  7 / 20], Training loss is 3.715228\n"}
+,{"stream_name":"stdout","time":9796.149864248,"data":"[Epoch  7 / 20], Validation loss is 3.831016, Validation accuracy is 0.302382\n"}
+,{"stream_name":"stdout","time":9838.239592784,"data":"[Epoch  8 / 20], Training loss is 3.577347\n"}
+,{"stream_name":"stdout","time":9872.488788114,"data":"[Epoch  8 / 20], Validation loss is 3.703939, Validation accuracy is 0.322575\n"}
+,{"stream_name":"stdout","time":9914.410287774,"data":"[Epoch  9 / 20], Training loss is 3.443071\n"}
+,{"stream_name":"stdout","time":9949.259597242,"data":"[Epoch  9 / 20], Validation loss is 3.592544, Validation accuracy is 0.345012\n"}
+,{"stream_name":"stdout","time":9992.420030317,"data":"[Epoch 10 / 20], Training loss is 3.318352\n"}
+,{"stream_name":"stdout","time":10026.825385004,"data":"[Epoch 10 / 20], Validation loss is 3.482815, Validation accuracy is 0.358129\n"}
+,{"stream_name":"stdout","time":10069.510749244,"data":"[Epoch 11 / 20], Training loss is 3.195712\n"}
+,{"stream_name":"stdout","time":10103.691082125,"data":"[Epoch 11 / 20], Validation loss is 3.373597, Validation accuracy is 0.382982\n"}
+,{"stream_name":"stdout","time":10145.548702666,"data":"[Epoch 12 / 20], Training loss is 3.090060\n"}
+,{"stream_name":"stdout","time":10180.458919106,"data":"[Epoch 12 / 20], Validation loss is 3.314698, Validation accuracy is 0.392993\n"}
+,{"stream_name":"stdout","time":10222.276100867,"data":"[Epoch 13 / 20], Training loss is 3.024140\n"}
+,{"stream_name":"stdout","time":10257.590509306,"data":"[Epoch 13 / 20], Validation loss is 3.256632, Validation accuracy is 0.405074\n"}
+,{"stream_name":"stdout","time":10299.723444713,"data":"[Epoch 14 / 20], Training loss is 2.953123\n"}
+,{"stream_name":"stdout","time":10334.288728879,"data":"[Epoch 14 / 20], Validation loss is 3.198662, Validation accuracy is 0.414049\n"}
+,{"stream_name":"stdout","time":10376.533280855,"data":"[Epoch 15 / 20], Training loss is 2.886129\n"}
+,{"stream_name":"stdout","time":10411.221116499,"data":"[Epoch 15 / 20], Validation loss is 3.139473, Validation accuracy is 0.420780\n"}
+,{"stream_name":"stdout","time":10453.41765235,"data":"[Epoch 16 / 20], Training loss is 2.825752\n"}
+,{"stream_name":"stdout","time":10487.782008121,"data":"[Epoch 16 / 20], Validation loss is 3.079328, Validation accuracy is 0.432862\n"}
+,{"stream_name":"stdout","time":10530.00980913,"data":"[Epoch 17 / 20], Training loss is 2.769589\n"}
+,{"stream_name":"stdout","time":10565.031616212,"data":"[Epoch 17 / 20], Validation loss is 3.050427, Validation accuracy is 0.439075\n"}
+,{"stream_name":"stdout","time":10607.796947672,"data":"[Epoch 18 / 20], Training loss is 2.730636\n"}
+,{"stream_name":"stdout","time":10642.204678778,"data":"[Epoch 18 / 20], Validation loss is 3.013885, Validation accuracy is 0.443735\n"}
+,{"stream_name":"stdout","time":10684.387252541,"data":"[Epoch 19 / 20], Training loss is 2.689097\n"}
+,{"stream_name":"stdout","time":10719.041034991,"data":"[Epoch 19 / 20], Validation loss is 2.980895, Validation accuracy is 0.448222\n"}
+,{"stream_name":"stdout","time":10761.296742767,"data":"[Epoch 20 / 20], Training loss is 2.649625\n"}
+,{"stream_name":"stdout","time":10795.765531429,"data":"[Epoch 20 / 20], Validation loss is 2.951298, Validation accuracy is 0.453227\n"}
+,{"stream_name":"stdout","time":10796.047017258,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":10796.047041223,"data":"Training with configuration (0.0001, 0.0050)\n"}
+,{"stream_name":"stdout","time":10838.618349164,"data":"[Epoch  1 / 20], Training loss is 5.256503\n"}
+,{"stream_name":"stdout","time":10872.30408316,"data":"[Epoch  1 / 20], Validation loss is 4.896283, Validation accuracy is 0.059717\n"}
+,{"stream_name":"stdout","time":10913.747781212,"data":"[Epoch  2 / 20], Training loss is 4.576339\n"}
+,{"stream_name":"stdout","time":10948.05628465,"data":"[Epoch  2 / 20], Validation loss is 4.331242, Validation accuracy is 0.177425\n"}
+,{"stream_name":"stdout","time":10990.099867157,"data":"[Epoch  3 / 20], Training loss is 3.980942\n"}
+,{"stream_name":"stdout","time":11024.404962907,"data":"[Epoch  3 / 20], Validation loss is 3.849529, Validation accuracy is 0.279600\n"}
+,{"stream_name":"stdout","time":11065.869987035,"data":"[Epoch  4 / 20], Training loss is 3.470806\n"}
+,{"stream_name":"stdout","time":11100.29891388,"data":"[Epoch  4 / 20], Validation loss is 3.441263, Validation accuracy is 0.359682\n"}
+,{"stream_name":"stdout","time":11142.887312966,"data":"[Epoch  5 / 20], Training loss is 3.043503\n"}
+,{"stream_name":"stdout","time":11177.164300519,"data":"[Epoch  5 / 20], Validation loss is 3.122845, Validation accuracy is 0.410597\n"}
+,{"stream_name":"stdout","time":11219.345511978,"data":"[Epoch  6 / 20], Training loss is 2.679688\n"}
+,{"stream_name":"stdout","time":11253.928745252,"data":"[Epoch  6 / 20], Validation loss is 2.844372, Validation accuracy is 0.446496\n"}
+,{"stream_name":"stdout","time":11296.274162335,"data":"[Epoch  7 / 20], Training loss is 2.417858\n"}
+,{"stream_name":"stdout","time":11331.627741515,"data":"[Epoch  7 / 20], Validation loss is 2.700005, Validation accuracy is 0.485157\n"}
+,{"stream_name":"stdout","time":11373.650049307,"data":"[Epoch  8 / 20], Training loss is 2.257282\n"}
+,{"stream_name":"stdout","time":11408.377782059,"data":"[Epoch  8 / 20], Validation loss is 2.584646, Validation accuracy is 0.502416\n"}
+,{"stream_name":"stdout","time":11451.333819409,"data":"[Epoch  9 / 20], Training loss is 2.127528\n"}
+,{"stream_name":"stdout","time":11485.914928945,"data":"[Epoch  9 / 20], Validation loss is 2.483131, Validation accuracy is 0.512081\n"}
+,{"stream_name":"stdout","time":11526.927670686,"data":"[Epoch 10 / 20], Training loss is 2.010167\n"}
+,{"stream_name":"stdout","time":11560.898527289,"data":"[Epoch 10 / 20], Validation loss is 2.384379, Validation accuracy is 0.525371\n"}
+,{"stream_name":"stdout","time":11602.042432714,"data":"[Epoch 11 / 20], Training loss is 1.903417\n"}
+,{"stream_name":"stdout","time":11636.85767623,"data":"[Epoch 11 / 20], Validation loss is 2.303601, Validation accuracy is 0.533138\n"}
+,{"stream_name":"stdout","time":11678.028043853,"data":"[Epoch 12 / 20], Training loss is 1.809513\n"}
+,{"stream_name":"stdout","time":11711.600832475,"data":"[Epoch 12 / 20], Validation loss is 2.250522, Validation accuracy is 0.542975\n"}
+,{"stream_name":"stdout","time":11753.139872205,"data":"[Epoch 13 / 20], Training loss is 1.748355\n"}
+,{"stream_name":"stdout","time":11786.89844865,"data":"[Epoch 13 / 20], Validation loss is 2.205922, Validation accuracy is 0.548153\n"}
+,{"stream_name":"stdout","time":11827.590664903,"data":"[Epoch 14 / 20], Training loss is 1.696119\n"}
+,{"stream_name":"stdout","time":11861.700755271,"data":"[Epoch 14 / 20], Validation loss is 2.162840, Validation accuracy is 0.555575\n"}
+,{"stream_name":"stdout","time":11902.209354316,"data":"[Epoch 15 / 20], Training loss is 1.647205\n"}
+,{"stream_name":"stdout","time":11935.927310419,"data":"[Epoch 15 / 20], Validation loss is 2.129015, Validation accuracy is 0.556783\n"}
+,{"stream_name":"stdout","time":11978.969144268,"data":"[Epoch 16 / 20], Training loss is 1.597944\n"}
+,{"stream_name":"stdout","time":12014.678897388,"data":"[Epoch 16 / 20], Validation loss is 2.088999, Validation accuracy is 0.563514\n"}
+,{"stream_name":"stdout","time":12057.987856853,"data":"[Epoch 17 / 20], Training loss is 1.554105\n"}
+,{"stream_name":"stdout","time":12094.543260048,"data":"[Epoch 17 / 20], Validation loss is 2.061971, Validation accuracy is 0.567311\n"}
+,{"stream_name":"stdout","time":12136.23853972,"data":"[Epoch 18 / 20], Training loss is 1.525842\n"}
+,{"stream_name":"stdout","time":12171.434195052,"data":"[Epoch 18 / 20], Validation loss is 2.048057, Validation accuracy is 0.567311\n"}
+,{"stream_name":"stdout","time":12213.715677001,"data":"[Epoch 19 / 20], Training loss is 1.497209\n"}
+,{"stream_name":"stdout","time":12248.682792868,"data":"[Epoch 19 / 20], Validation loss is 2.021954, Validation accuracy is 0.570590\n"}
+,{"stream_name":"stdout","time":12291.499556347,"data":"[Epoch 20 / 20], Training loss is 1.470298\n"}
+,{"stream_name":"stdout","time":12326.261566854,"data":"[Epoch 20 / 20], Validation loss is 2.002810, Validation accuracy is 0.572316\n"}
+,{"stream_name":"stdout","time":12326.531276118,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":12326.531309337,"data":"Training with configuration (0.0001, 0.0080)\n"}
+,{"stream_name":"stdout","time":12368.346814904,"data":"[Epoch  1 / 20], Training loss is 5.118958\n"}
+,{"stream_name":"stdout","time":12403.47259356,"data":"[Epoch  1 / 20], Validation loss is 4.607639, Validation accuracy is 0.101139\n"}
+,{"stream_name":"stdout","time":12445.29684718,"data":"[Epoch  2 / 20], Training loss is 4.144677\n"}
+,{"stream_name":"stdout","time":12480.04649813,"data":"[Epoch  2 / 20], Validation loss is 3.841951, Validation accuracy is 0.254919\n"}
+,{"stream_name":"stdout","time":12523.368206518,"data":"[Epoch  3 / 20], Training loss is 3.365061\n"}
+,{"stream_name":"stdout","time":12558.406602188,"data":"[Epoch  3 / 20], Validation loss is 3.274884, Validation accuracy is 0.366414\n"}
+,{"stream_name":"stdout","time":12600.515962164,"data":"[Epoch  4 / 20], Training loss is 2.770533\n"}
+,{"stream_name":"stdout","time":12635.847372773,"data":"[Epoch  4 / 20], Validation loss is 2.859059, Validation accuracy is 0.439593\n"}
+,{"stream_name":"stdout","time":12678.285035656,"data":"[Epoch  5 / 20], Training loss is 2.334897\n"}
+,{"stream_name":"stdout","time":12713.749373091,"data":"[Epoch  5 / 20], Validation loss is 2.545384, Validation accuracy is 0.478944\n"}
+,{"stream_name":"stdout","time":12755.914513403,"data":"[Epoch  6 / 20], Training loss is 1.999039\n"}
+,{"stream_name":"stdout","time":12791.08482845,"data":"[Epoch  6 / 20], Validation loss is 2.320671, Validation accuracy is 0.504315\n"}
+,{"stream_name":"stdout","time":12833.494381111,"data":"[Epoch  7 / 20], Training loss is 1.763362\n"}
+,{"stream_name":"stdout","time":12868.199201527,"data":"[Epoch  7 / 20], Validation loss is 2.196343, Validation accuracy is 0.541077\n"}
+,{"stream_name":"stdout","time":12910.232439599,"data":"[Epoch  8 / 20], Training loss is 1.639997\n"}
+,{"stream_name":"stdout","time":12945.290851515,"data":"[Epoch  8 / 20], Validation loss is 2.109017, Validation accuracy is 0.546773\n"}
+,{"stream_name":"stdout","time":12986.955330756,"data":"[Epoch  9 / 20], Training loss is 1.531722\n"}
+,{"stream_name":"stdout","time":13021.343211439,"data":"[Epoch  9 / 20], Validation loss is 2.035981, Validation accuracy is 0.558336\n"}
+,{"stream_name":"stdout","time":13062.747737852,"data":"[Epoch 10 / 20], Training loss is 1.439828\n"}
+,{"stream_name":"stdout","time":13097.283053194,"data":"[Epoch 10 / 20], Validation loss is 1.964747, Validation accuracy is 0.564895\n"}
+,{"stream_name":"stdout","time":13138.912359578,"data":"[Epoch 11 / 20], Training loss is 1.354101\n"}
+,{"stream_name":"stdout","time":13173.530017388,"data":"[Epoch 11 / 20], Validation loss is 1.903652, Validation accuracy is 0.572316\n"}
+,{"stream_name":"stdout","time":13214.807071684,"data":"[Epoch 12 / 20], Training loss is 1.281401\n"}
+,{"stream_name":"stdout","time":13249.086484641,"data":"[Epoch 12 / 20], Validation loss is 1.869402, Validation accuracy is 0.580601\n"}
+,{"stream_name":"stdout","time":13290.53044503,"data":"[Epoch 13 / 20], Training loss is 1.234251\n"}
+,{"stream_name":"stdout","time":13326.057785926,"data":"[Epoch 13 / 20], Validation loss is 1.840905, Validation accuracy is 0.585261\n"}
+,{"stream_name":"stdout","time":13368.244226258,"data":"[Epoch 14 / 20], Training loss is 1.196961\n"}
+,{"stream_name":"stdout","time":13402.642124793,"data":"[Epoch 14 / 20], Validation loss is 1.813541, Validation accuracy is 0.585088\n"}
+,{"stream_name":"stdout","time":13444.394341071,"data":"[Epoch 15 / 20], Training loss is 1.156387\n"}
+,{"stream_name":"stdout","time":13479.130841988,"data":"[Epoch 15 / 20], Validation loss is 1.787164, Validation accuracy is 0.586814\n"}
+,{"stream_name":"stdout","time":13520.715375615,"data":"[Epoch 16 / 20], Training loss is 1.118852\n"}
+,{"stream_name":"stdout","time":13555.08490044,"data":"[Epoch 16 / 20], Validation loss is 1.756551, Validation accuracy is 0.592509\n"}
+,{"stream_name":"stdout","time":13596.980801848,"data":"[Epoch 17 / 20], Training loss is 1.081764\n"}
+,{"stream_name":"stdout","time":13630.953898304,"data":"[Epoch 17 / 20], Validation loss is 1.743114, Validation accuracy is 0.595444\n"}
+,{"stream_name":"stdout","time":13672.210129359,"data":"[Epoch 18 / 20], Training loss is 1.062647\n"}
+,{"stream_name":"stdout","time":13706.051577711,"data":"[Epoch 18 / 20], Validation loss is 1.723509, Validation accuracy is 0.599758\n"}
+,{"stream_name":"stdout","time":13747.297979209,"data":"[Epoch 19 / 20], Training loss is 1.038162\n"}
+,{"stream_name":"stdout","time":13782.00030823,"data":"[Epoch 19 / 20], Validation loss is 1.711391, Validation accuracy is 0.603728\n"}
+,{"stream_name":"stdout","time":13823.610073986,"data":"[Epoch 20 / 20], Training loss is 1.018770\n"}
+,{"stream_name":"stdout","time":13858.170787343,"data":"[Epoch 20 / 20], Validation loss is 1.697475, Validation accuracy is 0.605281\n"}
+,{"stream_name":"stdout","time":13858.455797035,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":13858.455823115,"data":"Training with configuration (0.0001, 0.0100)\n"}
+,{"stream_name":"stdout","time":13900.973632262,"data":"[Epoch  1 / 20], Training loss is 5.081938\n"}
+,{"stream_name":"stdout","time":13935.393832223,"data":"[Epoch  1 / 20], Validation loss is 4.473148, Validation accuracy is 0.125129\n"}
+,{"stream_name":"stdout","time":13977.412531638,"data":"[Epoch  2 / 20], Training loss is 3.923050\n"}
+,{"stream_name":"stdout","time":14012.853137239,"data":"[Epoch  2 / 20], Validation loss is 3.628629, Validation accuracy is 0.285640\n"}
+,{"stream_name":"stdout","time":14056.160401342,"data":"[Epoch  3 / 20], Training loss is 3.081248\n"}
+,{"stream_name":"stdout","time":14091.267519584,"data":"[Epoch  3 / 20], Validation loss is 3.009105, Validation accuracy is 0.402658\n"}
+,{"stream_name":"stdout","time":14133.002323781,"data":"[Epoch  4 / 20], Training loss is 2.467476\n"}
+,{"stream_name":"stdout","time":14167.071816612,"data":"[Epoch  4 / 20], Validation loss is 2.624903, Validation accuracy is 0.457370\n"}
+,{"stream_name":"stdout","time":14209.696927572,"data":"[Epoch  5 / 20], Training loss is 2.052085\n"}
+,{"stream_name":"stdout","time":14243.502313573,"data":"[Epoch  5 / 20], Validation loss is 2.349172, Validation accuracy is 0.491543\n"}
+,{"stream_name":"stdout","time":14285.281704108,"data":"[Epoch  6 / 20], Training loss is 1.740838\n"}
+,{"stream_name":"stdout","time":14320.572931765,"data":"[Epoch  6 / 20], Validation loss is 2.155980, Validation accuracy is 0.523818\n"}
+,{"stream_name":"stdout","time":14362.418959899,"data":"[Epoch  7 / 20], Training loss is 1.528959\n"}
+,{"stream_name":"stdout","time":14397.419985773,"data":"[Epoch  7 / 20], Validation loss is 2.032760, Validation accuracy is 0.553504\n"}
+,{"stream_name":"stdout","time":14438.547551263,"data":"[Epoch  8 / 20], Training loss is 1.411341\n"}
+,{"stream_name":"stdout","time":14472.556877237,"data":"[Epoch  8 / 20], Validation loss is 1.950879, Validation accuracy is 0.572144\n"}
+,{"stream_name":"stdout","time":14514.276449555,"data":"[Epoch  9 / 20], Training loss is 1.318244\n"}
+,{"stream_name":"stdout","time":14548.60716049,"data":"[Epoch  9 / 20], Validation loss is 1.883992, Validation accuracy is 0.577494\n"}
+,{"stream_name":"stdout","time":14590.890199217,"data":"[Epoch 10 / 20], Training loss is 1.232853\n"}
+,{"stream_name":"stdout","time":14625.975456959,"data":"[Epoch 10 / 20], Validation loss is 1.833402, Validation accuracy is 0.577494\n"}
+,{"stream_name":"stdout","time":14667.446036019,"data":"[Epoch 11 / 20], Training loss is 1.162120\n"}
+,{"stream_name":"stdout","time":14701.668801622,"data":"[Epoch 11 / 20], Validation loss is 1.786704, Validation accuracy is 0.584743\n"}
+,{"stream_name":"stdout","time":14743.63465747,"data":"[Epoch 12 / 20], Training loss is 1.092909\n"}
+,{"stream_name":"stdout","time":14778.229207527,"data":"[Epoch 12 / 20], Validation loss is 1.754154, Validation accuracy is 0.594408\n"}
+,{"stream_name":"stdout","time":14820.247700733,"data":"[Epoch 13 / 20], Training loss is 1.049424\n"}
+,{"stream_name":"stdout","time":14854.743994314,"data":"[Epoch 13 / 20], Validation loss is 1.726508, Validation accuracy is 0.594063\n"}
+,{"stream_name":"stdout","time":14896.046846957,"data":"[Epoch 14 / 20], Training loss is 1.015041\n"}
+,{"stream_name":"stdout","time":14931.268687455,"data":"[Epoch 14 / 20], Validation loss is 1.703995, Validation accuracy is 0.599758\n"}
+,{"stream_name":"stdout","time":14972.905525595,"data":"[Epoch 15 / 20], Training loss is 0.975741\n"}
+,{"stream_name":"stdout","time":15007.298967057,"data":"[Epoch 15 / 20], Validation loss is 1.684677, Validation accuracy is 0.603383\n"}
+,{"stream_name":"stdout","time":15049.446614818,"data":"[Epoch 16 / 20], Training loss is 0.948678\n"}
+,{"stream_name":"stdout","time":15084.270773021,"data":"[Epoch 16 / 20], Validation loss is 1.659192, Validation accuracy is 0.607352\n"}
+,{"stream_name":"stdout","time":15125.869091848,"data":"[Epoch 17 / 20], Training loss is 0.915508\n"}
+,{"stream_name":"stdout","time":15160.1348473,"data":"[Epoch 17 / 20], Validation loss is 1.651350, Validation accuracy is 0.609078\n"}
+,{"stream_name":"stdout","time":15201.358755123,"data":"[Epoch 18 / 20], Training loss is 0.895674\n"}
+,{"stream_name":"stdout","time":15235.872391437,"data":"[Epoch 18 / 20], Validation loss is 1.637056, Validation accuracy is 0.611840\n"}
+,{"stream_name":"stdout","time":15278.44816883,"data":"[Epoch 19 / 20], Training loss is 0.876706\n"}
+,{"stream_name":"stdout","time":15313.087109694,"data":"[Epoch 19 / 20], Validation loss is 1.623475, Validation accuracy is 0.610977\n"}
+,{"stream_name":"stdout","time":15354.706416918,"data":"[Epoch 20 / 20], Training loss is 0.854874\n"}
+,{"stream_name":"stdout","time":15388.704842292,"data":"[Epoch 20 / 20], Validation loss is 1.609515, Validation accuracy is 0.615119\n"}
+,{"stream_name":"stdout","time":15388.991456603,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":15388.991491897,"data":"Training with configuration (0.0005, 0.0010)\n"}
+,{"stream_name":"stdout","time":15430.109161845,"data":"[Epoch  1 / 20], Training loss is 5.424274\n"}
+,{"stream_name":"stdout","time":15464.341995201,"data":"[Epoch  1 / 20], Validation loss is 5.274294, Validation accuracy is 0.013117\n"}
+,{"stream_name":"stdout","time":15505.636862344,"data":"[Epoch  2 / 20], Training loss is 5.136171\n"}
+,{"stream_name":"stdout","time":15539.658207894,"data":"[Epoch  2 / 20], Validation loss is 5.054240, Validation accuracy is 0.037798\n"}
+,{"stream_name":"stdout","time":15581.51283883,"data":"[Epoch  3 / 20], Training loss is 4.885121\n"}
+,{"stream_name":"stdout","time":15615.603146679,"data":"[Epoch  3 / 20], Validation loss is 4.846142, Validation accuracy is 0.080083\n"}
+,{"stream_name":"stdout","time":15657.356590535,"data":"[Epoch  4 / 20], Training loss is 4.638875\n"}
+,{"stream_name":"stdout","time":15692.230456162,"data":"[Epoch  4 / 20], Validation loss is 4.625975, Validation accuracy is 0.129444\n"}
+,{"stream_name":"stdout","time":15734.195709175,"data":"[Epoch  5 / 20], Training loss is 4.389126\n"}
+,{"stream_name":"stdout","time":15769.255835651,"data":"[Epoch  5 / 20], Validation loss is 4.402322, Validation accuracy is 0.174836\n"}
+,{"stream_name":"stdout","time":15811.19610062,"data":"[Epoch  6 / 20], Training loss is 4.138514\n"}
+,{"stream_name":"stdout","time":15845.18362295,"data":"[Epoch  6 / 20], Validation loss is 4.181667, Validation accuracy is 0.220228\n"}
+,{"stream_name":"stdout","time":15886.966045825,"data":"[Epoch  7 / 20], Training loss is 3.923807\n"}
+,{"stream_name":"stdout","time":15921.146264645,"data":"[Epoch  7 / 20], Validation loss is 4.034638, Validation accuracy is 0.243873\n"}
+,{"stream_name":"stdout","time":15963.819228073,"data":"[Epoch  8 / 20], Training loss is 3.763105\n"}
+,{"stream_name":"stdout","time":15999.270042401,"data":"[Epoch  8 / 20], Validation loss is 3.903920, Validation accuracy is 0.275285\n"}
+,{"stream_name":"stdout","time":16041.30617975,"data":"[Epoch  9 / 20], Training loss is 3.612649\n"}
+,{"stream_name":"stdout","time":16076.433368376,"data":"[Epoch  9 / 20], Validation loss is 3.771868, Validation accuracy is 0.301174\n"}
+,{"stream_name":"stdout","time":16118.786863948,"data":"[Epoch 10 / 20], Training loss is 3.469628\n"}
+,{"stream_name":"stdout","time":16153.307248387,"data":"[Epoch 10 / 20], Validation loss is 3.651962, Validation accuracy is 0.326372\n"}
+,{"stream_name":"stdout","time":16195.929692563,"data":"[Epoch 11 / 20], Training loss is 3.333395\n"}
+,{"stream_name":"stdout","time":16230.517848687,"data":"[Epoch 11 / 20], Validation loss is 3.543203, Validation accuracy is 0.346911\n"}
+,{"stream_name":"stdout","time":16272.814294543,"data":"[Epoch 12 / 20], Training loss is 3.219488\n"}
+,{"stream_name":"stdout","time":16307.847507403,"data":"[Epoch 12 / 20], Validation loss is 3.466983, Validation accuracy is 0.365033\n"}
+,{"stream_name":"stdout","time":16350.447455665,"data":"[Epoch 13 / 20], Training loss is 3.129582\n"}
+,{"stream_name":"stdout","time":16384.73537867,"data":"[Epoch 13 / 20], Validation loss is 3.386716, Validation accuracy is 0.376596\n"}
+,{"stream_name":"stdout","time":16427.548144066,"data":"[Epoch 14 / 20], Training loss is 3.047956\n"}
+,{"stream_name":"stdout","time":16462.494869354,"data":"[Epoch 14 / 20], Validation loss is 3.325880, Validation accuracy is 0.389368\n"}
+,{"stream_name":"stdout","time":16505.649528179,"data":"[Epoch 15 / 20], Training loss is 2.967922\n"}
+,{"stream_name":"stdout","time":16540.997456523,"data":"[Epoch 15 / 20], Validation loss is 3.268282, Validation accuracy is 0.405247\n"}
+,{"stream_name":"stdout","time":16581.805750759,"data":"[Epoch 16 / 20], Training loss is 2.888635\n"}
+,{"stream_name":"stdout","time":16616.027629533,"data":"[Epoch 16 / 20], Validation loss is 3.195790, Validation accuracy is 0.415948\n"}
+,{"stream_name":"stdout","time":16657.531909894,"data":"[Epoch 17 / 20], Training loss is 2.822827\n"}
+,{"stream_name":"stdout","time":16692.509642822,"data":"[Epoch 17 / 20], Validation loss is 3.154545, Validation accuracy is 0.423196\n"}
+,{"stream_name":"stdout","time":16734.764308901,"data":"[Epoch 18 / 20], Training loss is 2.763053\n"}
+,{"stream_name":"stdout","time":16769.003440686,"data":"[Epoch 18 / 20], Validation loss is 3.112975, Validation accuracy is 0.433725\n"}
+,{"stream_name":"stdout","time":16810.783520903,"data":"[Epoch 19 / 20], Training loss is 2.708392\n"}
+,{"stream_name":"stdout","time":16845.676794596,"data":"[Epoch 19 / 20], Validation loss is 3.066387, Validation accuracy is 0.440628\n"}
+,{"stream_name":"stdout","time":16886.934055729,"data":"[Epoch 20 / 20], Training loss is 2.653443\n"}
+,{"stream_name":"stdout","time":16920.763821824,"data":"[Epoch 20 / 20], Validation loss is 3.031504, Validation accuracy is 0.447705\n"}
+,{"stream_name":"stdout","time":16921.05825332,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":16921.058290329,"data":"Training with configuration (0.0005, 0.0020)\n"}
+,{"stream_name":"stdout","time":16962.506209178,"data":"[Epoch  1 / 20], Training loss is 5.341066\n"}
+,{"stream_name":"stdout","time":16996.73693864,"data":"[Epoch  1 / 20], Validation loss is 5.121062, Validation accuracy is 0.026924\n"}
+,{"stream_name":"stdout","time":17038.736141654,"data":"[Epoch  2 / 20], Training loss is 4.929008\n"}
+,{"stream_name":"stdout","time":17072.975928272,"data":"[Epoch  2 / 20], Validation loss is 4.788668, Validation accuracy is 0.083880\n"}
+,{"stream_name":"stdout","time":17114.806393995,"data":"[Epoch  3 / 20], Training loss is 4.546296\n"}
+,{"stream_name":"stdout","time":17149.447875802,"data":"[Epoch  3 / 20], Validation loss is 4.442004, Validation accuracy is 0.163790\n"}
+,{"stream_name":"stdout","time":17190.763187612,"data":"[Epoch  4 / 20], Training loss is 4.154696\n"}
+,{"stream_name":"stdout","time":17224.835573069,"data":"[Epoch  4 / 20], Validation loss is 4.090244, Validation accuracy is 0.234898\n"}
+,{"stream_name":"stdout","time":17266.642014388,"data":"[Epoch  5 / 20], Training loss is 3.773108\n"}
+,{"stream_name":"stdout","time":17300.682937378,"data":"[Epoch  5 / 20], Validation loss is 3.768622, Validation accuracy is 0.301174\n"}
+,{"stream_name":"stdout","time":17342.127129329,"data":"[Epoch  6 / 20], Training loss is 3.424011\n"}
+,{"stream_name":"stdout","time":17377.007346915,"data":"[Epoch  6 / 20], Validation loss is 3.469424, Validation accuracy is 0.352951\n"}
+,{"stream_name":"stdout","time":17420.01638855,"data":"[Epoch  7 / 20], Training loss is 3.152594\n"}
+,{"stream_name":"stdout","time":17457.450980549,"data":"[Epoch  7 / 20], Validation loss is 3.300424, Validation accuracy is 0.385571\n"}
+,{"stream_name":"stdout","time":17501.660791485,"data":"[Epoch  8 / 20], Training loss is 2.964389\n"}
+,{"stream_name":"stdout","time":17536.296210321,"data":"[Epoch  8 / 20], Validation loss is 3.150408, Validation accuracy is 0.416120\n"}
+,{"stream_name":"stdout","time":17579.056035054,"data":"[Epoch  9 / 20], Training loss is 2.798491\n"}
+,{"stream_name":"stdout","time":17613.746973674,"data":"[Epoch  9 / 20], Validation loss is 3.020486, Validation accuracy is 0.440283\n"}
+,{"stream_name":"stdout","time":17655.655796859,"data":"[Epoch 10 / 20], Training loss is 2.639173\n"}
+,{"stream_name":"stdout","time":17690.593490913,"data":"[Epoch 10 / 20], Validation loss is 2.900438, Validation accuracy is 0.459096\n"}
+,{"stream_name":"stdout","time":17733.227861006,"data":"[Epoch 11 / 20], Training loss is 2.502984\n"}
+,{"stream_name":"stdout","time":17768.022939582,"data":"[Epoch 11 / 20], Validation loss is 2.789939, Validation accuracy is 0.477908\n"}
+,{"stream_name":"stdout","time":17810.328620564,"data":"[Epoch 12 / 20], Training loss is 2.380424\n"}
+,{"stream_name":"stdout","time":17846.09104032,"data":"[Epoch 12 / 20], Validation loss is 2.716818, Validation accuracy is 0.491716\n"}
+,{"stream_name":"stdout","time":17888.454302275,"data":"[Epoch 13 / 20], Training loss is 2.296815\n"}
+,{"stream_name":"stdout","time":17924.450088053,"data":"[Epoch 13 / 20], Validation loss is 2.644863, Validation accuracy is 0.502416\n"}
+,{"stream_name":"stdout","time":17967.482719157,"data":"[Epoch 14 / 20], Training loss is 2.214654\n"}
+,{"stream_name":"stdout","time":18003.092795867,"data":"[Epoch 14 / 20], Validation loss is 2.586865, Validation accuracy is 0.513807\n"}
+,{"stream_name":"stdout","time":18046.363264259,"data":"[Epoch 15 / 20], Training loss is 2.136663\n"}
+,{"stream_name":"stdout","time":18082.986320359,"data":"[Epoch 15 / 20], Validation loss is 2.531428, Validation accuracy is 0.521229\n"}
+,{"stream_name":"stdout","time":18125.318483575,"data":"[Epoch 16 / 20], Training loss is 2.061176\n"}
+,{"stream_name":"stdout","time":18160.63033757,"data":"[Epoch 16 / 20], Validation loss is 2.473585, Validation accuracy is 0.533310\n"}
+,{"stream_name":"stdout","time":18202.288871023,"data":"[Epoch 17 / 20], Training loss is 1.998252\n"}
+,{"stream_name":"stdout","time":18237.927644741,"data":"[Epoch 17 / 20], Validation loss is 2.432905, Validation accuracy is 0.539351\n"}
+,{"stream_name":"stdout","time":18280.68900978,"data":"[Epoch 18 / 20], Training loss is 1.942206\n"}
+,{"stream_name":"stdout","time":18315.703714719,"data":"[Epoch 18 / 20], Validation loss is 2.398657, Validation accuracy is 0.542285\n"}
+,{"stream_name":"stdout","time":18358.788343502,"data":"[Epoch 19 / 20], Training loss is 1.889968\n"}
+,{"stream_name":"stdout","time":18394.359268398,"data":"[Epoch 19 / 20], Validation loss is 2.364189, Validation accuracy is 0.550224\n"}
+,{"stream_name":"stdout","time":18437.045238492,"data":"[Epoch 20 / 20], Training loss is 1.844808\n"}
+,{"stream_name":"stdout","time":18473.483663217,"data":"[Epoch 20 / 20], Validation loss is 2.334784, Validation accuracy is 0.556438\n"}
+,{"stream_name":"stdout","time":18473.748188141,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":18473.748211521,"data":"Training with configuration (0.0005, 0.0050)\n"}
+,{"stream_name":"stdout","time":18516.551394403,"data":"[Epoch  1 / 20], Training loss is 5.246618\n"}
+,{"stream_name":"stdout","time":18551.466712455,"data":"[Epoch  1 / 20], Validation loss is 4.854315, Validation accuracy is 0.060925\n"}
+,{"stream_name":"stdout","time":18594.033338559,"data":"[Epoch  2 / 20], Training loss is 4.469660\n"}
+,{"stream_name":"stdout","time":18628.615178756,"data":"[Epoch  2 / 20], Validation loss is 4.169682, Validation accuracy is 0.204177\n"}
+,{"stream_name":"stdout","time":18670.216462763,"data":"[Epoch  3 / 20], Training loss is 3.733004\n"}
+,{"stream_name":"stdout","time":18705.209896498,"data":"[Epoch  3 / 20], Validation loss is 3.550171, Validation accuracy is 0.322057\n"}
+,{"stream_name":"stdout","time":18747.403792587,"data":"[Epoch  4 / 20], Training loss is 3.106825\n"}
+,{"stream_name":"stdout","time":18781.849917273,"data":"[Epoch  4 / 20], Validation loss is 3.049821, Validation accuracy is 0.405937\n"}
+,{"stream_name":"stdout","time":18824.60147641,"data":"[Epoch  5 / 20], Training loss is 2.608708\n"}
+,{"stream_name":"stdout","time":18859.289038682,"data":"[Epoch  5 / 20], Validation loss is 2.692479, Validation accuracy is 0.470832\n"}
+,{"stream_name":"stdout","time":18900.839919028,"data":"[Epoch  6 / 20], Training loss is 2.227129\n"}
+,{"stream_name":"stdout","time":18935.487382237,"data":"[Epoch  6 / 20], Validation loss is 2.426045, Validation accuracy is 0.512772\n"}
+,{"stream_name":"stdout","time":18977.296889059,"data":"[Epoch  7 / 20], Training loss is 1.953119\n"}
+,{"stream_name":"stdout","time":19012.315656134,"data":"[Epoch  7 / 20], Validation loss is 2.280050, Validation accuracy is 0.549361\n"}
+,{"stream_name":"stdout","time":19054.309057347,"data":"[Epoch  8 / 20], Training loss is 1.793620\n"}
+,{"stream_name":"stdout","time":19088.463257344,"data":"[Epoch  8 / 20], Validation loss is 2.165722, Validation accuracy is 0.563169\n"}
+,{"stream_name":"stdout","time":19130.460690349,"data":"[Epoch  9 / 20], Training loss is 1.653889\n"}
+,{"stream_name":"stdout","time":19164.341747874,"data":"[Epoch  9 / 20], Validation loss is 2.064407, Validation accuracy is 0.576976\n"}
+,{"stream_name":"stdout","time":19206.033540635,"data":"[Epoch 10 / 20], Training loss is 1.532080\n"}
+,{"stream_name":"stdout","time":19241.271526776,"data":"[Epoch 10 / 20], Validation loss is 1.981193, Validation accuracy is 0.592682\n"}
+,{"stream_name":"stdout","time":19283.073859805,"data":"[Epoch 11 / 20], Training loss is 1.421454\n"}
+,{"stream_name":"stdout","time":19317.361641907,"data":"[Epoch 11 / 20], Validation loss is 1.906539, Validation accuracy is 0.599586\n"}
+,{"stream_name":"stdout","time":19358.710942781,"data":"[Epoch 12 / 20], Training loss is 1.326144\n"}
+,{"stream_name":"stdout","time":19392.742662949,"data":"[Epoch 12 / 20], Validation loss is 1.864450, Validation accuracy is 0.607525\n"}
+,{"stream_name":"stdout","time":19434.493433344,"data":"[Epoch 13 / 20], Training loss is 1.262495\n"}
+,{"stream_name":"stdout","time":19469.175720817,"data":"[Epoch 13 / 20], Validation loss is 1.817097, Validation accuracy is 0.615464\n"}
+,{"stream_name":"stdout","time":19510.127531845,"data":"[Epoch 14 / 20], Training loss is 1.200340\n"}
+,{"stream_name":"stdout","time":19544.523453627,"data":"[Epoch 14 / 20], Validation loss is 1.784385, Validation accuracy is 0.618744\n"}
+,{"stream_name":"stdout","time":19585.947437745,"data":"[Epoch 15 / 20], Training loss is 1.141763\n"}
+,{"stream_name":"stdout","time":19619.719071862,"data":"[Epoch 15 / 20], Validation loss is 1.747264, Validation accuracy is 0.625475\n"}
+,{"stream_name":"stdout","time":19662.045619513,"data":"[Epoch 16 / 20], Training loss is 1.086598\n"}
+,{"stream_name":"stdout","time":19695.780958247,"data":"[Epoch 16 / 20], Validation loss is 1.716954, Validation accuracy is 0.628754\n"}
+,{"stream_name":"stdout","time":19737.030505338,"data":"[Epoch 17 / 20], Training loss is 1.037662\n"}
+,{"stream_name":"stdout","time":19771.141696881,"data":"[Epoch 17 / 20], Validation loss is 1.694143, Validation accuracy is 0.630307\n"}
+,{"stream_name":"stdout","time":19813.021386885,"data":"[Epoch 18 / 20], Training loss is 0.999030\n"}
+,{"stream_name":"stdout","time":19847.720338154,"data":"[Epoch 18 / 20], Validation loss is 1.673719, Validation accuracy is 0.634795\n"}
+,{"stream_name":"stdout","time":19888.86252755,"data":"[Epoch 19 / 20], Training loss is 0.966400\n"}
+,{"stream_name":"stdout","time":19922.899335226,"data":"[Epoch 19 / 20], Validation loss is 1.653608, Validation accuracy is 0.636866\n"}
+,{"stream_name":"stdout","time":19964.417833925,"data":"[Epoch 20 / 20], Training loss is 0.925513\n"}
+,{"stream_name":"stdout","time":19997.891043334,"data":"[Epoch 20 / 20], Validation loss is 1.635726, Validation accuracy is 0.639972\n"}
+,{"stream_name":"stdout","time":19998.1608602,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":19998.1608874,"data":"Training with configuration (0.0005, 0.0080)\n"}
+,{"stream_name":"stdout","time":20039.843395713,"data":"[Epoch  1 / 20], Training loss is 5.130109\n"}
+,{"stream_name":"stdout","time":20074.104602712,"data":"[Epoch  1 / 20], Validation loss is 4.574825, Validation accuracy is 0.126855\n"}
+,{"stream_name":"stdout","time":20115.220127377,"data":"[Epoch  2 / 20], Training loss is 4.031498\n"}
+,{"stream_name":"stdout","time":20149.758387872,"data":"[Epoch  2 / 20], Validation loss is 3.656907, Validation accuracy is 0.299448\n"}
+,{"stream_name":"stdout","time":20191.076871475,"data":"[Epoch  3 / 20], Training loss is 3.098950\n"}
+,{"stream_name":"stdout","time":20225.050795708,"data":"[Epoch  3 / 20], Validation loss is 2.961195, Validation accuracy is 0.423024\n"}
+,{"stream_name":"stdout","time":20266.777410038,"data":"[Epoch  4 / 20], Training loss is 2.436067\n"}
+,{"stream_name":"stdout","time":20300.498204765,"data":"[Epoch  4 / 20], Validation loss is 2.509143, Validation accuracy is 0.481360\n"}
+,{"stream_name":"stdout","time":20341.852573502,"data":"[Epoch  5 / 20], Training loss is 1.971994\n"}
+,{"stream_name":"stdout","time":20376.821803951,"data":"[Epoch  5 / 20], Validation loss is 2.198538, Validation accuracy is 0.531930\n"}
+,{"stream_name":"stdout","time":20418.178094452,"data":"[Epoch  6 / 20], Training loss is 1.645249\n"}
+,{"stream_name":"stdout","time":20453.289590692,"data":"[Epoch  6 / 20], Validation loss is 2.003743, Validation accuracy is 0.565758\n"}
+,{"stream_name":"stdout","time":20494.503060836,"data":"[Epoch  7 / 20], Training loss is 1.416669\n"}
+,{"stream_name":"stdout","time":20527.958441846,"data":"[Epoch  7 / 20], Validation loss is 1.877983, Validation accuracy is 0.593718\n"}
+,{"stream_name":"stdout","time":20569.369258671,"data":"[Epoch  8 / 20], Training loss is 1.286355\n"}
+,{"stream_name":"stdout","time":20603.042731139,"data":"[Epoch  8 / 20], Validation loss is 1.800049, Validation accuracy is 0.605281\n"}
+,{"stream_name":"stdout","time":20644.015384683,"data":"[Epoch  9 / 20], Training loss is 1.174814\n"}
+,{"stream_name":"stdout","time":20678.03062022,"data":"[Epoch  9 / 20], Validation loss is 1.732509, Validation accuracy is 0.612012\n"}
+,{"stream_name":"stdout","time":20718.707628646,"data":"[Epoch 10 / 20], Training loss is 1.079699\n"}
+,{"stream_name":"stdout","time":20752.993987914,"data":"[Epoch 10 / 20], Validation loss is 1.673761, Validation accuracy is 0.618571\n"}
+,{"stream_name":"stdout","time":20794.717546744,"data":"[Epoch 11 / 20], Training loss is 0.989537\n"}
+,{"stream_name":"stdout","time":20828.274721792,"data":"[Epoch 11 / 20], Validation loss is 1.623855, Validation accuracy is 0.624784\n"}
+,{"stream_name":"stdout","time":20869.950056331,"data":"[Epoch 12 / 20], Training loss is 0.916111\n"}
+,{"stream_name":"stdout","time":20903.72225215,"data":"[Epoch 12 / 20], Validation loss is 1.588688, Validation accuracy is 0.630307\n"}
+,{"stream_name":"stdout","time":20945.25900264,"data":"[Epoch 13 / 20], Training loss is 0.861435\n"}
+,{"stream_name":"stdout","time":20979.157316945,"data":"[Epoch 13 / 20], Validation loss is 1.562649, Validation accuracy is 0.636003\n"}
+,{"stream_name":"stdout","time":21019.812504584,"data":"[Epoch 14 / 20], Training loss is 0.815735\n"}
+,{"stream_name":"stdout","time":21053.65471083,"data":"[Epoch 14 / 20], Validation loss is 1.541074, Validation accuracy is 0.637901\n"}
+,{"stream_name":"stdout","time":21094.714944649,"data":"[Epoch 15 / 20], Training loss is 0.765520\n"}
+,{"stream_name":"stdout","time":21128.441958815,"data":"[Epoch 15 / 20], Validation loss is 1.517440, Validation accuracy is 0.640145\n"}
+,{"stream_name":"stdout","time":21170.239396536,"data":"[Epoch 16 / 20], Training loss is 0.726832\n"}
+,{"stream_name":"stdout","time":21204.84939677,"data":"[Epoch 16 / 20], Validation loss is 1.500577, Validation accuracy is 0.642906\n"}
+,{"stream_name":"stdout","time":21246.146093387,"data":"[Epoch 17 / 20], Training loss is 0.683838\n"}
+,{"stream_name":"stdout","time":21280.452150875,"data":"[Epoch 17 / 20], Validation loss is 1.484791, Validation accuracy is 0.644460\n"}
+,{"stream_name":"stdout","time":21321.622279827,"data":"[Epoch 18 / 20], Training loss is 0.655169\n"}
+,{"stream_name":"stdout","time":21355.599485591,"data":"[Epoch 18 / 20], Validation loss is 1.472412, Validation accuracy is 0.646186\n"}
+,{"stream_name":"stdout","time":21396.843986778,"data":"[Epoch 19 / 20], Training loss is 0.624159\n"}
+,{"stream_name":"stdout","time":21430.645150729,"data":"[Epoch 19 / 20], Validation loss is 1.456206, Validation accuracy is 0.648429\n"}
+,{"stream_name":"stdout","time":21472.018172965,"data":"[Epoch 20 / 20], Training loss is 0.601128\n"}
+,{"stream_name":"stdout","time":21505.998285554,"data":"[Epoch 20 / 20], Validation loss is 1.450063, Validation accuracy is 0.652399\n"}
+,{"stream_name":"stdout","time":21506.250426715,"data":"======================================================================\n"}
+,{"stream_name":"stdout","time":21506.250456426,"data":"Training with configuration (0.0005, 0.0100)\n"}
+,{"stream_name":"stdout","time":21547.501827082,"data":"[Epoch  1 / 20], Training loss is 5.038772\n"}
+,{"stream_name":"stdout","time":21581.473530329,"data":"[Epoch  1 / 20], Validation loss is 4.394047, Validation accuracy is 0.144115\n"}
+,{"stream_name":"stdout","time":21622.609231966,"data":"[Epoch  2 / 20], Training loss is 3.752909\n"}
+,{"stream_name":"stdout","time":21656.710194472,"data":"[Epoch  2 / 20], Validation loss is 3.335089, Validation accuracy is 0.349499\n"}
+,{"stream_name":"stdout","time":21698.112151925,"data":"[Epoch  3 / 20], Training loss is 2.753071\n"}
+,{"stream_name":"stdout","time":21731.995846009,"data":"[Epoch  3 / 20], Validation loss is 2.651254, Validation accuracy is 0.452019\n"}
+,{"stream_name":"stdout","time":21773.763777372,"data":"[Epoch  4 / 20], Training loss is 2.113129\n"}
+,{"stream_name":"stdout","time":21808.24738746,"data":"[Epoch  4 / 20], Validation loss is 2.253397, Validation accuracy is 0.506904\n"}
+,{"stream_name":"stdout","time":21849.875159339,"data":"[Epoch  5 / 20], Training loss is 1.696477\n"}
+,{"stream_name":"stdout","time":21884.156520088,"data":"[Epoch  5 / 20], Validation loss is 1.998169, Validation accuracy is 0.547463\n"}
+,{"stream_name":"stdout","time":21925.748074481,"data":"[Epoch  6 / 20], Training loss is 1.401609\n"}
+,{"stream_name":"stdout","time":21959.792527781,"data":"[Epoch  6 / 20], Validation loss is 1.835204, Validation accuracy is 0.573524\n"}
+,{"stream_name":"stdout","time":22000.995364006,"data":"[Epoch  7 / 20], Training loss is 1.197746\n"}
+,{"stream_name":"stdout","time":22034.916355447,"data":"[Epoch  7 / 20], Validation loss is 1.721777, Validation accuracy is 0.607180\n"}
+,{"stream_name":"stdout","time":22076.507443739,"data":"[Epoch  8 / 20], Training loss is 1.079708\n"}
+,{"stream_name":"stdout","time":22110.570071181,"data":"[Epoch  8 / 20], Validation loss is 1.654016, Validation accuracy is 0.613048\n"}
+,{"stream_name":"stdout","time":22151.836959318,"data":"[Epoch  9 / 20], Training loss is 0.975806\n"}
+,{"stream_name":"stdout","time":22187.393832748,"data":"[Epoch  9 / 20], Validation loss is 1.598131, Validation accuracy is 0.621332\n"}
+,{"stream_name":"stdout","time":22228.374929546,"data":"[Epoch 10 / 20], Training loss is 0.892565\n"}
+,{"stream_name":"stdout","time":22263.375502677,"data":"[Epoch 10 / 20], Validation loss is 1.553243, Validation accuracy is 0.630480\n"}
+,{"stream_name":"stdout","time":22305.57801414,"data":"[Epoch 11 / 20], Training loss is 0.817064\n"}
+,{"stream_name":"stdout","time":22339.612127906,"data":"[Epoch 11 / 20], Validation loss is 1.512478, Validation accuracy is 0.633069\n"}
+,{"stream_name":"stdout","time":22380.729985558,"data":"[Epoch 12 / 20], Training loss is 0.751865\n"}
+,{"stream_name":"stdout","time":22415.68150799,"data":"[Epoch 12 / 20], Validation loss is 1.479401, Validation accuracy is 0.640490\n"}
+,{"stream_name":"stdout","time":22457.775507179,"data":"[Epoch 13 / 20], Training loss is 0.701876\n"}
+,{"stream_name":"stdout","time":22493.836432902,"data":"[Epoch 13 / 20], Validation loss is 1.465014, Validation accuracy is 0.643769\n"}
+,{"stream_name":"stdout","time":22536.585679879,"data":"[Epoch 14 / 20], Training loss is 0.658930\n"}
+,{"stream_name":"stdout","time":22571.548188516,"data":"[Epoch 14 / 20], Validation loss is 1.444321, Validation accuracy is 0.643942\n"}
+,{"stream_name":"stdout","time":22613.12205998,"data":"[Epoch 15 / 20], Training loss is 0.617124\n"}
+,{"stream_name":"stdout","time":22647.734366444,"data":"[Epoch 15 / 20], Validation loss is 1.429993, Validation accuracy is 0.646013\n"}
+,{"stream_name":"stdout","time":22689.224123664,"data":"[Epoch 16 / 20], Training loss is 0.581034\n"}
+,{"stream_name":"stdout","time":22724.144387038,"data":"[Epoch 16 / 20], Validation loss is 1.410902, Validation accuracy is 0.646703\n"}
+,{"stream_name":"stdout","time":22765.568980538,"data":"[Epoch 17 / 20], Training loss is 0.545258\n"}
+,{"stream_name":"stdout","time":22801.305481532,"data":"[Epoch 17 / 20], Validation loss is 1.406527, Validation accuracy is 0.648602\n"}
+,{"stream_name":"stdout","time":22843.945370714,"data":"[Epoch 18 / 20], Training loss is 0.518867\n"}
+,{"stream_name":"stdout","time":22877.994500575,"data":"[Epoch 18 / 20], Validation loss is 1.390552, Validation accuracy is 0.649983\n"}
+,{"stream_name":"stdout","time":22919.888981653,"data":"[Epoch 19 / 20], Training loss is 0.494654\n"}
+,{"stream_name":"stdout","time":22954.250116783,"data":"[Epoch 19 / 20], Validation loss is 1.384402, Validation accuracy is 0.652054\n"}
+,{"stream_name":"stdout","time":22995.516664563,"data":"[Epoch 20 / 20], Training loss is 0.473614\n"}
+,{"stream_name":"stdout","time":23030.25643181,"data":"[Epoch 20 / 20], Validation loss is 1.372296, Validation accuracy is 0.651709\n"}
+,{"stream_name":"stderr","time":23034.930456171,"data":"/opt/conda/lib/python3.10/site-packages/traitlets/traitlets.py:2930: FutureWarning: --Exporter.preprocessors=[\"remove_papermill_header.RemovePapermillHeader\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":23034.930514542,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":23034.937738529,"data":"[NbConvertApp] WARNING | Config option `kernel_spec_manager_class` not recognized by `NbConvertApp`.\n"}
+,{"stream_name":"stderr","time":23034.979630257,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":23035.503626078,"data":"[NbConvertApp] Writing 70406 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":23037.055476108,"data":"/opt/conda/lib/python3.10/site-packages/traitlets/traitlets.py:2930: FutureWarning: --Exporter.preprocessors=[\"nbconvert.preprocessors.ExtractOutputPreprocessor\"] for containers is deprecated in traitlets 5.0. You can pass `--Exporter.preprocessors item` ... multiple times to add items to a list.\n"}
+,{"stream_name":"stderr","time":23037.05551781,"data":"  warn(\n"}
+,{"stream_name":"stderr","time":23037.074864606,"data":"[NbConvertApp] WARNING | Config option `kernel_spec_manager_class` not recognized by `NbConvertApp`.\n"}
+,{"stream_name":"stderr","time":23037.105571992,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":23038.031541701,"data":"[NbConvertApp] Writing 365012 bytes to __results__.html\n"}
+]

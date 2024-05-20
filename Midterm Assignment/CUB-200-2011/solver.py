@@ -78,11 +78,11 @@ def train_resnet_with_cub(
         )
     
     # scheduler step size and gamma
-    step_size = 5
-    gamma = kwargs.pop('gamma', 0.5)
+    step_size = kwargs.pop('step', 10)
+    gamma = kwargs.pop('gamma', 0.7)
 
     # custom step scheduler
-    def custom_step_scheduler(optimizer, epoch, step_size, gamma):
+    def custom_step_scheduler(optimizer: optim, epoch: int, step_size: int, gamma: float):
         """
         Decay the learning rate of the second parameter group by gamma every step_size epochs.
         """
