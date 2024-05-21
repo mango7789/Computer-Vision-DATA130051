@@ -67,12 +67,12 @@ class CUB_ImageFolder(Dataset):
         return image_matrix, image_label
 
 
-def preprocess_data(batch_size: int=128) -> tuple[DataLoader, DataLoader]:
+def preprocess_data(batch_size: int=64) -> tuple[DataLoader, DataLoader]:
     """
     Preprocess the CUB-200-2011 dataset and return the train and test 'DataLoader'.
     
     Args:
-    - batch_size: The number of samples in one batch, default is 128.
+    - batch_size: The number of samples in one batch, default is 64.
     """
     
     # resize and normalize the images

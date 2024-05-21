@@ -79,7 +79,7 @@ def train_resnet_with_cub(
     
     # scheduler step size and gamma
     step_size = kwargs.pop('step', 10)
-    gamma = kwargs.pop('gamma', 0.7)
+    gamma = kwargs.pop('gamma', 0.5)
 
     # custom step scheduler
     def custom_step_scheduler(optimizer: optim, epoch: int, step_size: int, gamma: float):
@@ -88,8 +88,7 @@ def train_resnet_with_cub(
         """
         if epoch % step_size == 0 and epoch > 0:
             for index, param_group in enumerate(optimizer.param_groups):
-                if index == 1:  
-                    param_group['lr'] *= gamma
+                param_group['lr'] *= gamma
     
     # init the tensorboard
     tensorboard_name = "Fine_Tuning_With_Pretrain" if pretrain else "Fine_Tuning_Random_Initialize"
@@ -120,9 +119,8 @@ def train_resnet_with_cub(
             running_loss += loss.item() * inputs.size(0)
         
         custom_step_scheduler(optimizer, epoch, step_size, gamma)
-        epoch_loss = running_loss / samples
-        print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, max_num_epoch, epoch_loss))
-        writer.add_scalar('Train/Loss', epoch_loss, epoch)
+        train_loss = running_loss / samples
+        print("[Epoch {:>2} / {:>2}], Training loss is {:>8.6f}".format(epoch + 1, max_num_epoch, train_loss))
 
         # test
         model.eval()
@@ -138,12 +136,12 @@ def train_resnet_with_cub(
                 running_loss += criterion(outputs, labels).item() * inputs.size(0)
                 correct += (predicted == labels).sum().item()
 
-        epoch_loss = running_loss / total
-        writer.add_scalar('Validation/Loss', epoch_loss, epoch)
+        test_loss = running_loss / total
+        writer.add_scalars('Loss', {'Train': train_loss, 'Valid': test_loss}, epoch + 1)
         accuracy = correct / total
         writer.add_scalar('Validation/Accuracy', accuracy, epoch)
         print("[Epoch {:>2} / {:>2}], Validation loss is {:>8.6f}, Validation accuracy is {:>8.6f}".format(
-            epoch + 1, max_num_epoch, epoch_loss, accuracy
+            epoch + 1, max_num_epoch, test_loss, accuracy
         ))
         best_acc = max(best_acc, accuracy)
         

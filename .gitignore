@@ -2,3 +2,5 @@
 **/__pycache__/
 **/mmdetection/
 **/data/
+**/.venv/
+**/detectron2-main/
