@@ -17,18 +17,18 @@ model = dict(
 data = dict(
     train = dict(
         type = 'VOCDataset',
-        ann_file = 'data/VOCdevkit/VOC2007/ImageSets/Main/trainval.txt',
-        img_prefix = 'data/VOCdevkit/VOC2007'
+        ann_file = 'data/VOCdevkit/VOC2012/ImageSets/Main/trainval.txt',
+        img_prefix = 'data/VOCdevkit/VOC2012'
     ),
     val = dict(
         type = 'VOCDataset',
-        ann_file = 'data/VOCdevkit/VOC2007/ImageSets/Main/val.txt',
-        img_prefix = 'data/VOCdevkit/VOC2007'
+        ann_file = 'data/VOCdevkit/VOC2012/ImageSets/Main/val.txt',
+        img_prefix = 'data/VOCdevkit/VOC2012'
     ),
     test = dict(
         type = 'VOCDataset',
-        ann_file = 'data/VOCdevkit/VOC2007/ImageSets/Main/test.txt',
-        img_prefix = 'data/VOCdevkit/VOC2007'
+        ann_file = 'data/VOCdevkit/VOC2012/ImageSets/Main/test.txt',
+        img_prefix = 'data/VOCdevkit/VOC2012'
     ),
 )
 
