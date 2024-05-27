@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# define the Output directory
+output_dir="Output"
+
 ###############################################################################
 ##                     find optimal learning rates                           ##
 ###############################################################################
@@ -35,13 +38,13 @@ for ft_lr in "${fine_tuning_lrs[@]}"; do
 done
 
 # write results into a .txt file
-echo "Configuration        Accuracy" >best_accuracy_lr.txt
-echo "===============================" >>best_accuracy_lr.txt
+echo "Configuration        Accuracy" >"$output_dir/best_accuracy_lr.txt"
+echo "===============================" >>"$output_dir/best_accuracy_lr.txt"
 for ((i = 0; i < ${#fine_tuning_lrs[@]}; ++i)); do
     ft_lr=${fine_tuning_lrs[$i]}
     fc_lr=${output_lrs[$i]}
     accuracy=${best_accs[$i]}
-    printf "(%7.5f, %7.5f)   %8.6f\n" $ft_lr $fc_lr $accuracy >>best_accuracy_lr.txt
+    printf "(%7.5f, %7.5f)   %8.6f\n" $ft_lr $fc_lr $accuracy >>"$output_dir/best_accuracy_lr.txt"
 done
 
 echo "Best accuracy: $best_acc"
@@ -56,9 +59,9 @@ num_epochs=(15 30 45)
 best_acc=$(python train.py --epochs "${num_epochs[@]}" --ft_lr $best_fine_tune_lr --fc_lr $best_output_lr --save)
 
 # write result into a .txt file
-echo "Learning Rate  Accuracy" >best_accuracy_ep.txt
-echo "======================================" >>best_accuracy_ep.txt
-printf "%7.5f     %8.6f\n" $lr $best_acc >>best_accuracy_ep.txt
+echo "Learning Rate  Accuracy" >"$output_dir/best_accuracy_ep.txt"
+echo "======================================" >>"$output_dir/best_accuracy_ep.txt"
+printf "%7.5f     %8.6f\n" $lr $best_acc >>"$output_dir/best_accuracy_ep.txt"
 
 ###############################################################################
 ##                    random initialization of weight                        ##

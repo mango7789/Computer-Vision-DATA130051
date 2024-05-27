@@ -194,7 +194,9 @@ def train_resnet_with_cub(
         if accuracy_top1 > best_acc:
             best_acc = accuracy_top1
             if save:
-                torch.save(model.state_dict(), 'resnet18_cub.pth')
+                if not os.path.exists('./Output'):
+                    os.mkdir('./Output')
+                torch.save(model.state_dict(), os.path.join('Output', 'resnet18_cub.pth'))
             
         if epoch + 1 == num_epochs[count]:
             store_best_acc[count] = best_acc
