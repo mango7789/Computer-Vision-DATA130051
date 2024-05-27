@@ -125,6 +125,8 @@ def train_resnet_with_cub(
     tensorboard_name = "/kaggle/working/Fine_Tuning_With_Pretrain"
     if len(num_epochs) != 1:
         tensorboard_name = "/kaggle/working/Full_Train"
+    if not pretrain:
+        tensorboard_name = '/kaggle/working/Random_Init'
     writer = SummaryWriter(tensorboard_name, comment="-{}-{}".format(fine_tuning_lr, output_lr))
         
     # best accuracy
@@ -182,15 +184,7 @@ def train_resnet_with_cub(
         writer.add_scalars('Loss', {'Train': train_loss, 'Valid': test_loss}, epoch + 1)
         accuracy_top1 = correct_top1 / samples
         accuracy_top5 = correct_top5 / samples
-        writer.add_scalars(
-            'Valid Accuracy', 
-            {
-                'Top1': accuracy_top1,
-                'Top5': accuracy_top5,
-            },
-            epoch + 1
-            
-        )
+        writer.add_scalars('Valid Accuracy', {'Top1': accuracy_top1, 'Top5': accuracy_top5}, epoch + 1)
         
         print("[Epoch {:>2} / {:>2}], Validation loss is {:>8.6f}, Top-5 accuracy is {:>8.6f}, Top-1 accuracy is {:>8.6f}".format(
             epoch + 1, max_num_epoch, test_loss, accuracy_top5, accuracy_top1
