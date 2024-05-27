@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.init as init
 import torchvision.models as models
 
 class CUB_ResNet_18(nn.Module):
@@ -19,8 +20,14 @@ class CUB_ResNet_18(nn.Module):
             self.resnet18 = models.resnet18(weights="ResNet18_Weights.IMAGENET1K_V1")
         else:
             self.resnet18 = models.resnet18(weights=None)
+            
         # change the output layer
         self.resnet18.fc = nn.Linear(self.resnet18.fc.in_features, num_classes)
+        
+        # apply Kaiming initialization to the fully connected layer
+        init.kaiming_normal_(self.resnet18.fc.weight, mode='fan_out', nonlinearity='relu')
+        if self.resnet18.fc.bias is not None:
+            nn.init.constant_(self.resnet18.fc.bias, 0)
         
     def forward(self, x: torch.Tensor):
         """

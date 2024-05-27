@@ -66,29 +66,36 @@ class CUB_ImageFolder(Dataset):
         image_label = torch.tensor(int(image_label) - 1)
         return image_matrix, image_label
 
-
-def preprocess_data(batch_size: int=64) -> tuple[DataLoader, DataLoader]:
+def preprocess_data(data_dir: str, batch_size: int=64) -> tuple[DataLoader, DataLoader]:
     """
     Preprocess the CUB-200-2011 dataset and return the train and test 'DataLoader'.
     
     Args:
+    - data_dir: The directory of the dataset.
     - batch_size: The number of samples in one batch, default is 64.
-    """
     
-    # resize and normalize the images
-    transform = transforms.Compose([
+    Return:
+    - train_dataloder: The dataloader of the training dataset.
+    - test_loader: The dataloader of the testing dataset.
+    """
+    # resize and normalize the images. Apply data augumentation to the training dataset.
+    train_transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.RandomRotation(degrees=(-15, 15)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    test_transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
 
-    data_dir = 'data/CUB_200_2011'
-
     # load the dataset and extract the train/test Dataloader
-    train_dataset = CUB_ImageFolder(data_dir, transform=transform)
+    train_dataset = CUB_ImageFolder(data_dir, transform=train_transform)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     
-    test_dataset = CUB_ImageFolder(data_dir, transform=transform, train=False)
+    test_dataset = CUB_ImageFolder(data_dir, transform=test_transform, train=False)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
     
     return train_loader, test_loader
