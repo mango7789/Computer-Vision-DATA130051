@@ -3,3 +3,4 @@
 **/mmdetection/
 **/data/
 **/tutorial/
+*.pth
