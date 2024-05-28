@@ -1,10 +1,10 @@
 auto_scale_lr = dict(base_batch_size=16, enable=False)
 backend_args = None
-data_root = '../../kaggle/input/vocdata/VOCdevkit/'
+data_root = 'data/VOCdevkit/'
 dataset_type = 'VOCDataset'
 default_hooks = dict(
     checkpoint=dict(interval=1, type='CheckpointHook'),
-    logger=dict(interval=50, type='LoggerHook'),
+    logger=dict(interval=200, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     timer=dict(type='IterTimerHook'),
@@ -18,7 +18,7 @@ launcher = 'none'
 load_from = None
 log_level = 'INFO'
 log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
-max_epochs = 2
+max_epochs = 4
 model = dict(
     backbone=dict(
         depth=50,
@@ -184,13 +184,13 @@ model = dict(
             nms_pre=2000)),
     type='FasterRCNN')
 optim_wrapper = dict(
-    optimizer=dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0001),
+    optimizer=dict(lr=0.005, momentum=0.9, type='SGD', weight_decay=0.0001),
     type='OptimWrapper')
 param_scheduler = [
     dict(
         begin=0,
         by_epoch=True,
-        end=2,
+        end=4,
         gamma=0.1,
         milestones=[
             3,
@@ -205,7 +205,7 @@ test_dataloader = dict(
         ann_file='VOC2007/ImageSets/Main/test.txt',
         backend_args=None,
         data_prefix=dict(sub_data_root='VOC2007/'),
-        data_root='../../kaggle/input/vocdata/VOCdevkit/',
+        data_root='data/VOCdevkit/',
         pipeline=[
             dict(backend_args=None, type='LoadImageFromFile'),
             dict(keep_ratio=True, scale=(
@@ -247,7 +247,7 @@ test_pipeline = [
         ),
         type='PackDetInputs'),
 ]
-train_cfg = dict(max_epochs=2, type='EpochBasedTrainLoop', val_interval=1)
+train_cfg = dict(max_epochs=4, type='EpochBasedTrainLoop', val_interval=1)
 train_dataloader = dict(
     batch_sampler=dict(type='AspectRatioBatchSampler'),
     batch_size=2,
@@ -258,7 +258,7 @@ train_dataloader = dict(
                     ann_file='VOC2007/ImageSets/Main/trainval.txt',
                     backend_args=None,
                     data_prefix=dict(sub_data_root='VOC2007/'),
-                    data_root='../../kaggle/input/vocdata/VOCdevkit/',
+                    data_root='data/VOCdevkit/',
                     filter_cfg=dict(
                         bbox_min_size=32, filter_empty_gt=True, min_size=32),
                     pipeline=[
@@ -279,7 +279,7 @@ train_dataloader = dict(
                     ann_file='VOC2012/ImageSets/Main/trainval.txt',
                     backend_args=None,
                     data_prefix=dict(sub_data_root='VOC2012/'),
-                    data_root='../../kaggle/input/vocdata/VOCdevkit/',
+                    data_root='data/VOCdevkit/',
                     filter_cfg=dict(
                         bbox_min_size=32, filter_empty_gt=True, min_size=32),
                     pipeline=[
@@ -323,7 +323,7 @@ val_dataloader = dict(
         ann_file='VOC2007/ImageSets/Main/test.txt',
         backend_args=None,
         data_prefix=dict(sub_data_root='VOC2007/'),
-        data_root='../../kaggle/input/vocdata/VOCdevkit/',
+        data_root='data/VOCdevkit/',
         pipeline=[
             dict(backend_args=None, type='LoadImageFromFile'),
             dict(keep_ratio=True, scale=(
@@ -357,4 +357,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs\\faster-rcnn_r50_fpn_1x_voc0712'
+work_dir = './work_dirs/faster-rcnn_r50_fpn_1x_voc0712'

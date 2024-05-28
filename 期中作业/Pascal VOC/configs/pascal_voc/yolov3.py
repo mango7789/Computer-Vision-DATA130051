@@ -59,7 +59,9 @@ model = dict(
         max_per_img=100))
 
 # Training configuration
-train_cfg = dict(max_epochs=273, val_interval=7)
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=273, val_interval=7)
+val_cfg = dict(type='ValLoop')
+test_cfg = dict(type='TestLoop')
 
 # Optimizer configuration
 optim_wrapper = dict(

@@ -4,7 +4,7 @@ data_root = 'data/VOCdevkit/'
 dataset_type = 'VOCDataset'
 default_hooks = dict(
     checkpoint=dict(interval=1, type='CheckpointHook'),
-    logger=dict(interval=50, type='LoggerHook'),
+    logger=dict(interval=200, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     timer=dict(type='IterTimerHook'),
@@ -184,7 +184,7 @@ model = dict(
             nms_pre=2000)),
     type='FasterRCNN')
 optim_wrapper = dict(
-    optimizer=dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0001),
+    optimizer=dict(lr=0.005, momentum=0.9, type='SGD', weight_decay=0.0001),
     type='OptimWrapper')
 param_scheduler = [
     dict(
@@ -357,4 +357,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs\\faster-rcnn_r50_fpn_1x_voc0712'
+work_dir = './work_dirs/faster-rcnn_r50_fpn_1x_voc0712'
