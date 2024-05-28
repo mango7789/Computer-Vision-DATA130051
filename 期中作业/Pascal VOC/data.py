@@ -14,8 +14,8 @@ def load_VOC(batch_size: int=64, shuffle: bool=True):
     download = True
     
     # load dataset
-    train_dataset = VOCDetection(root='./data', year='2007', image_set='train', transform=transform, download=download)
-    test_dataset = VOCDetection(root='./data', year='2007', image_set='val', transform=transform, download=download)
+    train_dataset = VOCDetection(root='./data', year='2007', image_set='train', transform=transform, download=False)
+    test_dataset = VOCDetection(root='./data', year='2007', image_set='test', transform=transform, download=download)
     
     # get the dataloader
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=shuffle)
