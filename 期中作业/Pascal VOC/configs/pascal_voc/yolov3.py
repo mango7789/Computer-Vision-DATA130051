@@ -66,7 +66,7 @@ model = dict(
         max_per_img=100))
 
 # Training configuration
-train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=273, val_interval=7)
+train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=10, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
@@ -79,8 +79,8 @@ optim_wrapper = dict(
 
 # Learning rate scheduler configuration
 param_scheduler = [
-    dict(type='LinearLR', start_factor=0.1, by_epoch=False, begin=0, end=2000),
-    dict(type='MultiStepLR', by_epoch=True, milestones=[218, 246], gamma=0.1)
+    dict(type='LinearLR', start_factor=0.005, by_epoch=False, begin=0, end=2000),
+    dict(type='MultiStepLR', by_epoch=True, milestones=[8, 9], gamma=0.1)
 ]
 
 # Hooks configuration
