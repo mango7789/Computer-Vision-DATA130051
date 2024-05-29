@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'VOCDataset'
-data_root = '../../kaggle/input/vocdata/VOCdevkit/'
+data_root = 'data/VOCdevkit/'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module

@@ -2,8 +2,15 @@ _base_ = [
      '../_base_/datasets/voc0712.py', '../_base_/default_runtime.py'
 ]
 # model settings
+data_preprocessor = dict(
+    type='DetDataPreprocessor',
+    mean=[0, 0, 0],
+    std=[255., 255., 255.],
+    bgr_to_rgb=True,
+    pad_size_divisor=32)
 model = dict(
     type='YOLOV3',
+    data_preprocessor=data_preprocessor,
     backbone=dict(
         type='Darknet',
         depth=53,
@@ -16,7 +23,7 @@ model = dict(
         out_channels=[512, 256, 128]),
     bbox_head=dict(
         type='YOLOV3Head',
-        num_classes=20,
+        num_classes=80,
         in_channels=[512, 256, 128],
         out_channels=[1024, 512, 256],
         anchor_generator=dict(

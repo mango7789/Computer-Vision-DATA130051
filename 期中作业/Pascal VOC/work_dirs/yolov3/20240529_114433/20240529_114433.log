@@ -1,0 +1,1144 @@
+2024/05/29 11:44:39 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+    CUDA available: False
+    MUSA available: False
+    numpy_random_seed: 394784762
+    MSVC: 用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.39.33523 版
+    GCC: n/a
+    PyTorch: 2.3.0+cpu
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 201703
+  - MSVC 192930151
+  - Intel(R) oneAPI Math Kernel Library Version 2021.4-Product Build 20210904 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.6 (Git Hash 86e6af5974177e513fd3fee58425e1063e7f1361)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX512
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.3.0, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+    TorchVision: 0.18.0+cpu
+    OpenCV: 4.9.0
+    MMEngine: 0.10.4
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 394784762
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2024/05/29 11:44:39 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=64)
+backend_args = None
+data_preprocessor = dict(
+    bgr_to_rgb=True,
+    mean=[
+        0,
+        0,
+        0,
+    ],
+    pad_size_divisor=32,
+    std=[
+        255.0,
+        255.0,
+        255.0,
+    ],
+    type='DetDataPreprocessor')
+data_root = 'data/VOCdevkit/'
+dataset_type = 'VOCDataset'
+default_hooks = dict(
+    checkpoint=dict(interval=7, type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+launcher = 'none'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+model = dict(
+    backbone=dict(
+        depth=53,
+        init_cfg=dict(checkpoint='open-mmlab://darknet53', type='Pretrained'),
+        out_indices=(
+            3,
+            4,
+            5,
+        ),
+        type='Darknet'),
+    bbox_head=dict(
+        anchor_generator=dict(
+            base_sizes=[
+                [
+                    (
+                        116,
+                        90,
+                    ),
+                    (
+                        156,
+                        198,
+                    ),
+                    (
+                        373,
+                        326,
+                    ),
+                ],
+                [
+                    (
+                        30,
+                        61,
+                    ),
+                    (
+                        62,
+                        45,
+                    ),
+                    (
+                        59,
+                        119,
+                    ),
+                ],
+                [
+                    (
+                        10,
+                        13,
+                    ),
+                    (
+                        16,
+                        30,
+                    ),
+                    (
+                        33,
+                        23,
+                    ),
+                ],
+            ],
+            strides=[
+                32,
+                16,
+                8,
+            ],
+            type='YOLOAnchorGenerator'),
+        bbox_coder=dict(type='YOLOBBoxCoder'),
+        featmap_strides=[
+            32,
+            16,
+            8,
+        ],
+        in_channels=[
+            512,
+            256,
+            128,
+        ],
+        loss_cls=dict(
+            loss_weight=1.0,
+            reduction='sum',
+            type='CrossEntropyLoss',
+            use_sigmoid=True),
+        loss_conf=dict(
+            loss_weight=1.0,
+            reduction='sum',
+            type='CrossEntropyLoss',
+            use_sigmoid=True),
+        loss_wh=dict(loss_weight=2.0, reduction='sum', type='MSELoss'),
+        loss_xy=dict(
+            loss_weight=2.0,
+            reduction='sum',
+            type='CrossEntropyLoss',
+            use_sigmoid=True),
+        num_classes=80,
+        out_channels=[
+            1024,
+            512,
+            256,
+        ],
+        type='YOLOV3Head'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            0,
+            0,
+            0,
+        ],
+        pad_size_divisor=32,
+        std=[
+            255.0,
+            255.0,
+            255.0,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        in_channels=[
+            1024,
+            512,
+            256,
+        ],
+        num_scales=3,
+        out_channels=[
+            512,
+            256,
+            128,
+        ],
+        type='YOLOV3Neck'),
+    test_cfg=dict(
+        conf_thr=0.005,
+        max_per_img=100,
+        min_bbox_size=0,
+        nms=dict(iou_threshold=0.45, type='nms'),
+        nms_pre=1000,
+        score_thr=0.05),
+    train_cfg=dict(
+        assigner=dict(
+            min_pos_iou=0,
+            neg_iou_thr=0.5,
+            pos_iou_thr=0.5,
+            type='GridAssigner')),
+    type='YOLOV3')
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=35, norm_type=2),
+    optimizer=dict(lr=0.001, momentum=0.9, type='SGD', weight_decay=0.0005),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(begin=0, by_epoch=False, end=2000, start_factor=0.1, type='LinearLR'),
+    dict(
+        by_epoch=True, gamma=0.1, milestones=[
+            218,
+            246,
+        ], type='MultiStepLR'),
+]
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='VOC2007/ImageSets/Main/test.txt',
+        backend_args=None,
+        data_prefix=dict(sub_data_root='VOC2007/'),
+        data_root='data/VOCdevkit/',
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1000,
+                600,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='VOCDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(eval_mode='11points', metric='mAP', type='VOCMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1000,
+        600,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_epochs=273, type='EpochBasedTrainLoop', val_interval=7)
+train_dataloader = dict(
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    batch_size=2,
+    dataset=dict(
+        dataset=dict(
+            datasets=[
+                dict(
+                    ann_file='VOC2007/ImageSets/Main/trainval.txt',
+                    backend_args=None,
+                    data_prefix=dict(sub_data_root='VOC2007/'),
+                    data_root='data/VOCdevkit/',
+                    filter_cfg=dict(
+                        bbox_min_size=32, filter_empty_gt=True, min_size=32),
+                    pipeline=[
+                        dict(backend_args=None, type='LoadImageFromFile'),
+                        dict(type='LoadAnnotations', with_bbox=True),
+                        dict(
+                            keep_ratio=True,
+                            scale=(
+                                1000,
+                                600,
+                            ),
+                            type='Resize'),
+                        dict(prob=0.5, type='RandomFlip'),
+                        dict(type='PackDetInputs'),
+                    ],
+                    type='VOCDataset'),
+                dict(
+                    ann_file='VOC2012/ImageSets/Main/trainval.txt',
+                    backend_args=None,
+                    data_prefix=dict(sub_data_root='VOC2012/'),
+                    data_root='data/VOCdevkit/',
+                    filter_cfg=dict(
+                        bbox_min_size=32, filter_empty_gt=True, min_size=32),
+                    pipeline=[
+                        dict(backend_args=None, type='LoadImageFromFile'),
+                        dict(type='LoadAnnotations', with_bbox=True),
+                        dict(
+                            keep_ratio=True,
+                            scale=(
+                                1000,
+                                600,
+                            ),
+                            type='Resize'),
+                        dict(prob=0.5, type='RandomFlip'),
+                        dict(type='PackDetInputs'),
+                    ],
+                    type='VOCDataset'),
+            ],
+            ignore_keys=[
+                'dataset_type',
+            ],
+            type='ConcatDataset'),
+        times=3,
+        type='RepeatDataset'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(keep_ratio=True, scale=(
+        1000,
+        600,
+    ), type='Resize'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='VOC2007/ImageSets/Main/test.txt',
+        backend_args=None,
+        data_prefix=dict(sub_data_root='VOC2007/'),
+        data_root='data/VOCdevkit/',
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1000,
+                600,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='VOCDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(eval_mode='11points', metric='mAP', type='VOCMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = './work_dirs\\yolov3'
+
+2024/05/29 11:44:41 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2024/05/29 11:44:41 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/05/29 11:47:03 - mmengine - INFO - load model from: open-mmlab://darknet53
+2024/05/29 11:47:03 - mmengine - INFO - Loads checkpoint by openmmlab backend from path: open-mmlab://darknet53
+Name of parameter - Initialization information
+
+backbone.conv1.conv.weight - torch.Size([32, 3, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv1.bn.weight - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv1.bn.bias - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.conv.conv.weight - torch.Size([64, 32, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.conv.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.conv.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv1.conv.weight - torch.Size([32, 64, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv1.bn.weight - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv1.bn.bias - torch.Size([32]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv2.conv.weight - torch.Size([64, 32, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv2.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block1.res0.conv2.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.conv.conv.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.conv.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.conv.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv1.conv.weight - torch.Size([64, 128, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv1.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv1.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv2.conv.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv2.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res0.conv2.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv1.conv.weight - torch.Size([64, 128, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv1.bn.weight - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv1.bn.bias - torch.Size([64]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv2.conv.weight - torch.Size([128, 64, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv2.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block2.res1.conv2.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.conv.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.conv.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.conv.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res0.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res1.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res2.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res3.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res4.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res5.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res6.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv1.conv.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv1.bn.weight - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv1.bn.bias - torch.Size([128]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv2.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block3.res7.conv2.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.conv.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.conv.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.conv.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res0.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res1.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res2.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res3.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res4.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res5.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res6.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv1.bn.weight - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv1.bn.bias - torch.Size([256]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv2.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block4.res7.conv2.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.conv.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.conv.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.conv.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res0.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res1.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res2.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv1.bn.weight - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv1.bn.bias - torch.Size([512]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv2.bn.weight - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+backbone.conv_res_block5.res3.conv2.bn.bias - torch.Size([1024]): 
+PretrainedInit: load from open-mmlab://darknet53 
+
+neck.detect1.conv1.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv2.conv.weight - torch.Size([1024, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv2.bn.weight - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv2.bn.bias - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv3.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv3.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv3.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv4.conv.weight - torch.Size([1024, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv4.bn.weight - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv4.bn.bias - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv5.conv.weight - torch.Size([512, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect1.conv5.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect1.conv5.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv1.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv1.conv.weight - torch.Size([256, 768, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv2.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv2.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv2.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv3.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv4.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv4.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv4.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv5.conv.weight - torch.Size([256, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect2.conv5.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect2.conv5.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv2.conv.weight - torch.Size([128, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.conv2.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.conv2.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv1.conv.weight - torch.Size([128, 384, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv1.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv1.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv2.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv3.conv.weight - torch.Size([128, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv3.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv3.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv4.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv4.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv4.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv5.conv.weight - torch.Size([128, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+neck.detect3.conv5.bn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+neck.detect3.conv5.bn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.0.conv.weight - torch.Size([1024, 512, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_bridge.0.bn.weight - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.0.bn.bias - torch.Size([1024]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.1.conv.weight - torch.Size([512, 256, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_bridge.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.2.conv.weight - torch.Size([256, 128, 3, 3]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_bridge.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_bridge.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of YOLOV3  
+
+bbox_head.convs_pred.0.weight - torch.Size([255, 1024, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.0.bias - torch.Size([255]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.1.weight - torch.Size([255, 512, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.1.bias - torch.Size([255]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.2.weight - torch.Size([255, 256, 1, 1]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+
+bbox_head.convs_pred.2.bias - torch.Size([255]): 
+Initialized by user-defined `init_weights` in YOLOV3Head  
+2024/05/29 11:47:09 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2024/05/29 11:47:09 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2024/05/29 11:47:09 - mmengine - INFO - Checkpoints will be saved to d:\Computer Vision\期中作业\Pascal VOC\work_dirs\yolov3.
+2024/05/29 11:53:38 - mmengine - INFO - Epoch(train)   [1][   50/24827]  lr: 1.2206e-04  eta: 609 days, 6:35:29  time: 7.7668  data_time: 0.4018  grad_norm: 1147.3613  loss: 184.2765  loss_cls: 23.9403  loss_conf: 144.3069  loss_xy: 12.2738  loss_wh: 3.7556
+2024/05/29 11:59:23 - mmengine - INFO - Epoch(train)   [1][  100/24827]  lr: 1.4457e-04  eta: 575 days, 8:33:34  time: 6.9022  data_time: 0.0039  grad_norm: 1092.9049  loss: 112.7995  loss_cls: 24.9429  loss_conf: 71.3122  loss_xy: 13.1080  loss_wh: 3.4364
+2024/05/29 12:05:10 - mmengine - INFO - Epoch(train)   [1][  150/24827]  lr: 1.6708e-04  eta: 565 days, 0:52:50  time: 6.9400  data_time: 0.0030  grad_norm: 901.5478  loss: 102.4467  loss_cls: 26.9928  loss_conf: 57.6368  loss_xy: 14.3768  loss_wh: 3.4404
+2024/05/29 12:10:48 - mmengine - INFO - Epoch(train)   [1][  200/24827]  lr: 1.8959e-04  eta: 556 days, 15:13:33  time: 6.7748  data_time: 0.0022  grad_norm: 558.2283  loss: 75.3548  loss_cls: 20.9845  loss_conf: 40.8691  loss_xy: 11.0929  loss_wh: 2.4083
+2024/05/29 12:16:34 - mmengine - INFO - Epoch(train)   [1][  250/24827]  lr: 2.1211e-04  eta: 553 days, 16:05:47  time: 6.9073  data_time: 0.0020  grad_norm: 475.2475  loss: 77.6139  loss_cls: 22.7233  loss_conf: 39.5831  loss_xy: 12.4891  loss_wh: 2.8184
+2024/05/29 12:22:21 - mmengine - INFO - Epoch(train)   [1][  300/24827]  lr: 2.3462e-04  eta: 552 days, 5:13:19  time: 6.9474  data_time: 0.0019  grad_norm: 432.6616  loss: 76.9983  loss_cls: 22.4704  loss_conf: 38.5878  loss_xy: 12.9009  loss_wh: 3.0392
