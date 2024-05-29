@@ -8,17 +8,18 @@ default_hooks = dict(
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     timer=dict(type='IterTimerHook'),
-    visualization=dict(type='DetVisualizationHook'))
+    visualization=dict(
+        draw=True, show=True, type='DetVisualizationHook', wait_time=2))
 default_scope = 'mmdet'
 env_cfg = dict(
     cudnn_benchmark=False,
     dist_cfg=dict(backend='nccl'),
     mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
 launcher = 'none'
-load_from = None
+load_from = 'work_dirs/faster-rcnn_r50_fpn_1x_voc0712/epoch_4.pth'
 log_level = 'INFO'
 log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
-max_epochs = 4
+max_epochs = 2
 model = dict(
     backbone=dict(
         depth=50,
@@ -190,7 +191,7 @@ param_scheduler = [
     dict(
         begin=0,
         by_epoch=True,
-        end=4,
+        end=2,
         gamma=0.1,
         milestones=[
             3,
@@ -247,7 +248,7 @@ test_pipeline = [
         ),
         type='PackDetInputs'),
 ]
-train_cfg = dict(max_epochs=4, type='EpochBasedTrainLoop', val_interval=1)
+train_cfg = dict(max_epochs=2, type='EpochBasedTrainLoop', val_interval=1)
 train_dataloader = dict(
     batch_sampler=dict(type='AspectRatioBatchSampler'),
     batch_size=2,
@@ -357,4 +358,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs/faster-rcnn_r50_fpn_1x_voc0712'
+work_dir = './work_dirs\\faster-rcnn_r50_fpn_1x_voc0712'
