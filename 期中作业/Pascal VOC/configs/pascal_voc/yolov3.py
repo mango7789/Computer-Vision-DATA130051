@@ -73,19 +73,13 @@ test_cfg = dict(type='TestLoop')
 # Optimizer configuration
 optim_wrapper = dict(
     type='OptimWrapper',
-    # optimizer=dict(type='SGD', lr=0.001, momentum=0.9, weight_decay=0.0001),
-    optimizer=dict(
-        type='AdamW',
-        lr=0.001,
-        weight_decay=0.0001,
-        eps=1e-8,
-        betas=(0.9, 0.999)),
+    optimizer=dict(type='SGD', lr=0.0005, momentum=0.9, weight_decay=0.0005),
     clip_grad=dict(max_norm=35, norm_type=2)
 )
 
 # Learning rate scheduler configuration
 param_scheduler = [
-    dict(type='LinearLR', start_factor=0.005, by_epoch=False, begin=0, end=2000),
+    dict(type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=2000),
     dict(type='MultiStepLR', by_epoch=True, milestones=[4, 8], gamma=0.1)
 ]
 
@@ -93,4 +87,4 @@ param_scheduler = [
 default_hooks = dict(checkpoint=dict(type='CheckpointHook', interval=1))
 
 # Auto scaling learning rate configuration
-auto_scale_lr = dict(base_batch_size=64)
+auto_scale_lr = dict(base_batch_size=16)
