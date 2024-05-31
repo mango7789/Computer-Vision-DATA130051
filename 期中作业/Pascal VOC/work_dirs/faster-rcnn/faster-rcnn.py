@@ -8,15 +8,14 @@ default_hooks = dict(
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
     timer=dict(type='IterTimerHook'),
-    visualization=dict(
-        draw=True, show=True, type='DetVisualizationHook', wait_time=2))
+    visualization=dict(type='DetVisualizationHook'))
 default_scope = 'mmdet'
 env_cfg = dict(
     cudnn_benchmark=False,
     dist_cfg=dict(backend='nccl'),
     mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
 launcher = 'none'
-load_from = 'work_dirs/faster-rcnn_r50_fpn_1x_voc0712/epoch_4.pth'
+load_from = None
 log_level = 'INFO'
 log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
 max_epochs = 2
@@ -358,4 +357,4 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = './work_dirs\\faster-rcnn_r50_fpn_1x_voc0712'
+work_dir = './work_dirs\\faster-rcnn'
