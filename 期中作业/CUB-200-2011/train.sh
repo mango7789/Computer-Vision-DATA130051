@@ -3,6 +3,9 @@
 # define the Output directory
 output_dir="Output"
 
+# create the output directory if it doesn't exist
+mkdir -p "$output_dir"
+
 ###############################################################################
 ##                     find optimal learning rates                           ##
 ###############################################################################
